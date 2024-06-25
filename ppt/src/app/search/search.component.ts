@@ -26,7 +26,7 @@ export class SearchComponent {
   search(){
     if(this.addInfoForm.valid){
       let val = this.addInfoForm.controls['value'].value;
-  console.log(val,'search text');
+      console.log(val,'search text');
   
       this.ApiService.searchSlides(val).subscribe((data: any) => {
         console.log(data);
@@ -34,9 +34,7 @@ export class SearchComponent {
         localStorage.setItem('SplitData',value)
         this.router.navigate(['metadata']);
       } )
-  
-  
-      }
+    }
   }
 
 }

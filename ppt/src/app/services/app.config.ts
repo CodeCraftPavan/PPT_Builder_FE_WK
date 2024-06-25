@@ -1,7 +1,7 @@
 export const APP_DI_CONFIG: any = {
     // For api calls  
-    //https://localhost:44361/search-slide?searchKeyWord=note2
-    parentDomain : 'https://localhost:44361/',
+    
+    parentDomain : 'http://10.0.0.163:8081/',
 
    // https://localhost:44361/api/AuthManagement/Sign-In
 

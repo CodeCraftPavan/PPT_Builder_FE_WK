@@ -10,15 +10,20 @@ import { LoginComponent } from './login/login.component';
 import { MetadataComponent } from './metadata/metadata.component';
 import { MergeslidesComponent } from './mergeslides/mergeslides.component';
 import { SearchComponent } from './search/search.component';
+import { HomeComponent } from './home/home.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     MergepptComponent,
     LoginComponent,
     MetadataComponent,
     MergeslidesComponent,
-    SearchComponent
+    SearchComponent,
+    FeedbackComponent
+    
  
   ],
   imports: [
