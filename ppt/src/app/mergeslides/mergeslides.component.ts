@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MasterService } from '../services/master.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mergeslides',
@@ -16,7 +17,7 @@ export class MergeslidesComponent {
   pavan: any;
 
   constructor(private ApiService: MasterService,
-    private sanitizer: DomSanitizer,
+    private sanitizer: DomSanitizer,private router: Router
   ) {
     this.getRFQ();
   }
@@ -68,9 +69,12 @@ export class MergeslidesComponent {
       let url = resp.data;
 
       window.open(url);
-    })
-
+      setTimeout(() => {
+        this.router.navigate(['/feedback'], { queryParams: { presentationUrl: url } });
+      }, 1000);
+      },error => {
+        console.error('Error downloading presentation', error);
+        alert('Error downloading presentation');
+      });
   }
-
-
 }

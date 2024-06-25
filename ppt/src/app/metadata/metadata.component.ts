@@ -34,24 +34,24 @@ export class MetadataComponent {
       keywords: [''],
       note:['']
     })
-
-
     let value: any = localStorage.getItem("SplitData");
     this.slideList = JSON.parse(value)
     console.log(this.slideList,'slideList');
-    this.metadataList = this.slideList.metaData
+    console.log(this.slideList);
+    this.metadataList = this.slideList;
+    //this.metadataList = this.slideList.metaData
     console.log(this.metadataList,'metadata');
     
 
-    this.pavan = this.slideList.slideList[0]
-    this.pramod = this.metadataList[0];
+    this.pavan = this.slideList.data[0]
+    this.pramod = this.metadataList.data[0];
 
 
    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.pavan}&embedded=true`);
 
    // this.content = 'https://docs.google.com/gview?url=+this.slideList.slideList[0]' + '&embedded=true'
 
-  //  this.iframeURL = this.sanitizeUrl(this.content);
+   //  this.iframeURL = this.sanitizeUrl(this.content);
 
     // this.iframeURL= 'https://docs.google.com/gview?url=${this.content}&embedded=true'
 

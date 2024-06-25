@@ -40,7 +40,7 @@ console.log(this.addInfoForm.value,'formvalue');
 
       localStorage.setItem('Token',data.data)
 
-      this.router.navigate(['splitPPt']);
+      this.router.navigate(['/home']);
 
     } )
 
