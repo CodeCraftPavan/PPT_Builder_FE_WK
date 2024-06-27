@@ -25,7 +25,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    debugger;
+    ;
     this.feedbackForm = this.formBuilder.group({
       SlideTitle: ['', Validators.required],
       UsagePurposeType: ['', Validators.required]
@@ -41,7 +41,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   // onSubmit(): void {
-  //   debugger;
+  //   ;
 
   //   let Payload = {
   //     slideFileKeys: JSON.parse(this.SlideKeyList)
@@ -79,9 +79,9 @@ export class FeedbackComponent implements OnInit {
   //       UsagePurposeType: this.feedbackForm.controls['UsagePurposeType'].value
   //     };
       
-  //     debugger; // need to check about setting timeout.
+  //     ; // need to check about setting timeout.
   //     this.apiService.submitFeedback(feedbackPayload).subscribe(response => {
-  //       debugger;
+  //       ;
   //       console.log('Feedback submitted successfully', response);
   //       alert('Feedback submitted successfully');
   //     }, error => {
@@ -122,7 +122,7 @@ export class FeedbackComponent implements OnInit {
   // }
 
   onSubmit(): void {
-    debugger;
+    ;
   
     let Payload = {
       slideFileKeys: JSON.parse(this.SlideKeyList)
@@ -149,9 +149,9 @@ export class FeedbackComponent implements OnInit {
           UsagePurposeType: this.feedbackForm.controls['UsagePurposeType'].value
         };
   
-        debugger; 
+        ; 
         this.apiService.submitFeedback(feedbackPayload).subscribe(response => {
-          debugger;
+          ;
           console.log('Feedback submitted successfully', response);
           alert('Feedback submitted successfully');
         }, error => {

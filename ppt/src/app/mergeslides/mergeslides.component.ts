@@ -52,7 +52,7 @@ export class MergeslidesComponent {
   mergeSlides(metadata: any) {
     console.log(metadata, 'metadata');
     let fileLocation = metadata.s3FilePath;
-    debugger;
+    ;
     this.slideFileKeyList.push(fileLocation)
   }
   onMergeClick(): void {
@@ -63,7 +63,7 @@ export class MergeslidesComponent {
      } 
     });
     
-    debugger;
+    ;
   }
   onHomeClick():void{
     this.router.navigate(["\home"]);

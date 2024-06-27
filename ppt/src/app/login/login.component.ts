@@ -28,7 +28,7 @@ export class LoginComponent {
   }   
   
   signUp() {
-console.log(this.addInfoForm.value,'formvalue');
+    console.log(this.addInfoForm.value,'formvalue');
 
     if(this.addInfoForm.valid){
     var Payload: any = {};
@@ -43,9 +43,11 @@ console.log(this.addInfoForm.value,'formvalue');
       this.router.navigate(['/home']);
 
     } )
-
-
     }
+}
+
+onClickCreateAccount():void{
+  this.router.navigate(["\accountCreation"]);
 }
 
 }

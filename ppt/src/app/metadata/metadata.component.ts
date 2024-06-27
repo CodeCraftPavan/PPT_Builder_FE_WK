@@ -94,7 +94,7 @@ export class MetadataComponent {
     console.log(this.addInfoForm.value,'formvalue');
     
         if(this.addInfoForm.valid){
-          debugger;
+          ;
         var Payload: any = {};
         Payload.id = item.id;
         Payload.metaDataOfSlide = this.addInfoForm.controls['title'].value;

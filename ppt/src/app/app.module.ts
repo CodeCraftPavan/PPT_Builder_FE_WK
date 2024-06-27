@@ -12,6 +12,7 @@ import { MergeslidesComponent } from './mergeslides/mergeslides.component';
 import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { AccountCreationComponent } from './account-creation/account-creation.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FeedbackComponent } from './feedback/feedback.component';
     MetadataComponent,
     MergeslidesComponent,
     SearchComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    AccountCreationComponent
     
  
   ],
