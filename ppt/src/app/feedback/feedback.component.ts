@@ -13,6 +13,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FeedbackComponent implements OnInit {
   feedbackForm: FormGroup;
+  MergedSlidesKey: any;
+  SlideKeyList: any;
+  MergedpresentationUrl: any;
   presentationPurpose = PresentationPurpose;
   purposeValues: string[];
   presentationUrl: string;
@@ -22,30 +25,144 @@ export class FeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    debugger;
     this.feedbackForm = this.formBuilder.group({
       SlideTitle: ['', Validators.required],
-      //title: ['', Validators.required],
       UsagePurposeType: ['', Validators.required]
     });
 
-    this.route.queryParams.subscribe(params => {
+      this.route.queryParams.subscribe(params => {
       this.presentationUrl = params['presentationUrl'];
+      this.MergedSlidesKey = params['MergedSlidesKey'];
+      this.SlideKeyList = params['SlideKeyList'];
+      this.MergedpresentationUrl = params['url'];
+
     });
   }
 
+  // onSubmit(): void {
+  //   debugger;
+
+  //   let Payload = {
+  //     slideFileKeys: JSON.parse(this.SlideKeyList)
+  //   }
+      
+  //   this.apiService.mergeSlides(Payload).subscribe((resp: any) => {
+  //     console.log(resp, 'meta data result');
+  //     this.MergedSlidesKey = resp.data.mergedSlideKeyId
+  //     console.log(this.MergedSlidesKey,'slideId')
+
+  //     //this.url = resp.data;
+      
+  //     this.MergedpresentationUrl = resp.data.objectUrl;
+  //     const a = document.createElement('a');
+  //     a.href = this.MergedpresentationUrl;
+  //     //a.href = this.url;
+  //     a.download = 'merged_presentation.pptx'; // Optionally set a filename
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     document.body.removeChild(a);
+
+  //     //window.open(url);
+      
+  //     },error => {
+  //       console.error('Error downloading presentation', error);
+  //       alert('Error downloading presentation');
+  //     });
+
+
+  //   if (this.feedbackForm.valid) {
+      
+  //     const feedbackPayload = {
+  //       mergedSlidesKeyId: this.MergedSlidesKey,
+  //       SlideTitle: this.feedbackForm.controls['SlideTitle'].value,
+  //       UsagePurposeType: this.feedbackForm.controls['UsagePurposeType'].value
+  //     };
+      
+  //     debugger; // need to check about setting timeout.
+  //     this.apiService.submitFeedback(feedbackPayload).subscribe(response => {
+  //       debugger;
+  //       console.log('Feedback submitted successfully', response);
+  //       alert('Feedback submitted successfully');
+  //     }, error => {
+  //       console.error('Error submitting feedback', error);
+  //       alert('Error submitting feedback');
+  //     });
+
+  //     //simultaneosly download the file
+        
+  //     // let Payload = {
+  //     //   slideFileKeys: this.SlideKeyList
+  //     // }
+
+  //     // this.apiService.mergeSlides(Payload).subscribe((resp: any) => {
+  //     //   console.log(resp, 'meta data result');
+  //     //   this.MergedSlidesKey = resp.data.mergedSlideKeyId
+  //     //   console.log(this.MergedSlidesKey,'slideId')
+  
+  //     //   //this.url = resp.data;
+  //     //   this.MergedpresentationUrl = resp.data;
+  //     //   const a = document.createElement('a');
+  //     //   a.href = this.MergedpresentationUrl;
+  //     //   //a.href = this.url;
+  //     //   a.download = 'merged_presentation.pptx'; // Optionally set a filename
+  //     //   document.body.appendChild(a);
+  //     //   a.click();
+  //     //   document.body.removeChild(a);
+  
+  //     //   //window.open(url);
+        
+  //     //   },error => {
+  //     //     console.error('Error downloading presentation', error);
+  //     //     alert('Error downloading presentation');
+  //     //   });
+
+
+  //   }
+  // }
+
   onSubmit(): void {
-    if (this.feedbackForm.valid) {
-      const feedbackPayload = {
-        ...this.feedbackForm.value
-        //presentationUrl: this.presentationUrl
-      };
-      this.apiService.submitFeedback(feedbackPayload).subscribe(response => {
-        console.log('Feedback submitted successfully', response);
-        alert('Feedback submitted successfully');
-      }, error => {
-        console.error('Error submitting feedback', error);
-        alert('Error submitting feedback');
-      });
+    debugger;
+  
+    let Payload = {
+      slideFileKeys: JSON.parse(this.SlideKeyList)
     }
+      
+    this.apiService.mergeSlides(Payload).subscribe((resp: any) => {
+      console.log(resp, 'meta data result');
+      this.MergedSlidesKey = resp.data.mergedSlideKeyId;
+      console.log(this.MergedSlidesKey, 'slideId');
+  
+      this.MergedpresentationUrl = resp.data.objectUrl;
+      const a = document.createElement('a');
+      a.href = this.MergedpresentationUrl;
+      a.download = 'merged_presentation.pptx'; // Optionally set a filename
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+  
+      // After mergeSlides API call is successful, call submitFeedback API
+      if (this.feedbackForm.valid) {
+        const feedbackPayload = {
+          mergedSlidesKeyId: this.MergedSlidesKey,
+          SlideTitle: this.feedbackForm.controls['SlideTitle'].value,
+          UsagePurposeType: this.feedbackForm.controls['UsagePurposeType'].value
+        };
+  
+        debugger; 
+        this.apiService.submitFeedback(feedbackPayload).subscribe(response => {
+          debugger;
+          console.log('Feedback submitted successfully', response);
+          alert('Feedback submitted successfully');
+        }, error => {
+          console.error('Error submitting feedback', error);
+          alert('Error submitting feedback');
+        });
+      }
+    }, error => {
+      console.error('Error downloading presentation', error);
+      alert('Error downloading presentation');
+    });
   }
+  
 }

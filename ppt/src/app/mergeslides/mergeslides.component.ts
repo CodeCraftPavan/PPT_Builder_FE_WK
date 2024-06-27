@@ -12,7 +12,8 @@ export class MergeslidesComponent {
 
   slideList: any;
   metadataList: any;
-
+  MergedSlidesKey: any;
+  url: any;
   safeUrl: SafeResourceUrl;
   pavan: any;
 
@@ -38,8 +39,6 @@ export class MergeslidesComponent {
 
     this.pavan = data.objectUrl;
     console.log(this.pavan, 'url for load');
-
-
     return this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.pavan}&embedded=true`);
 
   }
@@ -48,29 +47,53 @@ export class MergeslidesComponent {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  Devika: any = []
+  slideFileKeyList: any = []
 
   mergeSlides(metadata: any) {
     console.log(metadata, 'metadata');
     let fileLocation = metadata.s3FilePath;
-    
-    this.Devika.push(fileLocation)
+    debugger;
+    this.slideFileKeyList.push(fileLocation)
   }
-
+  onMergeClick(): void {
+    this.router.navigate(['/feedback'], { queryParams: { 
+      MergedpresentationUrl: this.url,
+      SlideKeyList: JSON.stringify(this.slideFileKeyList)
+      //MergedSlidesKey: JSON.stringify(this.MergedSlidesKey)
+     } 
+    });
+    
+    debugger;
+  }
+  onHomeClick():void{
+    this.router.navigate(["\home"]);
+  }
   download() {
     let Payload = {
-      slideFileKeys: this.Devika
+      slideFileKeys: this.slideFileKeyList
     }
     console.log(Payload, 'merge payload');
 
     this.ApiService.mergeSlides(Payload).subscribe((resp: any) => {
       console.log(resp, 'meta data result');
+      this.MergedSlidesKey = resp.data.mergedSlideKeyId
+      console.log(this.MergedSlidesKey,'slideId')
 
-      let url = resp.data;
+       this.url = resp.data;
+      const a = document.createElement('a');
+      a.href = this.url;
+      a.download = 'merged_presentation.pptx'; // Optionally set a filename
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
 
-      window.open(url);
+      //window.open(url);
       setTimeout(() => {
-        this.router.navigate(['/feedback'], { queryParams: { presentationUrl: url } });
+        this.router.navigate(['/feedback'], { queryParams: { 
+          presentationUrl: this.url,
+          MergedSlidesKey: JSON.stringify(this.MergedSlidesKey)
+         } 
+        });
       }, 1000);
       },error => {
         console.error('Error downloading presentation', error);

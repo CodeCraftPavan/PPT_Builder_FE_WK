@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MasterService } from '../services/master.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class MetadataComponent {
 
   constructor(private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
-    private ApiService: MasterService
+    private ApiService: MasterService,
+    private router: Router
   ) {
 
     this.addInfoForm = this.formBuilder.group({
@@ -34,6 +36,7 @@ export class MetadataComponent {
       keywords: [''],
       note:['']
     })
+    
     let value: any = localStorage.getItem("SplitData");
     this.slideList = JSON.parse(value)
     console.log(this.slideList,'slideList');
@@ -42,28 +45,14 @@ export class MetadataComponent {
     //this.metadataList = this.slideList.metaData
     console.log(this.metadataList,'metadata');
     
-
-    this.pavan = this.slideList.data[0]
-    this.pramod = this.metadataList.data[0];
+    
+    this.pavan = this.metadataList.slideList[0]
+    this.pramod = this.metadataList.metaData[0];
 
 
    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.pavan}&embedded=true`);
 
-   // this.content = 'https://docs.google.com/gview?url=+this.slideList.slideList[0]' + '&embedded=true'
-
-   //  this.iframeURL = this.sanitizeUrl(this.content);
-
-    // this.iframeURL= 'https://docs.google.com/gview?url=${this.content}&embedded=true'
-
-
-
-
-
-    //  let url = this.slideList.slideList[0]
-
-
-    //  this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-
+   
   }
 
   sanitizeUrl(url: string): SafeResourceUrl {
@@ -80,7 +69,8 @@ export class MetadataComponent {
     this.val++;
     this.addInfoForm.reset();
     this.pavan = this.slideList.slideList[this.val]
-    this.pramod = this.metadataList[this.val];
+    
+    this.pramod = this.metadataList.metaData[this.val];
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.pavan}&embedded=true`);
   }
 
@@ -93,12 +83,18 @@ export class MetadataComponent {
 
   }
 
+  onHomeClick():void{
+    this.router.navigate(["\home"]);
+  }
+
   dataAdd(item:any) {
+    
     console.log(item,'item');
     
     console.log(this.addInfoForm.value,'formvalue');
     
         if(this.addInfoForm.valid){
+          debugger;
         var Payload: any = {};
         Payload.id = item.id;
         Payload.metaDataOfSlide = this.addInfoForm.controls['title'].value;

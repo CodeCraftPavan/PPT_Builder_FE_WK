@@ -25,9 +25,13 @@ export class MergepptComponent {
       console.log(data);
       let value = JSON.stringify(data)
       localStorage.setItem('SplitData',value)
-
-      this.router.navigate(['metadata']);
+      
+      this.router.navigate(['/metadata']);
     } )
+  }
+
+  onHomeClick():void{
+    this.router.navigate(["\home"]);
   }
 
   AttachFiles:any;
