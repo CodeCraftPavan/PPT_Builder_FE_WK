@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MasterService } from '../services/master.service';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search',
@@ -11,6 +12,10 @@ import { Router } from '@angular/router';
 export class SearchComponent {
 
   addInfoForm: FormGroup;
+  metadataList :any;
+  safeUrl: SafeResourceUrl;
+  private sanitizer: DomSanitizer;
+  slideFileKeyList: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,14 +32,41 @@ export class SearchComponent {
     if(this.addInfoForm.valid){
       let val = this.addInfoForm.controls['value'].value;
       console.log(val,'search text');
-  
-      this.ApiService.searchSlides(val).subscribe((data: any) => {
-        console.log(data);
-        let value = JSON.stringify(data)
-        localStorage.setItem('SplitData',value)
-        this.router.navigate(['metadata']);
+      this.ApiService.searchSlides(val).subscribe((resp: any) => {
+         this.metadataList = resp.data;
+        console.log(this.metadataList,'Slide LIst');
       } )
     }
+  }
+
+  getslideView(data: any) {
+
+  let url = data.objectUrl;
+    console.log(url, 'url for load');
+    return this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${url}&embedded=true`);
+
+  }
+
+  mergeSlides(metadata: any) {
+    console.log(metadata, 'metadata');
+    let fileLocation = metadata.s3FilePath;
+    ;
+    this.slideFileKeyList.push(fileLocation)
+  }
+
+  onMergeClick(): void {
+    this.router.navigate(['/feedback'], { queryParams: { 
+     // MergedpresentationUrl: this.url,
+      SlideKeyList: JSON.stringify(this.slideFileKeyList)
+      //MergedSlidesKey: JSON.stringify(this.MergedSlidesKey)
+     } 
+    });
+    
+    ;
+  }
+
+  onHomeClick():void{
+    this.router.navigate(["\home"]);
   }
 
 }
