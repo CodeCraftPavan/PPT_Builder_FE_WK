@@ -28,6 +28,7 @@ getAllSlides(){
 }
 
 searchSlides(data:any){
+  debugger;
   return this.http.get<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.mergeSlides.searchSlides+ `?searchKeyWord=${data}`)
 }
 
