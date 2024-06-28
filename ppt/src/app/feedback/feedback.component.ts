@@ -4,7 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MasterService } from '../services/master.service';
 import { PresentationPurpose } from '../models/presentation-purpose.enum';
 import { getEnumValues } from '../utils/enum-utils';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-feedback',
@@ -19,8 +19,9 @@ export class FeedbackComponent implements OnInit {
   presentationPurpose = PresentationPurpose;
   purposeValues: string[];
   presentationUrl: string;
+  
 
-  constructor(private formBuilder: FormBuilder, private apiService: MasterService, private route: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder, private apiService: MasterService,private router: Router, private route: ActivatedRoute) {
     this.purposeValues = getEnumValues(this.presentationPurpose);
   }
 
@@ -120,6 +121,10 @@ export class FeedbackComponent implements OnInit {
 
   //   }
   // }
+
+  onHomeClick():void{
+    this.router.navigate(["\home"]);
+  }
 
   onSubmit(): void {
     ;
