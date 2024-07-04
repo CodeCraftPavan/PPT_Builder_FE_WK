@@ -13,20 +13,10 @@ export class AccountCreationComponent {
 
   constructor(private masterService: MasterService) {}
 
-  // sendOtp(form: NgForm) {
-  //   ;
-  //   if (form.value.email) {
-  //     this.masterService.sendOtp('pavan.kumar@ecanarys.com').subscribe(() => {
-  //       this.otpSent = true;
-  //     });
-  //   }
-  // }
-
   sendOtp(email: string) {
     this.masterService.sendOtp(email).subscribe(
       response => {
         console.log('Email sent successfully', response);
-        // Handle success, maybe show a message to the user
         this.otpSent = true; // Set otpSent to true upon successful sending of OTP
       },
       error => {
@@ -43,22 +33,23 @@ export class AccountCreationComponent {
   
   sendOtpFromForm(accountForm: NgForm) {
     const email = accountForm.value.email; 
-    console.log(email,"emailid")// Extract email from form
+    console.log(email, "emailid"); // Extract email from form
     this.sendOtp(email); // Call sendOtp with the extracted email
   }
-   
 
   verifyOtp(form: NgForm) {
     if (form.value.otp && form.value.email) {
-      this.masterService.verifyOtp(form.value.email, form.value.otp).subscribe(() => {
-        this.otpVerified = true;
-        alert('OTP verification successful.');
-      },
-      error =>{
-        console.error('Error verifying OTP:', error);
-        this.otpVerified = false;
-        alert('OTP verification unsuccessful. Please enter the correct OTP.');
-      });
+      this.masterService.verifyOtp(form.value.email, form.value.otp).subscribe(
+        () => {
+          this.otpVerified = true;
+          alert('OTP verification successful.');
+        },
+        error => {
+          console.error('Error verifying OTP:', error);
+          this.otpVerified = false;
+          alert('OTP verification unsuccessful. Please enter the correct OTP.');
+        }
+      );
     }
   }
 
@@ -70,9 +61,17 @@ export class AccountCreationComponent {
         userEMailId: form.value.email,
         password: form.value.password
       };
-      this.masterService.createUser(accountData).subscribe(response => {
-        console.log('Account created successfully', response);
-      });
+      this.masterService.createUser(accountData).subscribe(
+        response => {
+          debugger;
+          console.log('Account created successfully', response);
+          alert('Account successfully created.'); // Alert for successful account creation
+        },
+        error => {
+          console.error('Error creating account:', error);
+          alert('Account creation failed. Please try again.'); // Alert for account creation failure
+        }
+      );
     }
   }
 }

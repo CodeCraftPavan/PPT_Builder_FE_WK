@@ -25,4 +25,7 @@ export class HomeComponent implements OnInit {
   onSearch(): void{
     this.router.navigate(['/search']);
   }
+  onLogOutclick(): void{
+    this.router.navigate(['']);
+  }
 }

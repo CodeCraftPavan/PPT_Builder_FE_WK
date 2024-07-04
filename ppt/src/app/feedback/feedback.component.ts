@@ -154,7 +154,6 @@ export class FeedbackComponent implements OnInit {
           UsagePurposeType: this.feedbackForm.controls['UsagePurposeType'].value
         };
   
-        ; 
         this.apiService.submitFeedback(feedbackPayload).subscribe(response => {
           ;
           console.log('Feedback submitted successfully', response);
