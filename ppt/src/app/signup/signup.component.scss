@@ -1,0 +1,46 @@
+:host {
+    display: block;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+      linear-gradient(45deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+      linear-gradient(-45deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    max-width: 600px; /* Adjust container width as needed */
+}
+
+.text-center {
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.col {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.col:last-child {
+    margin-right: 0;
+}
+
+button {
+    width: 100%;
+    padding: 12px; 
+    font-size: 16px; 
+    background-color: #164a41 !important;
+}

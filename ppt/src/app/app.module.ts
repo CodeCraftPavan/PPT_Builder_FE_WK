@@ -13,6 +13,23 @@ import { SearchComponent } from './search/search.component';
 import { HomeComponent } from './home/home.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { AccountCreationComponent } from './account-creation/account-creation.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { OtpVerificationComponent } from './otp-verification/otp-verification.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { SignupComponent } from './signup/signup.component'; 
+
 
 @NgModule({
   declarations: [
@@ -24,15 +41,32 @@ import { AccountCreationComponent } from './account-creation/account-creation.co
     MergeslidesComponent,
     SearchComponent,
     FeedbackComponent,
-    AccountCreationComponent
+    AccountCreationComponent,
+    ForgetPasswordComponent,
+    OtpVerificationComponent,
+    ResetPasswordComponent,
+    SignupComponent
     
  
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,ReactiveFormsModule,
-    HttpClientModule
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    NoopAnimationsModule,
+
+    
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,  multi: true}

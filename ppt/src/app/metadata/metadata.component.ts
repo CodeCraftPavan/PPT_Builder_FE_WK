@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MasterService } from '../services/master.service';
@@ -12,6 +12,11 @@ import { Router } from '@angular/router';
 })
 export class MetadataComponent {
 
+  @Input() maxRating = 5;
+  @Input() rating = 0;
+  stars: boolean[] = [];
+  @Input() id: number;  // Assuming each item being rated has an ID
+  
   slideList: any;
   content: any;
   urlvale: any
@@ -19,11 +24,15 @@ export class MetadataComponent {
   safeUrl: SafeResourceUrl;
 
   addInfoForm: FormGroup;
- metadataList:any;
+  metadataList:any;
 
-
+  
   pavan: any;
   pramod:any;
+
+  ngOnInit() {
+    this.stars = Array(this.maxRating).fill(false);
+  }
 
   constructor(private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
@@ -36,7 +45,7 @@ export class MetadataComponent {
       keywords: [''],
       note:['']
     })
-    
+
     let value: any = localStorage.getItem("SplitData");
     this.slideList = JSON.parse(value)
     console.log(this.slideList,'slideList');
@@ -44,14 +53,12 @@ export class MetadataComponent {
     this.metadataList = this.slideList;
     //this.metadataList = this.slideList.metaData
     console.log(this.metadataList,'metadata');
-    
-    
+    debugger;
     this.pavan = this.metadataList.slideList[0]
     this.pramod = this.metadataList.metaData[0];
 
 
    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.pavan}&embedded=true`);
-
    
   }
 
@@ -106,4 +113,31 @@ export class MetadataComponent {
           alert('Submitted Metadata Successfully');
         } ) }
     }
+
+    rate(rating: number) {
+      this.rating = rating;
+    }
+
+    submitRating() {
+      debugger;
+      const data = {
+        rating: this.rating,
+        slideId: this.metadataList.metaData[0].id
+      };
+      this.addRatings(data);
+    }
+
+  addRatings(data: any){
+    // const Payload = {
+    //   rating: data.rating,
+    //   slideId: data.slideId
+    // };
+    var Payload: any = {};
+    Payload.rating = data.rating,
+    Payload.slideId = data.slideId
+    debugger;
+    this.ApiService.addRating(Payload).subscribe((response : any) =>{
+      console.log(response ,'Ratings data');
+    })
+  }
 }
