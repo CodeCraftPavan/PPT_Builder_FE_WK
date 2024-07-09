@@ -35,7 +35,7 @@
                 <h3 class="login-heading mb-4"><strong>Welcome To PPT Builder!</strong></h3>
   
                 <!-- Sign In Form -->
-                <form [formGroup]="addInfoForm">
+                <form [formGroup]="addInfoForm" (ngSubmit)="signUp()" >
                   <div class="form-floating mb-3">
                     <input formControlName="username" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
