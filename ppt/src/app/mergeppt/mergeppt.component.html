@@ -1,8 +1,27 @@
-<h1 class="d-flex justify-content-center">PPT Builder</h1>
+<!-- <h1 class="d-flex justify-content-center">PPT Builder</h1>
 <div class="mb-3">
     <label for="formFile" class="form-label">Split PPt</label>
     <input  (change)="uploadFile($event)" class="form-control" type="file" id="formFile">
   </div>
   
   <button (click)="SubmitFile()" type="button" class="btn btn-primary">Split PPT</button>&nbsp;
-  <button (click)="onHomeClick()" type="button" class="btn btn-primary">Home</button>
+  <button (click)="onHomeClick()" type="button" class="btn btn-primary">Home</button> -->
+
+  <mat-toolbar color="primary" class="d-flex justify-content-center">
+    <span>PPT Builder</span>
+  </mat-toolbar>
+  
+  <div class="mb-3">
+    <label class="mat-label">Split PPT</label>
+    <input type="file" (change)="uploadFile($event)" class="file-input">
+  </div>
+  <div class="button-group">
+    <button mat-raised-button color="primary" (click)="SubmitFile()">Split PPT</button>&nbsp;
+    <button mat-raised-button color="primary" (click)="onHomeClick()">Home</button>
+  </div>
+
+  <div *ngIf="isLoading" class="d-flex justify-content-center">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+  
+  

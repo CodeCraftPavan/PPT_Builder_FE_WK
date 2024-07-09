@@ -27,7 +27,7 @@ export class MetadataComponent {
   metadataList:any;
 
   
-  pavan: any;
+  S3ObjUrl: any;
   pramod:any;
 
   ngOnInit() {
@@ -54,11 +54,11 @@ export class MetadataComponent {
     //this.metadataList = this.slideList.metaData
     console.log(this.metadataList,'metadata');
     debugger;
-    this.pavan = this.metadataList.slideList[0]
+    this.S3ObjUrl = this.metadataList.slideList[0]
     this.pramod = this.metadataList.metaData[0];
 
 
-   this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.pavan}&embedded=true`);
+   this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
    
   }
 
@@ -75,18 +75,18 @@ export class MetadataComponent {
   update(){
     this.val++;
     this.addInfoForm.reset();
-    this.pavan = this.slideList.slideList[this.val]
+    this.S3ObjUrl = this.slideList.slideList[this.val]
     
     this.pramod = this.metadataList.metaData[this.val];
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.pavan}&embedded=true`);
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
   }
 
   prev() {
     this.val--;
 
-    this.pavan = this.slideList.slideList[this.val]
+    this.S3ObjUrl = this.slideList.slideList[this.val]
 
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.pavan}&embedded=true`);
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
 
   }
 

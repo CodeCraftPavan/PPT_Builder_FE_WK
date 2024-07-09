@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class MergepptComponent {
 
   reportFile:any;
+  isLoading = false;
 
   constructor( private ApiService: MasterService,
     private router: Router,
@@ -18,6 +19,7 @@ export class MergepptComponent {
   }
 
   SubmitFile(){
+    this.isLoading = true;
     let formData = new FormData();
     formData.append('file',this.AttachFiles);
 
@@ -38,7 +40,7 @@ export class MergepptComponent {
   uploadFile(e: any) {
     this.AttachFiles = e.target.files[0];
     console.log(this.AttachFiles,'file');
-    
+ 
   }
 
 }

@@ -155,7 +155,6 @@ export class FeedbackComponent implements OnInit {
         };
   
         this.apiService.submitFeedback(feedbackPayload).subscribe(response => {
-          ;
           console.log('Feedback submitted successfully', response);
           alert('Feedback submitted successfully');
         }, error => {
