@@ -1,6 +1,7 @@
-
+<!-- <h1 class="d-flex justify-content-center">PPT Builder</h1>
 <div class="d-flex justify-content-center m-3">
-    <button (click)="download()" type="button" class="btn btn-primary">Merge PPT</button>
+    <button (click)="onMergeClick()" type="button" class="btn btn-primary">Download Merged PPT</button>&nbsp;
+    <button (click)="onHomeClick()" type="button" class="btn btn-primary">Home</button>
 </div>
 
 
@@ -8,7 +9,7 @@
     <div class="col-6" >
         <iframe [src]="getslideView(mode)" width="600px" height="400px" frameborder="0"></iframe>
     </div>
-    <div class="col-4" >
+    <div class="col-4">
 
         <div class="card" >
             <div class="card-body">
@@ -25,4 +26,32 @@
 </div>
 
 
+ -->
 
+ <h1 class="d-flex justify-content-center">PPT Builder</h1>
+<div class="d-flex justify-content-center m-3">
+  <button mat-raised-button color="primary" (click)="onMergeClick()">Download Merged PPT</button>&nbsp;
+  <button mat-raised-button color="primary" (click)="onHomeClick()">Home</button>
+</div>
+
+<div class="row" *ngFor="let mode of metadataList">
+  <div class="col-6">
+    <iframe [src]="getslideView(mode)" width="600px" height="400px" frameborder="0"></iframe>
+  </div>
+  <div class="col-4">
+    <mat-card>
+      <mat-card-content>
+        <h5 class="card-title"><span class="under">Title:</span> {{mode.metaDataOfSlide}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted"><span class="under">Keywords:</span> {{mode.keyWords}}</h6>
+        <p class="card-text"><span class="under">Note:</span> {{mode.notes}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-2">
+    <!-- <button mat-raised-button color="primary" (click)="mergeSlides(mode)">Add Slide</button> -->
+    <mat-checkbox (change)="onCheckboxChange(mode, $event.checked)">Add Slide</mat-checkbox>
+  </div>
+</div>
+
+<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
+</mat-paginator>

@@ -1,5 +1,6 @@
+<h1 class="d-flex justify-content-center">PPT Builder</h1>
 <div class="feedback-container">
-    <h2>Provide Feedback</h2>
+    <h2>Could you please fill these details?</h2>
     <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="SlideTitle">Title</label>
@@ -13,7 +14,8 @@
           </option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary">Submit Feedback</button>
+      <button type="submit" class="btn btn-primary">Submit Feedback</button>&nbsp;
+      &nbsp;<button (click)="onHomeClick()" type="button" class="btn btn-primary">Home</button>
     </form>
   </div>
   

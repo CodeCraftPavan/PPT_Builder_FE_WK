@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MasterService } from '../services/master.service';
 import { Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search',
@@ -10,11 +11,16 @@ import { Router } from '@angular/router';
 })
 export class SearchComponent {
 
+  url: any;
   addInfoForm: FormGroup;
+  metadataList :any;
+  safeUrl: SafeResourceUrl;
+  slideFileKeyList: any = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private sanitizer: DomSanitizer,
     // private toastrService: ToastrService,
     private ApiService: MasterService) {
 
@@ -27,14 +33,45 @@ export class SearchComponent {
     if(this.addInfoForm.valid){
       let val = this.addInfoForm.controls['value'].value;
       console.log(val,'search text');
-  
-      this.ApiService.searchSlides(val).subscribe((data: any) => {
-        console.log(data);
-        let value = JSON.stringify(data)
-        localStorage.setItem('SplitData',value)
-        this.router.navigate(['metadata']);
+      this.ApiService.searchSlides(val).subscribe((resp: any) => {
+         this.metadataList = resp.data;
+        console.log(this.metadataList,'Slide LIst');
       } )
     }
+  }
+
+  getslideView(data: any) {
+    debugger;
+   this.url = data.objectUrl;
+    console.log(this.url, 'url for load');
+    return this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.url}&embedded=true`);
+
+  }
+  sanitizeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  mergeSlides(metadata: any) {
+    console.log(metadata, 'metadata');
+    let fileLocation = metadata.s3FilePath;
+    ;
+    this.slideFileKeyList.push(fileLocation)
+  }
+
+  onMergeClick(): void {
+    debugger;
+    this.router.navigate(['/feedback'], { queryParams: { 
+     // MergedpresentationUrl: this.url,
+      SlideKeyList: JSON.stringify(this.slideFileKeyList)
+      //MergedSlidesKey: JSON.stringify(this.MergedSlidesKey)
+     } 
+    });
+    
+    ;
+  }
+
+  onHomeClick():void{
+    this.router.navigate(["\home"]);
   }
 
 }

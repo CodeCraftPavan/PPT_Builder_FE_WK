@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class MergepptComponent {
 
   reportFile:any;
+  isLoading = false;
 
   constructor( private ApiService: MasterService,
     private router: Router,
@@ -18,6 +19,7 @@ export class MergepptComponent {
   }
 
   SubmitFile(){
+    this.isLoading = true;
     let formData = new FormData();
     formData.append('file',this.AttachFiles);
 
@@ -25,16 +27,20 @@ export class MergepptComponent {
       console.log(data);
       let value = JSON.stringify(data)
       localStorage.setItem('SplitData',value)
-
-      this.router.navigate(['metadata']);
+      
+      this.router.navigate(['/metadata']);
     } )
+  }
+
+  onHomeClick():void{
+    this.router.navigate(["\home"]);
   }
 
   AttachFiles:any;
   uploadFile(e: any) {
     this.AttachFiles = e.target.files[0];
     console.log(this.AttachFiles,'file');
-    
+ 
   }
 
 }

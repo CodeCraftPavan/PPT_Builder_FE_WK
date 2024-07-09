@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MasterService } from '../services/master.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,6 +12,11 @@ import { MasterService } from '../services/master.service';
 })
 export class MetadataComponent {
 
+  @Input() maxRating = 5;
+  @Input() rating = 0;
+  stars: boolean[] = [];
+  @Input() id: number;  // Assuming each item being rated has an ID
+  
   slideList: any;
   content: any;
   urlvale: any
@@ -18,15 +24,20 @@ export class MetadataComponent {
   safeUrl: SafeResourceUrl;
 
   addInfoForm: FormGroup;
- metadataList:any;
+  metadataList:any;
 
-
-  pavan: any;
+  
+  S3ObjUrl: any;
   pramod:any;
+
+  ngOnInit() {
+    this.stars = Array(this.maxRating).fill(false);
+  }
 
   constructor(private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
-    private ApiService: MasterService
+    private ApiService: MasterService,
+    private router: Router
   ) {
 
     this.addInfoForm = this.formBuilder.group({
@@ -34,6 +45,7 @@ export class MetadataComponent {
       keywords: [''],
       note:['']
     })
+
     let value: any = localStorage.getItem("SplitData");
     this.slideList = JSON.parse(value)
     console.log(this.slideList,'slideList');
@@ -41,29 +53,13 @@ export class MetadataComponent {
     this.metadataList = this.slideList;
     //this.metadataList = this.slideList.metaData
     console.log(this.metadataList,'metadata');
-    
-
-    this.pavan = this.slideList.data[0]
-    this.pramod = this.metadataList.data[0];
-
-
-   this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.pavan}&embedded=true`);
-
-   // this.content = 'https://docs.google.com/gview?url=+this.slideList.slideList[0]' + '&embedded=true'
-
-   //  this.iframeURL = this.sanitizeUrl(this.content);
-
-    // this.iframeURL= 'https://docs.google.com/gview?url=${this.content}&embedded=true'
+    debugger;
+    this.S3ObjUrl = this.metadataList.slideList[0]
+    this.pramod = this.metadataList.metaData[0];
 
 
-
-
-
-    //  let url = this.slideList.slideList[0]
-
-
-    //  this.iframeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-
+   this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
+   
   }
 
   sanitizeUrl(url: string): SafeResourceUrl {
@@ -79,26 +75,33 @@ export class MetadataComponent {
   update(){
     this.val++;
     this.addInfoForm.reset();
-    this.pavan = this.slideList.slideList[this.val]
-    this.pramod = this.metadataList[this.val];
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.pavan}&embedded=true`);
+    this.S3ObjUrl = this.slideList.slideList[this.val]
+    
+    this.pramod = this.metadataList.metaData[this.val];
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
   }
 
   prev() {
     this.val--;
 
-    this.pavan = this.slideList.slideList[this.val]
+    this.S3ObjUrl = this.slideList.slideList[this.val]
 
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.pavan}&embedded=true`);
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
 
   }
 
+  onHomeClick():void{
+    this.router.navigate(["\home"]);
+  }
+
   dataAdd(item:any) {
+    
     console.log(item,'item');
     
     console.log(this.addInfoForm.value,'formvalue');
     
         if(this.addInfoForm.valid){
+          ;
         var Payload: any = {};
         Payload.id = item.id;
         Payload.metaDataOfSlide = this.addInfoForm.controls['title'].value;
@@ -110,4 +113,31 @@ export class MetadataComponent {
           alert('Submitted Metadata Successfully');
         } ) }
     }
+
+    rate(rating: number) {
+      this.rating = rating;
+    }
+
+    submitRating() {
+      debugger;
+      const data = {
+        rating: this.rating,
+        slideId: this.metadataList.metaData[0].id
+      };
+      this.addRatings(data);
+    }
+
+  addRatings(data: any){
+    // const Payload = {
+    //   rating: data.rating,
+    //   slideId: data.slideId
+    // };
+    var Payload: any = {};
+    Payload.rating = data.rating,
+    Payload.slideId = data.slideId
+    debugger;
+    this.ApiService.addRating(Payload).subscribe((response : any) =>{
+      console.log(response ,'Ratings data');
+    })
+  }
 }

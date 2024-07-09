@@ -1,0 +1,67 @@
+<h1 class="d-flex justify-content-center">PPT Builder</h1>
+<form (ngSubmit)="onSubmit(accountForm)" #accountForm="ngForm" style="display: flex; flex-direction: column; align-items: center; justify-content: center; max-width: 400px; margin: 0 auto;">
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 15px;">
+      <label for="firstName" style="margin-bottom: 5px;">First Name</label>
+      <input type="text" id="firstName" name="firstName" ngModel required style="width: 100%; max-width: 300px; margin-bottom: 10px;">
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 15px;">
+      <label for="lastName" style="margin-bottom: 5px;">Last Name</label>
+      <input type="text" id="lastName" name="lastName" ngModel required style="width: 100%; max-width: 300px; margin-bottom: 10px;">
+    </div>
+    <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 15px;">
+      <label for="email" style="margin-bottom: 5px;">Email</label>
+      <input type="email" id="email" name="email" ngModel required style="width: 100%; max-width: 300px; margin-bottom: 10px;">
+      <button type="button" (click)="sendOtpFromForm(accountForm)" class="btn btn-primary" style="width: 100%; max-width: 300px; margin-bottom: 10px;">Send OTP</button>
+    </div>
+    <div *ngIf="otpSent" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 15px;">
+      <label for="otp" style="margin-bottom: 5px;">OTP</label>
+      <input type="text" id="otp" name="otp" ngModel required style="width: 100%; max-width: 300px; margin-bottom: 10px;">
+      <button type="button" (click)="verifyOtp(accountForm)" class="btn btn-primary" style="width: 100%; max-width: 300px; margin-bottom: 10px;">Verify OTP</button>
+    </div>
+    <div *ngIf="otpVerified" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 15px;">
+      <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 15px;">
+        <label for="password" style="margin-bottom: 5px;">Password</label>
+        <input type="password" id="password" name="password" ngModel required style="width: 100%; max-width: 300px; margin-bottom: 10px;">
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 15px;">
+        <label for="confirmPassword" style="margin-bottom: 5px;">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" ngModel required style="width: 100%; max-width: 300px; margin-bottom: 10px;">
+      </div>
+      <button type="submit" [disabled]="!accountForm.form.valid" class="btn btn-primary" style="width: 100%; max-width: 300px; margin-bottom: 10px;">Create Account</button>
+    </div>
+  </form>
+  
+
+
+<!-- <form (ngSubmit)="onSubmit(accountForm)" #accountForm="ngForm">
+    <div>
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" name="firstName" ngModel required>
+    </div>
+    <div>
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" name="lastName" ngModel required>
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" ngModel required>
+      <button type="button" (click)="sendOtpFromForm(accountForm)" class="btn btn-primary">Send OTP</button>
+      
+    </div>
+    <div *ngIf="otpSent">
+      <label for="otp">OTP</label>
+      <input type="text" id="otp" name="otp" ngModel required>
+      <button type="button" (click)="verifyOtp(accountForm)" class="btn btn-primary">Verify OTP</button>
+    </div>
+    <div *ngIf="otpVerified">
+      <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" ngModel required>
+      </div>
+      <div>
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" ngModel required>
+      </div>
+      <button type="submit" [disabled]="!accountForm.form.valid" class="btn btn-primary">Create Account</button>
+    </div>
+  </form> -->
