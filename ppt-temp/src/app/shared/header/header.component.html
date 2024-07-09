@@ -1,0 +1,36 @@
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-primary-delivery navbar-light sticky-top p-0">
+    <a class="navbar-brand d-flex align-items-center px-2 px-lg-3">
+        <!-- <img src="../../../assets/img/logo.png" width="40px" height="auto"> -->
+        <img src="../../../assets/img/logonew.png" width="100px" height="auto">
+        <h4 class="m-0 text-white"> &nbsp; PPT Builder</h4>
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto">
+            <div  class="nav-item dropdown" *ngFor="let item of menuList">
+                <a [ngClass]="item.subMenu.length > 0 ? 'nav-link dropdown-toggle' : 'nav-link'" [attr.data-bs-toggle]="item.subMenu.length > 0 ? 'dropdown' : null"
+                    [routerLink]="item.subMenu.length == 0 ? item.url : undefined">
+                  <span>{{item.name}}</span>
+                 </a>
+                <!-- <div id="menu{{item.url}}" [ngClass]="item.subMenu.length > 0 ? 'dropdown-menu bg-light' : null">
+                  <div class="bg-white p-2" *ngFor="let sub of item.subMenu">
+                      <a class="dropdown-item" routerLink="{{sub.url}}" routerLinkActive="active">{{sub.name}}</a>
+                  </div>
+                </div> -->
+           </div>
+            <!-- user dropdown -->
+            <div  class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pavan Kumar</a>
+                <div class="dropdown-menu bg-light">
+                    <a class="dropdown-item" (click)="logout()">Logout</a>
+                </div>
+            </div>
+             <a class="nav-item nav-link" style="visibility: hidden;">Li</a>        
+        </div> 
+    </div>
+</nav>
+<!-- Navbar End -->
+
