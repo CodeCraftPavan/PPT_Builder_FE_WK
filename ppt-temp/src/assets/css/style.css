@@ -1,6 +1,6 @@
 /********** Template CSS **********/
 :root {
-    --primary: #0C2B4B;
+    --primary: #009688;
     --secondary: #757575;
     --light: #F3F6F8;
     --dark: #0C2B4B;
@@ -47,9 +47,15 @@
 }
 
 .btn.btn-primary,
-.btn.btn-outline-primary:hover {
+.btn.btn-outline-primary:hover, btn.btn-outline-primary:active  {
     color: #FFFFFF;
-    background-color: #0C2B4B;
+    background-color: #009688;
+    border-color:  #009688;;
+}
+
+.btn:hover {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
 }
 
 .btn-square {

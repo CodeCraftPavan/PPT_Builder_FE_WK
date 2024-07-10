@@ -53,7 +53,7 @@ export class MetadataComponent {
     this.metadataList = this.slideList;
     //this.metadataList = this.slideList.metaData
     console.log(this.metadataList,'metadata');
-    debugger;
+   
     this.S3ObjUrl = this.metadataList.slideList[0]
     this.pramod = this.metadataList.metaData[0];
 
@@ -119,7 +119,7 @@ export class MetadataComponent {
     }
 
     submitRating() {
-      debugger;
+   
       const data = {
         rating: this.rating,
         slideId: this.metadataList.metaData[0].id

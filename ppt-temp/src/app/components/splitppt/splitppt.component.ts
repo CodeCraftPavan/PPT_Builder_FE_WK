@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { UserService } from '../../shared/service/user.service';
 
 @Component({
-  selector: 'app-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  selector: 'app-splitppt',
+  templateUrl: './splitppt.component.html',
+  styleUrls: ['./splitppt.component.scss']
 })
-export class SearchComponent {
-
+export class SplitpptComponent {
   url: any;
   addInfoForm: FormGroup;
   metadataList :any;
@@ -59,7 +58,7 @@ export class SearchComponent {
   }
 
   onMergeClick(): void {
-    debugger;
+   
     this.router.navigate(['/feedback'], { queryParams: { 
      // MergedpresentationUrl: this.url,
       SlideKeyList: JSON.stringify(this.slideFileKeyList)

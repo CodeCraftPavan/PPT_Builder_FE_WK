@@ -16,6 +16,7 @@ export class LoginComponent {
   title = 'ppt';
   addInfoForm: FormGroup;
   errorMessage: string;
+  loginText = 'Log In';
 
   constructor(
    
@@ -60,9 +61,11 @@ export class LoginComponent {
 
   onLogin() {
     if (this.addInfoForm.valid) {
+      this.loginText = 'Loggin Please Wait!'
       this.ApiService.login(this.addInfoForm.value).subscribe((data:any) => {
           localStorage.setItem('Token', data.data);
           this.router.navigate(['/dashboard/search']);
+          this.loginText = "Log In";
         },(error:any) => {
           console.error('Login failed:', error);
         }

@@ -15,20 +15,33 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private masterService: MasterService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
-    let authReq = req;
-    const token = this.masterService.getToken();
-  //  console.log(token,'logged token')
-    if (token != null) {
-      authReq = this.addTokenHeader(req, token);
+
+    let result = req.url.includes("AuthManagement/Sign-In");
+
+    if(result){
+      return next.handle(req);
     }
 
-    return next.handle(authReq).pipe(catchError(error => {
-      if (error instanceof HttpErrorResponse && error.status === 401) {
-        return this.handle401Error(authReq, next);
-      }
+    let Token: any = localStorage.getItem("Token");
+      const Authorization = Token;
+    return next.handle(req.clone({ setHeaders: { Authorization } }));
 
-      return throwError(error);
-    }));
+  
+
+  //   let authReq = req;
+  //   const token = this.masterService.getToken();
+  // //  console.log(token,'logged token')
+  //   if (token != null) {
+  //     authReq = this.addTokenHeader(req, token);
+  //   }
+
+  //   return next.handle(authReq).pipe(catchError(error => {
+  //     if (error instanceof HttpErrorResponse && error.status === 401) {
+  //       return this.handle401Error(authReq, next);
+  //     }
+
+  //     return throwError(error);
+  //   }));
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {

@@ -16,8 +16,8 @@ export const MenuList = [
     },
     {
         id: 2,
-        name: 'Search PPT',
-        url:'/dashboard/search',
+        name: 'Meta Data',
+        url:'/dashboard/metadata',
         subMenu: [],
         isActive: true
     },

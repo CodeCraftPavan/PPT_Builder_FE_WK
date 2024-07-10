@@ -7,6 +7,7 @@ import { OtpVerificationComponent } from './otp-verification/otp-verification.co
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SignupComponent } from './signup/signup.component';
 import { CommonModule } from '@angular/common';
+//import { DataNotFoundComponent } from './data-not-found/data-not-found.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { CommonModule } from '@angular/common';
     ForgetPasswordComponent,
     OtpVerificationComponent,
     ResetPasswordComponent,
-    SignupComponent
+    SignupComponent,
+   
   ]
 })
 

@@ -3,6 +3,9 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { UserService } from '../../shared/service/user.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { ViewPptComponent } from '../view-ppt/view-ppt.component';
 
 
 @Component({
@@ -19,30 +22,43 @@ export class MergeslidesComponent {
   safeUrl: SafeResourceUrl;
   S3ObjUrl: any;
   pagedMetadataList: any;
+  displayedColumns: string[] = ['slno', 'keywords', 'metaDataOfSlide','notes','view', 'add'];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  // Pagination properties
+  length = 0;
+  pageSize = 5;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageIndex = 0;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+ 
 
-    // Pagination properties
-    length = 0;
-    pageSize = 5;
-    pageSizeOptions: number[] = [5, 10, 25, 100];
-    pageIndex = 0;
 
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-
-
-  constructor(private ApiService: UserService,
-    private sanitizer: DomSanitizer,private router: Router
+  constructor(private ApiService: UserService,private sanitizer: DomSanitizer,private router: Router,public dialog: MatDialog
   ) {
     this.getRFQ();
   }
 
-  ngOnInit(): void {}
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  ngOnInit(): void {
+ //   this.getRFQ();
+  }
 
   getRFQ() {
-    this.ApiService.getAllSlides().subscribe(
-      (resp: any) => {
-      this.metadataList = resp.data;
-      this.length = resp.data.length;
-      this.updatePageData();
+    
+    let pagination:any = {};
+    pagination.pageSize = 10;
+    pagination.pageNumber =0;
+
+    this.ApiService.getAllSlides(pagination).subscribe((resp: any) => {
+       this.metadataList = resp.data;
+      // this.length = resp.data.length;
+      this.dataSource = new MatTableDataSource<any>(resp.data);
+     // this.updatePageData();
+      // this.paginator.length = resp.totalCount;
+      // this.paginator.pageIndex = this.pageIndex;
       console.log(this.metadataList, 'all metadata');
 
     }, (error: any) => {
@@ -50,16 +66,32 @@ export class MergeslidesComponent {
     })
   }
 
+  pageChanged(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.getRFQ();
+  }
+
+  viewSlide(element:any){
+    const dialogRef = this.dialog.open(ViewPptComponent, {width: '750px',data: { element }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   
 
   slideval = 0;
-  getslideView(data: any) {
+  
+  getslideView(element:any) {
+    this.S3ObjUrl = element.objectUrl;
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
 
-    this.S3ObjUrl = data.objectUrl;
-    console.log(this.S3ObjUrl, 'url for load');
-    return this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
 
   }
+
 
   sanitizeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);

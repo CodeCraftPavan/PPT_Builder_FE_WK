@@ -6,10 +6,15 @@ import { MergeslidesComponent } from './mergeslides/mergeslides.component';
 import { MetadataComponent } from './metadata/metadata.component';
 import { SearchComponent } from './search/search.component';
 import { MaterialModule } from '../material.module';
+import { CommonModule } from '@angular/common';
+import { DataNotFoundComponent } from './data-not-found/data-not-found.component';
+import { ViewPptComponent } from './view-ppt/view-ppt.component';
+import { SplitpptComponent } from './splitppt/splitppt.component';
+
 
 @NgModule({
   imports: [
-    MaterialModule
+    MaterialModule,CommonModule
   ],
   declarations: [
     MergepptComponent,
@@ -17,7 +22,11 @@ import { MaterialModule } from '../material.module';
     MergeslidesComponent,
     SearchComponent,
     FeedbackComponent,
-    FilterPipe
+    DataNotFoundComponent,
+    
+    FilterPipe,
+          ViewPptComponent,
+          SplitpptComponent
   ]
 })
 

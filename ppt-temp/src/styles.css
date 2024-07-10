@@ -54,7 +54,7 @@ label{
 
 
 .bg-primary-delivery{
-    background-color:#187ba1;
+    background-color:#009688 ;
 }
 
 .navbar-brand{
@@ -216,4 +216,10 @@ label{
 .text-error{
   color: red;
   font-size: 13px;
+}
+
+
+
+.sticky-top {
+  z-index: 0 !important;
 }
