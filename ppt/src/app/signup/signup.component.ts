@@ -47,18 +47,18 @@ export class SignupComponent {
   }
 
   sendOTP(): void {
-    debugger;
     const email = this.emailForm.value.email;
     this.ApiService.sendOtp(email).subscribe(response => {
-      console.log(response);
+      console.log(response, 'response data');
       if (response.success) {
         this.otpSent = true;
       } else {
-        alert('Failed to send OTP');
+
       }
     },  
     error => {
-      console.error('Error sending reset password email:', error);
+      const errorMsg = error.error?.message || 'An error occurred while sending OTP. Please try again later.';
+      alert(errorMsg);
     });
   }
 
@@ -73,7 +73,11 @@ export class SignupComponent {
       } else {
         alert('Invalid OTP');
       }
-    });
+    },error => {
+      const errorMsg = error.error?.message || 'Kindly enter the right OTP.';
+      alert(errorMsg);
+    }
+    );
   }
 
   onSubmit(): void {
@@ -97,6 +101,10 @@ export class SignupComponent {
         } else {
           alert('Failed to create account');
         }
+      },error => {
+        const errorMsg = error.error?.message || 'An error occured while creating the user.';
+        console.log(errorMsg);
+        alert(errorMsg);
       });
     }
   }
