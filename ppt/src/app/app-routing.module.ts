@@ -1,27 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MergepptComponent } from './mergeppt/mergeppt.component';
-import { LoginComponent } from './login/login.component';
-import { MetadataComponent } from './metadata/metadata.component';
-import { SearchComponent } from './search/search.component';
-import { MergeslidesComponent } from './mergeslides/mergeslides.component';
-import { HomeComponent } from './home/home.component';
-import { FeedbackComponent } from './feedback/feedback.component';
-import { AccountCreationComponent } from './account-creation/account-creation.component';
-import { SignupComponent } from './signup/signup.component';
+import { LoginComponent } from './shared/login/login.component';
+import { AuthGuard } from './guard/auth.guard';
+import { LayoutComponent } from './layout/layout.component';
 
 const routes: Routes = [
-  { path:'home',component:HomeComponent },
-  { path:'Merge',component:MergeslidesComponent },
-  { path:'splitPPt',component:MergepptComponent },
-  { path:'metadata',component:MetadataComponent },
-  { path:'search',component:SearchComponent },
-  { path:'login',component:LoginComponent },
-  { path:'',component:LoginComponent },
-  // { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'feedback', component: FeedbackComponent },
-  { path:'accountCreation', component: AccountCreationComponent },
-  { path:'signup',component:SignupComponent }
+  {path: '', redirectTo: 'login',pathMatch: 'full'}, 
+  {path:'',component:LoginComponent},
+  {
+    path: 'dashboard',
+    component: LayoutComponent,
+    //canActivate:[AuthGuard],
+    children: [
+        {
+      path: '',loadChildren: () => import('./layout/layout.module').then(x => x.LayoutModule)
+  }]},
+  {path: '**',redirectTo: 'login'}
 ];
 
 @NgModule({

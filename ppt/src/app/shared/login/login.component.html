@@ -1,0 +1,75 @@
+<!-- <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+      <div class ="mt-5">
+        <form  [formGroup]="addInfoForm">          
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">User Email</label>
+            <input formControlName="username" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+          </div>
+      
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Password</label>
+            <input formControlName="password" type="password" class="form-control" id="exampleFormControlInput1" placeholder="password">
+          </div>
+  
+          <button (click)="signUp()"  class="btn btn-primary" type="submit">Login</button>&nbsp;
+          <button (click)="onClickCreateAccount()"  class="btn btn-primary" type="submit">Create Account</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-3"></div>
+  
+  </div> -->
+
+  <div class="container-fluid ps-md-0">
+    <div class="row g-0">
+      <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+      <div class="col-md-8 col-lg-6">
+        <div class="login d-flex align-items-center py-5">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-9 col-lg-8 mx-auto">
+                <h3 class="login-heading mb-4"><strong>Welcome To PPT Builder!</strong></h3>
+  
+                <!-- Sign In Form -->
+                <form [formGroup]="addInfoForm" (ngSubmit)="onLogin()" >
+                  <div class="form-floating mb-3">
+                    <input formControlName="userEmail" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    <label for="floatingInput">Email address</label>
+                  </div>
+                  <div class="form-floating mb-3">
+                    <input formControlName="password" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                    <label for="floatingPassword">Password</label>
+                  </div>
+  
+                  <div class="d-grid">
+                    <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">{{loginText}}</button>
+                    
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="sigin">
+                        <span>Didnt Register yet? &nbsp;<a class="small" >SignUp Here</a></span>
+                        
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="text-end">
+                        <a class="small" href="#">Forgot password?</a>
+                      </div>
+                    </div>
+                  </div>
+  
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  

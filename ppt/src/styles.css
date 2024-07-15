@@ -1,0 +1,225 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.table-responsive{
+    box-shadow: 0px 3px 3px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+}
+
+.thead-dark{
+    background-color: #0C2B4B;
+    color: white;
+}
+
+.text-link{
+    font-size: 13px;
+    text-decoration: underline;
+    color: red;
+    cursor: pointer;
+}
+
+.text-link-blue{
+  font-size: 13px;
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}
+.text-blue{
+    font-size: 16px;
+    text-decoration: underline;
+    color:#0C2B4B;
+    margin-left: 5px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.accordion-button:not(.collapsed) {
+  color: #ffffff;
+  background-color: #0C2B4B !important;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.125);
+}
+
+label{
+  color: black !important;
+}
+
+
+.bg-primary-delivery{
+    background-color:#009688 ;
+}
+
+.navbar-brand{
+    color: white !important;
+}
+
+.navbar-item{
+    color: white !important;
+}
+
+
+.table tr td{
+    padding-top: 20px;
+}
+
+.custom-cursor{
+    cursor: pointer;
+}
+
+.nav-tabs>.nav-item>.nav-link {
+    color: #070707;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-size: 15px;
+    
+}
+
+.nav-tabs>.nav-item>.nav-link:hover {
+    background-color: transparent;
+}
+
+.nav-tabs>.nav-item>.nav-link.active {
+    background-color: #0C2B4B;
+    color: #FFFFFF;
+}
+
+
+.disabled {
+    pointer-events:none; 
+    opacity:0.6;  
+    cursor: not-allowed;
+}
+
+
+.nav-tabs {
+    border: 0;
+}
+
+.tab-slider--nav {
+    width: 100%;
+    float: left;
+    margin-bottom: 20px;
+  }
+  
+  .tab-slider--tabs {
+    display: block;
+    float: left;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+    background: #fff;
+    height: 35px;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+  }
+  .tab-slider--tabs:after {
+    content: "";
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    -webkit-transition: all 250ms ease-in-out;
+    transition: all 250ms ease-in-out;
+    border-radius: 35px;
+  }
+  .tab-slider--tabs.slide:after {
+    left: 50%;
+  }
+  
+  .tab-slider--trigger {
+    font-size: 15px;
+    line-height: 1;
+    font-weight: bold;
+    color: #0C2B4B;
+    text-align: center;
+    padding: 11px 20px;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    display: inline-block;
+    -webkit-transition: color 250ms ease-in-out;
+    transition: color 250ms ease-in-out;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+  }
+
+  .tab-slider--trigger.active {
+    color: #fff;
+    background: #0C2B4B;
+  }
+  
+  .tab-slider--body {
+    margin-bottom: 20px;
+  }
+
+
+  .status-true,  .status-completed{
+    color: green;
+    font-size: 15px;
+  }
+  
+  .status-false, .status-hold{
+    color: red;
+    font-size: 15px;
+  }
+
+  .status-null{
+    color: grey;
+    font-size: 15px;
+  }
+
+  .status-active{
+    color: rgb(224, 177, 22);
+    font-size: 15px;
+  }
+
+  .text-green{
+    color: green;
+    font-weight: bold;
+  }
+
+  .text-amber{
+    color: rgb(224, 177, 22);
+  }
+
+  .text-red{
+    color: red;
+    font-weight: bold;
+  }
+
+.table thead th, .table tbody td{
+  text-align: center;
+}
+
+.text-validation{
+  font-size: .875em;
+  color: #dc3545;
+}
+
+.text-error{
+  color: red;
+  font-size: 13px;
+}
+
+
+
+.sticky-top {
+  z-index: 0 !important;
+}

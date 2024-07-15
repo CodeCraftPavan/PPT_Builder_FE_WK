@@ -1,0 +1,13 @@
+ <div class="mb-3">
+    <label class="mat-label">Split PPT</label>
+    <input type="file" (change)="uploadFile($event)" class="file-input">
+  </div>
+  <div class="button-group">
+    <button mat-raised-button color="primary" (click)="SubmitFile()">Split PPT</button>&nbsp;
+  </div>
+<!-- 
+  <div *ngIf="isLoading" class="d-flex justify-content-center">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+   -->
+  

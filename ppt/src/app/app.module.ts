@@ -1,84 +1,44 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthInterceptor } from './services/auth.interceptor';
-import { MergepptComponent } from './mergeppt/mergeppt.component';
-import { LoginComponent } from './login/login.component';
-import { MetadataComponent } from './metadata/metadata.component';
-import { MergeslidesComponent } from './mergeslides/mergeslides.component';
-import { SearchComponent } from './search/search.component';
-import { HomeComponent } from './home/home.component';
-import { FeedbackComponent } from './feedback/feedback.component';
-import { AccountCreationComponent } from './account-creation/account-creation.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+import { LayoutModule } from './layout/layout.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatNativeDateModule } from '@angular/material/core';
-import { ForgetPasswordComponent } from './forget-password/forget-password.component';
-import { OtpVerificationComponent } from './otp-verification/otp-verification.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { SignupComponent } from './signup/signup.component'; 
-import { NgxPaginationModule } from 'ngx-pagination';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SortableheaderDirective } from './shared/directive/sortableheader.directive';
+import { PagesModule } from './components/pages.module';
+import { SharedModule } from './shared/shared.module';
+import { CommonModule } from '@angular/common';
+//import { ToastrModule } from 'ngx-toastr';
 
-
+//import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    MergepptComponent,
-    LoginComponent,
-    MetadataComponent,
-    MergeslidesComponent,
-    SearchComponent,
-    FeedbackComponent,
-    AccountCreationComponent,
-    ForgetPasswordComponent,
-    OtpVerificationComponent,
-    ResetPasswordComponent,
-    SignupComponent
-    
- 
+    SortableheaderDirective
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NoopAnimationsModule,
-
+    CommonModule,
+    BrowserModule,BrowserAnimationsModule,PagesModule,SharedModule,
+    AppRoutingModule,LayoutModule,HttpClientModule,
     
-    BrowserAnimationsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule,
-    NgxPaginationModule,
-    MatPaginatorModule,
-    MatToolbarModule,
-    MatProgressSpinnerModule
+    // ToastrModule.forRoot({
+    //   closeButton: true,
+    //   timeOut: 3000,// 3 seconds
+    //   progressBar: true,
+    //   positionClass: "toast-top-center",
+    // })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor,  multi: true}
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+     },
   ],
   bootstrap: [AppComponent]
 })
