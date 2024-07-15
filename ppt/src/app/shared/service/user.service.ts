@@ -31,7 +31,7 @@ getAllSlides(data:any){
 }
 
 searchSlides(data: any){
-  return this.http.get<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.mergeSlides.searchSlides+ `?searchKeyWord=${data}`)
+  return this.http.post<any>(APP_DI_CONFIG.parentDomain+APP_DI_CONFIG.endPoints.mergeSlides.searchSlides,data)
 }
 
 mergeSlides(data:any){

@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/service/user.service';
+import { FeedbackComponent } from '../feedback/feedback.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-splitppt',
@@ -21,28 +24,57 @@ export class SplitpptComponent {
     private router: Router,
     private sanitizer: DomSanitizer,
     // private toastrService: ToastrService,
-    private ApiService: UserService) {
+    private ApiService: UserService,public dialog: MatDialog) {
 
     this.addInfoForm = this.formBuilder.group({
       value: [''],
     })
-  }   
+  }
+  
+  ngOnInit() {
+    this.getSplitPptList();
+  }
+
+
+  getSplitPptList(){
+    let pagination:any = {};
+    pagination.pageSize = 10;
+    pagination.pageNumber =0;
+
+    this.ApiService.getAllSlides(pagination).subscribe((resp: any) => {
+       this.metadataList = resp.data.responseList
+      // this.length = resp.data.length;
+    //   this.dataSource = new MatTableDataSource<any>(this.metadataList);
+    //  // this.updatePageData();
+    //   this.paginator.length = resp.data.totalCount;
+    //   this.paginator.pageIndex = this.pageIndex;
+      console.log(this.metadataList, 'all metadata');
+    }, (error: any) => {
+
+    })
+  }
 
   search(){
     if(this.addInfoForm.valid){
       let val = this.addInfoForm.controls['value'].value;
       console.log(val,'search text');
-      this.ApiService.searchSlides(val).subscribe((resp: any) => {
-         this.metadataList = resp.data;
+      let payload :any = {};
+      let pagination:any = {};
+      pagination.pageSize = 10;
+      pagination.pageNumber =0;
+      payload.searchinput = val;
+      payload.pagination = pagination;
+      this.ApiService.searchSlides(payload).subscribe((resp: any) => {
+        console.log(resp);
+        this.metadataList = resp.data.responseList;
         console.log(this.metadataList,'Slide LIst');
       } )
     }
   }
 
-  getslideView(data: any) {
-    
+  getslideView(data: any) { 
    this.url = data.objectUrl;
-    console.log(this.url, 'url for load');
+   // console.log(this.url, 'url for load');
     return this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.url}&embedded=true`);
 
   }
@@ -59,14 +91,14 @@ export class SplitpptComponent {
 
   onMergeClick(): void {
    
-    this.router.navigate(['/feedback'], { queryParams: { 
-     // MergedpresentationUrl: this.url,
-      SlideKeyList: JSON.stringify(this.slideFileKeyList)
-      //MergedSlidesKey: JSON.stringify(this.MergedSlidesKey)
-     } 
-    });
-    
-    ;
+    let data:any = {};
+      data.SlideKeyList = JSON.stringify(this.slideFileKeyList);
+      const dialogRef = this.dialog.open(FeedbackComponent, {width: '500px',data: data
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      }); 
   }
 
   onHomeClick():void{
