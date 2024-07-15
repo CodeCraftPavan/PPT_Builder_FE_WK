@@ -64,7 +64,7 @@ export class LoginComponent {
       this.loginText = 'Loggin Please Wait!'
       this.ApiService.login(this.addInfoForm.value).subscribe((data:any) => {
           localStorage.setItem('Token', data.data);
-          this.router.navigate(['/dashboard/search']);
+          this.router.navigate(['/dashboard/splitppt']);
           this.loginText = "Log In";
         },(error:any) => {
           console.error('Login failed:', error);
