@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { DataNotFoundComponent } from './data-not-found/data-not-found.component';
 import { ViewPptComponent } from './view-ppt/view-ppt.component';
 import { SplitpptComponent } from './splitppt/splitppt.component';
+import { AddpptComponent } from './addppt/addppt.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SplitpptComponent } from './splitppt/splitppt.component';
     
     FilterPipe,
           ViewPptComponent,
-          SplitpptComponent
+          SplitpptComponent,
+          AddpptComponent
   ]
 })
 

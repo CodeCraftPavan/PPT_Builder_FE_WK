@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../shared/service/user.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../shared/service/user.service';
 
 @Component({
-  selector: 'app-mergeppt',
-  templateUrl: './mergeppt.component.html',
-  styleUrls: ['./mergeppt.component.scss']
+  selector: 'app-addppt',
+  templateUrl: './addppt.component.html',
+  styleUrls: ['./addppt.component.scss']
 })
-export class MergepptComponent {
-
+export class AddpptComponent {
   reportFile:any;
   isLoading = false;
 

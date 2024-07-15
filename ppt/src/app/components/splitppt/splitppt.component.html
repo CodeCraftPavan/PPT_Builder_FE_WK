@@ -2,9 +2,9 @@
     <div class="container bg-white br-2 p-3">
         <div class="row header-padding">
             <div class="col-md-9 col-sm-6"><h4 class="text-black mt-2">List of Spilt Slides</h4></div>
-            <!-- <div class="col-md-3 col-sm-6 button-right">
-                <button mat-raised-button color="primary">Add PPT</button>&nbsp;
-            </div> -->
+            <div class="col-md-3 col-sm-6 button-right">
+                
+            </div>
         </div>
      
         <div class="row">
@@ -15,15 +15,19 @@
                 </div>
     
                 <div class="col-md-2 form-group">
-                    <button (click)="search()"  class="btn btn-primary" type="submit">Search</button>
+                    <button (click)="search()"  mat-raised-button color="primary" type="submit">Search</button>
                 </div>
-                <div class="col-md-3 form-group">
-                    <button [disabled]="slideFileKeyList.length == 0"  (click)="onMergeClick()" mat-raised-button color="primary">Download Merged PPT</button>
+                <div class="col-md-4 form-group">
+                    <button [disabled]="slideFileKeyList.length == 0"  (click)="onMergeClick()" mat-raised-button color="primary">Download PPT</button> &nbsp;
+                    <button mat-raised-button color="primary"  (click)="onAddPptClick()">Add PPT</button>
                 </div>
+    
+               
                 </div>             
             </form>  
          
         </div>
+        <hr/>
       
         <div class="row p-2" *ngFor="let mode of metadataList">
             <div class="col-md-6">
@@ -40,7 +44,7 @@
         
             </div>
             <div class="col-md-2" >
-                <button (click)="mergeSlides(mode)"  type="button" class="btn btn-primary">Add Slide</button>
+                <mat-checkbox (change)="onCheckboxChange(mode, $event.checked)"></mat-checkbox>
             </div>
         </div>
       

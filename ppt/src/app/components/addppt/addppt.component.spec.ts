@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MergepptComponent } from './mergeppt.component';
+import { AddpptComponent } from './addppt.component';
 
-describe('MergepptComponent', () => {
-  let component: MergepptComponent;
-  let fixture: ComponentFixture<MergepptComponent>;
+describe('AddpptComponent', () => {
+  let component: AddpptComponent;
+  let fixture: ComponentFixture<AddpptComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MergepptComponent ]
+      declarations: [ AddpptComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MergepptComponent);
+    fixture = TestBed.createComponent(AddpptComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

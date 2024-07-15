@@ -6,6 +6,7 @@ import { UserService } from '../../shared/service/user.service';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import { AddpptComponent } from '../addppt/addppt.component';
 
 @Component({
   selector: 'app-splitppt',
@@ -101,8 +102,25 @@ export class SplitpptComponent {
       }); 
   }
 
-  onHomeClick():void{
-    this.router.navigate(["\home"]);
+  onCheckboxChange(mode: any, isChecked: boolean): void {
+
+    let fileLocation = mode.s3FilePath;
+    if (isChecked) {
+      this.slideFileKeyList.push(fileLocation);
+    } else {
+      const index = this.slideFileKeyList.indexOf(fileLocation);
+      if (index > -1) {
+        this.slideFileKeyList.splice(index, 1);
+      }
+    }
+  }
+
+  onAddPptClick(){
+    const dialogRef = this.dialog.open(AddpptComponent, {width: '500px'});
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    }); 
   }
 
 }

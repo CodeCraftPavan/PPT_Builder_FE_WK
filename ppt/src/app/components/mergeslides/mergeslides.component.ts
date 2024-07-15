@@ -50,12 +50,11 @@ export class MergeslidesComponent {
   getRFQ() {
     
     let pagination:any = {};
-    pagination.pageSize = 10;
-    pagination.pageNumber =0;
+    pagination.pageSize = 20;
+    pagination.pageNumber=0;
 
     this.ApiService.getAllSlides(pagination).subscribe((resp: any) => {
-       this.metadataList = resp.data.responseList
-       ;
+       this.metadataList = resp.data.responseList;
       // this.length = resp.data.length;
       this.dataSource = new MatTableDataSource<any>(this.metadataList);
      // this.updatePageData();
