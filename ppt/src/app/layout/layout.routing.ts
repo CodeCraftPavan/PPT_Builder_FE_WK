@@ -4,6 +4,7 @@ import { MergeslidesComponent } from 'src/app/components/mergeslides/mergeslides
 import { MetadataComponent } from 'src/app/components/metadata/metadata.component';
 import { AuthGuard } from 'src/app/guard/auth.guard';
 import { SplitpptComponent } from '../components/splitppt/splitppt.component';
+import { AddpptComponent } from '../components/addppt/addppt.component';
 
 
 export const LayoutRoutes: Routes = [
@@ -11,6 +12,7 @@ export const LayoutRoutes: Routes = [
    { path:'splitppt',component:SplitpptComponent },
    { path:'metadata',component:MetadataComponent },
    { path:'keypoints', component: FeedbackComponent },
+   { path:'addppt', component: AddpptComponent}
   
 
 ];

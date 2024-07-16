@@ -27,7 +27,7 @@ export class AddpptComponent {
       let value = JSON.stringify(data)
       localStorage.setItem('SplitData',value)
       
-      this.router.navigate(['/metadata']);
+      this.router.navigate(['/dashboard/metadata']);
     } )
   }
 

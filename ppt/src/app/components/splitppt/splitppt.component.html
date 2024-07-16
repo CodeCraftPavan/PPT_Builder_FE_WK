@@ -18,8 +18,8 @@
                     <button (click)="search()"  mat-raised-button color="primary" type="submit">Search</button>
                 </div>
                 <div class="col-md-4 form-group">
-                    <button [disabled]="slideFileKeyList.length == 0"  (click)="onMergeClick()" mat-raised-button color="primary">Download PPT</button> &nbsp;
-                    <button mat-raised-button color="primary"  (click)="onAddPptClick()">Add PPT</button>
+                    <button [disabled]="slideFileKeyList.length <= 1"  (click)="onMergeClick()" mat-raised-button color="primary">Download PPT</button> &nbsp;
+                    <button mat-raised-button color="primary"  (click)="onAddPptClick()">Split PPT</button>
                 </div>
     
                
@@ -28,7 +28,7 @@
          
         </div>
         <hr/>
-      
+         
         <div class="row p-2" *ngFor="let mode of metadataList">
             <div class="col-md-6">
                 <iframe [src]="getslideView(mode)" width="520px" height="400px" frameborder="0"></iframe>
@@ -46,6 +46,9 @@
             <div class="col-md-2" >
                 <mat-checkbox (change)="onCheckboxChange(mode, $event.checked)"></mat-checkbox>
             </div>
+        </div>
+        <div class="row p-2" *ngIf="metadataList.length == 0">
+            <app-data-not-found></app-data-not-found>
         </div>
       
     </div>

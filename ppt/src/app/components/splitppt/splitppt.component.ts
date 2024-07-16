@@ -16,7 +16,7 @@ import { AddpptComponent } from '../addppt/addppt.component';
 export class SplitpptComponent {
   url: any;
   addInfoForm: FormGroup;
-  metadataList :any;
+  metadataList :any[] =[];
   safeUrl: SafeResourceUrl;
   slideFileKeyList: any = [];
 
@@ -33,7 +33,7 @@ export class SplitpptComponent {
   }
   
   ngOnInit() {
-    this.getSplitPptList();
+   // this.getSplitPptList();
   }
 
 
@@ -116,11 +116,11 @@ export class SplitpptComponent {
   }
 
   onAddPptClick(){
-    const dialogRef = this.dialog.open(AddpptComponent, {width: '500px'});
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    }); 
+    this.router.navigate(['/dashboard/addppt'])
+    // const dialogRef = this.dialog.open(AddpptComponent, {width: '500px'});
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed');
+    // }); 
   }
 
 }
