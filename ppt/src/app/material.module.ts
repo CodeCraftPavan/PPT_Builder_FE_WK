@@ -34,6 +34,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -44,7 +45,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatTableModule,
     MatInputModule,
     MatFormFieldModule,
-    MatCheckboxModule,MatAutocompleteModule,
+    MatCheckboxModule,MatAutocompleteModule,MatProgressSpinnerModule
     
   ],
   exports:[
@@ -84,7 +85,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatProgressBarModule,
     MatPaginatorModule,
     MatBadgeModule,
-   MatAutocompleteModule
+   MatAutocompleteModule,MatProgressSpinnerModule
 
   ],
   providers: [],

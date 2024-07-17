@@ -1,26 +1,4 @@
-<!-- <div class="row">
-    <div class="col-3"></div>
-    <div class="col-6">
-      <div class ="mt-5">
-        <form  [formGroup]="addInfoForm">          
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">User Email</label>
-            <input formControlName="username" type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-          </div>
-      
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Password</label>
-            <input formControlName="password" type="password" class="form-control" id="exampleFormControlInput1" placeholder="password">
-          </div>
-  
-          <button (click)="signUp()"  class="btn btn-primary" type="submit">Login</button>&nbsp;
-          <button (click)="onClickCreateAccount()"  class="btn btn-primary" type="submit">Create Account</button>
-        </form>
-      </div>
-    </div>
-    <div class="col-3"></div>
-  
-  </div> -->
+
 
   <div class="container-fluid ps-md-0">
     <div class="row g-0">
@@ -44,7 +22,11 @@
                   </div>
   
                   <div class="d-grid">
-                    <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit">{{loginText}}</button>
+                    <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold bg-primary-delivery mb-2" type="submit">
+                      <div class="spinner-border" role="status" style="font-size: 10px; width: 15px; height: 15px" *ngIf="loginText == 'Logging Please Wait!'">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                      {{loginText}}</button>
                     
                   </div>
 

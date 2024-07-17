@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/service/user.service';
@@ -16,7 +16,7 @@ export class MetadataComponent {
   @Input() rating = 0;
   stars: boolean[] = [];
   @Input() id: number;  // Assuming each item being rated has an ID
-  
+
   slideList: any;
   content: any;
   urlvale: any
@@ -24,11 +24,11 @@ export class MetadataComponent {
   safeUrl: SafeResourceUrl;
 
   addInfoForm: FormGroup;
-  metadataList:any;
+  metadataList: any;
 
-  
+
   S3ObjUrl: any;
-  pramod:any;
+  pramod: any;
 
   ngOnInit() {
     this.stars = Array(this.maxRating).fill(false);
@@ -41,22 +41,22 @@ export class MetadataComponent {
   ) {
 
     this.addInfoForm = this.formBuilder.group({
-      title: [''],
-      keywords: [''],
-      note:['']
+      title: ['',Validators.required],
+      keywords: ['',Validators.required],
+      notes: ['', Validators.required]
     })
 
     let value: any = localStorage.getItem("SplitData");
     this.slideList = JSON.parse(value)
     this.metadataList = this.slideList;
     //this.metadataList = this.slideList.metaData
-    if(this.metadataList){
+    if (this.metadataList) {
       this.S3ObjUrl = this.metadataList.slideList[0]
       this.pramod = this.metadataList.metaData[0];
     }
 
-   this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
-   
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
+
   }
 
   sanitizeUrl(url: string): SafeResourceUrl {
@@ -69,11 +69,11 @@ export class MetadataComponent {
 
   val = 0;
 
-  update(){
+  update() {
     this.val++;
     this.addInfoForm.reset();
     this.S3ObjUrl = this.slideList.slideList[this.val]
-    
+
     this.pramod = this.metadataList.metaData[this.val];
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
   }
@@ -87,54 +87,49 @@ export class MetadataComponent {
 
   }
 
-  onHomeClick():void{
+  onHomeClick(): void {
     this.router.navigate(["\home"]);
   }
 
-  dataAdd(item:any) {
-    
-    console.log(item,'item');
-    
-    console.log(this.addInfoForm.value,'formvalue');
-    
-        if(this.addInfoForm.valid){
-          ;
-        var Payload: any = {};
-        Payload.id = item.id;
-        Payload.metaDataOfSlide = this.addInfoForm.controls['title'].value;
-        Payload.keyWords =  this.addInfoForm.controls['keywords'].value;
-        Payload.notes = this.addInfoForm.controls['note'].value;
+  addMetaData() {
+    if (this.addInfoForm.valid) {
+      var Payload: any = {};
+      Payload.id = 0;
+      Payload.metaDataOfSlide = this.addInfoForm.controls['title'].value;
+      Payload.keyWords = this.addInfoForm.controls['keywords'].value;
+      Payload.notes = this.addInfoForm.controls['note'].value;
 
-        this.ApiService.addmetadata(Payload).subscribe((data: any) => {
-          console.log(data,'meta data result');
-          alert('Submitted Metadata Successfully');
-        } ) }
+      this.ApiService.addmetadata(Payload).subscribe((data: any) => {
+        console.log(data, 'meta data result');
+        alert('Submitted Metadata Successfully');
+      })
     }
+  }
 
-    rate(rating: number) {
-      this.rating = rating;
-    }
+  rate(rating: number) {
+    this.rating = rating;
+  }
 
-    submitRating() {
-   
-      const data = {
-        rating: this.rating,
-        slideId: this.metadataList.metaData[0].id
-      };
-      this.addRatings(data);
-    }
+  submitRating() {
 
-  addRatings(data: any){
+    const data = {
+      rating: this.rating,
+      slideId: this.metadataList.metaData[0].id
+    };
+    this.addRatings(data);
+  }
+
+  addRatings(data: any) {
     // const Payload = {
     //   rating: data.rating,
     //   slideId: data.slideId
     // };
     var Payload: any = {};
     Payload.rating = data.rating,
-    Payload.slideId = data.slideId
+      Payload.slideId = data.slideId
     debugger;
-    this.ApiService.addRating(Payload).subscribe((response : any) =>{
-      console.log(response ,'Ratings data');
+    this.ApiService.addRating(Payload).subscribe((response: any) => {
+      console.log(response, 'Ratings data');
     })
   }
 }

@@ -1,12 +1,31 @@
 <div class="wrapper page">
     <div class="container bg-white br-2 p-3">
         <div class="row header-padding">
-            <div class="col-md-9 col-sm-6"><h4 class="text-black mt-2">List of Spilt Slides</h4></div>
+            <div class="col-md-9 col-sm-6"><h4 class="text-black mt-2">List of Slides</h4></div>
             <div class="col-md-3 col-sm-6 button-right">
-                <button [disabled]="slideFileKeyList.length <= 1"  (click)="onMergeClick()" mat-raised-button color="primary">Download PPT</button> &nbsp;
-                    <button mat-raised-button color="primary"  (click)="onAddPptClick()">Split PPT</button>
                 
             </div>
+        </div>
+     
+        <div class="row">
+            <form  [formGroup]="addInfoForm">  
+                <div class="row">
+                <div class="col-md-5 form-group">
+                    <input type="email" formControlName="value" class="form-control" placeholder="search ppt">
+                </div>
+    
+                <div class="col-md-2 form-group">
+                    <button (click)="search()"  mat-raised-button color="primary" type="submit">Search</button>
+                </div>
+                <div class="col-md-4 form-group">
+                    <button [disabled]="slideFileKeyList.length <= 1"  (click)="onMergeClick()" mat-raised-button color="primary">Download PPT</button> &nbsp;
+                    <!-- <button mat-raised-button color="primary"  (click)="onAddPptClick()">Split PPT</button> -->
+                </div>
+    
+               
+                </div>             
+            </form>  
+         
         </div>
         <hr/>
          
@@ -34,3 +53,4 @@
       
     </div>
   </div>
+

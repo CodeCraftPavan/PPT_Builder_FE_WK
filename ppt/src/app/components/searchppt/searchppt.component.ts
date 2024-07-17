@@ -1,19 +1,17 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { UserService } from '../../shared/service/user.service';
+import { UserService } from 'src/app/shared/service/user.service';
 import { FeedbackComponent } from '../feedback/feedback.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { AddpptComponent } from '../addppt/addppt.component';
 
 @Component({
-  selector: 'app-splitppt',
-  templateUrl: './splitppt.component.html',
-  styleUrls: ['./splitppt.component.scss']
+  selector: 'app-searchppt',
+  templateUrl: './searchppt.component.html',
+  styleUrls: ['./searchppt.component.scss']
 })
-export class SplitpptComponent {
+export class SearchpptComponent {
   url: any;
   addInfoForm: FormGroup;
   metadataList :any[] =[];
@@ -33,7 +31,7 @@ export class SplitpptComponent {
   }
   
   ngOnInit() {
-    this.getSplitPptList();
+   // this.getSplitPptList();
   }
 
 
@@ -122,5 +120,4 @@ export class SplitpptComponent {
     //   console.log('The dialog was closed');
     // }); 
   }
-
 }

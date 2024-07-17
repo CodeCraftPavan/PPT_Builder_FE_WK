@@ -61,7 +61,7 @@ export class LoginComponent {
 
   onLogin() {
     if (this.addInfoForm.valid) {
-      this.loginText = 'Loggin Please Wait!'
+      this.loginText = 'Logging Please Wait!'
       this.ApiService.login(this.addInfoForm.value).subscribe((data:any) => {
           localStorage.setItem('Token', data.data);
           this.router.navigate(['/dashboard/splitppt']);

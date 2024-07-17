@@ -14,13 +14,13 @@ export const MenuList = [
         subMenu: [],
         isActive: true
     },
-    // {
-    //     id: 2,
-    //     name: 'Meta Data',
-    //     url:'/dashboard/metadata',
-    //     subMenu: [],
-    //     isActive: true
-    // },
+    {
+        id: 2,
+        name: 'Search PPT',
+        url:'/dashboard/searchppt',
+        subMenu: [],
+        isActive: true
+    },
     // {
     //     id: 3,
     //     name: 'Key Details',

@@ -1,7 +1,7 @@
 <div class="wrapper page">
   <div class="container bg-white br-2 p-3">
       <div class="row header-padding">
-          <div class="col-md-9 col-sm-6"><h4 class="text-black mt-2">Metadata for Uploaded File</h4></div>
+          <div class="col-md-9 col-sm-6"><h4 class="text-black mt-2">Add Metadata for Uploaded File</h4></div>
           <div class="col-md-3 col-sm-6 button-right">
           
           </div>
@@ -29,57 +29,50 @@
               </button>
           </div>
         </div>
-        <div class="col-lg-4 text-center">
-          <form>
-            <p>
-              <mat-form-field appearance="outline" class="full-width">
+        <div class="col-lg-4">
+          <form [formGroup]="addInfoForm" (ngSubmit)="addMetaData()">    
+              <mat-form-field appearance="outline" class="form-group w-100">
                 <mat-label >Title</mat-label>
-                <input matInput placeholder="title">
-            </mat-form-field>
-            </p>
-            <p>
-              <mat-form-field appearance="outline" class="full-width">
+                <input matInput id="title" type="text" formControlName="title">
+                <mat-error *ngIf="addInfoForm.get('title')?.hasError('required')">Please enter title</mat-error>
+              </mat-form-field>
+       
+              <mat-form-field appearance="outline" class="form-group w-100">
                   <mat-label>Keywords</mat-label>
-                  <textarea matInput placeholder="keywords"></textarea>
+                  <input matInput id="keywords" type="text" formControlName="keywords">
+                  <mat-error *ngIf="addInfoForm.get('keywords')?.hasError('required')">Please enter keywords</mat-error>
               </mat-form-field>
-            </p>
-            <p>
-              <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>note</mat-label>
-                  <textarea matInput placeholder="Notes"></textarea>
+         
+              <mat-form-field appearance="outline" class="form-group w-100">
+                  <mat-label>Notes</mat-label>
+                  <textarea matInput id="notes" class="form-control" formControlName="notes"></textarea>
+                  <mat-error *ngIf="addInfoForm.get('notes')?.hasError('required')">Please enter notes</mat-error>
+                  
               </mat-form-field>
-            </p>
+              <div class="form-group">
+                <button mat-raised-button type="submit" color="primary">Save</button>
+              </div>
+        
           </form>
-          <div class="row text-center mt-2">
-            <div class="col-lg-6">
-              <mat-checkbox>Count</mat-checkbox>
-            </div>
-            <!-- <div class="col-lg-6">
-              <mat-checkbox>Rating</mat-checkbox>
-              <mat-icon>star</mat-icon>
-            </div> -->
-            <!-- <div class="rating">
-              <span *ngFor="let star of stars; index as i" (click)="rate(i + 1)">
-                <mat-icon>{{ i < rating ? 'star' : 'star_border' }}</mat-icon>
-              </span>
-            </div> -->
-            <div class="rating-container">
-              <div class="rating">
+                <!--Add Rating  -->
+
+            <div class="rating-container row mt-2">
+              <p>Add Rating to the ppt</p>
+              <div class="rating col-md-6">
                 <span *ngFor="let star of stars; index as i" (click)="rate(i + 1)">
                   <mat-icon>{{ i < rating ? 'star' : 'star_border' }}</mat-icon>
                 </span>
               </div>
-              <div class="submit-rating">
-                <button mat-raised-button color="primary" (click)="submitRating()">Submit Rating</button>
+              <div class="submit-rating col-md-6">
+                <button mat-raised-button color="primary" (click)="submitRating()">Submit</button>
               </div>
             </div>
-          </div>
+          
+          
         </div>
       </div>
 
-      <div class="text-center mt-5">
-        <button (click)="dataAdd(pramod)" mat-raised-button type="submit" class="savebtn">Save</button>
-      </div>
+  
    
     
   </div>

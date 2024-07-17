@@ -53,15 +53,15 @@ label{
 }
 
 
-.bg-primary-delivery{
-    background-color:#009688 ;
+.bg-primary-delivery, .bg-primary-delivery:active, .bg-primary-delivery:hover{
+    background-color:#3f51b5 ;
 }
 
 .navbar-brand{
     color: white !important;
 }
 
-.navbar-item{
+.navbar-item, .nav-link{
     color: white !important;
 }
 

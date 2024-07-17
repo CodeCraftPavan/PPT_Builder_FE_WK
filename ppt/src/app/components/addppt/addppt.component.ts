@@ -10,6 +10,8 @@ import { UserService } from '../../shared/service/user.service';
 export class AddpptComponent {
   reportFile:any;
   isLoading = false;
+  splittedData: string;
+  SubmitText = 'Submit';
 
   constructor( private ApiService: UserService,
     private router: Router,
@@ -21,13 +23,14 @@ export class AddpptComponent {
     this.isLoading = true;
     let formData = new FormData();
     formData.append('file',this.AttachFiles);
-
+    this.SubmitText = "Splitting the ppt. Please Wait!"
     this.ApiService.mergePPt(formData).subscribe((data: any) => {
-      console.log(data);
       let value = JSON.stringify(data)
+      this.SubmitText = 'Submit';
+      this.splittedData = value
       localStorage.setItem('SplitData',value)
       
-      this.router.navigate(['/dashboard/metadata']);
+      //this.router.navigate(['/dashboard/metadata']);
     } )
   }
 
