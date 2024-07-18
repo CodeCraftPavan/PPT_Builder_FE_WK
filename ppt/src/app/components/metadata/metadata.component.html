@@ -33,8 +33,8 @@
           <form [formGroup]="addInfoForm" (ngSubmit)="addMetaData()">    
               <mat-form-field appearance="outline" class="form-group w-100">
                 <mat-label >Title</mat-label>
-                <input matInput id="title" type="text" formControlName="title">
-                <mat-error *ngIf="addInfoForm.get('title')?.hasError('required')">Please enter title</mat-error>
+                <input matInput id="metaDataOfSlide" type="text" formControlName="metaDataOfSlide">
+                <mat-error *ngIf="addInfoForm.get('metaDataOfSlide')?.hasError('required')">Please enter title</mat-error>
               </mat-form-field>
        
               <mat-form-field appearance="outline" class="form-group w-100">
@@ -47,7 +47,25 @@
                   <mat-label>Notes</mat-label>
                   <textarea matInput id="notes" class="form-control" formControlName="notes"></textarea>
                   <mat-error *ngIf="addInfoForm.get('notes')?.hasError('required')">Please enter notes</mat-error>
-                  
+              </mat-form-field>
+              <div class="rating-container row mt-2">              
+                <div class="rating col-md-6">
+                  <span *ngFor="let star of stars; index as i" (click)="rate(i + 1)">
+                    <mat-icon>{{ i < rating ? 'star' : 'star_border' }}</mat-icon>
+                  </span>
+                </div>
+                
+              </div>
+
+              <mat-form-field appearance="outline" class="form-group w-100">
+                <mat-label>Date</mat-label>
+                <input readonly matInput placeholder="Due date" formControlName="date" [matDatepicker]="picker3"
+                  [min]="minDate" (click)="picker3.open()">
+                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
+                <!-- <mat-error *ngIf="receivePaymentForm.get('dueDate').hasError('required')">
+                  Please select due date.
+                </mat-error> -->
               </mat-form-field>
               <div class="form-group">
                 <button mat-raised-button type="submit" color="primary">Save</button>
@@ -56,17 +74,7 @@
           </form>
                 <!--Add Rating  -->
 
-            <div class="rating-container row mt-2">
-              <p>Add Rating to the ppt</p>
-              <div class="rating col-md-6">
-                <span *ngFor="let star of stars; index as i" (click)="rate(i + 1)">
-                  <mat-icon>{{ i < rating ? 'star' : 'star_border' }}</mat-icon>
-                </span>
-              </div>
-              <div class="submit-rating col-md-6">
-                <button mat-raised-button color="primary" (click)="submitRating()">Submit</button>
-              </div>
-            </div>
+           
           
           
         </div>

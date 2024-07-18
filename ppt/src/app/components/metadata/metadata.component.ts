@@ -29,6 +29,7 @@ export class MetadataComponent {
 
   S3ObjUrl: any;
   pramod: any;
+  minDate = new Date();
 
   ngOnInit() {
     this.stars = Array(this.maxRating).fill(false);
@@ -41,9 +42,11 @@ export class MetadataComponent {
   ) {
 
     this.addInfoForm = this.formBuilder.group({
-      title: ['',Validators.required],
+      metaDataOfSlide: ['',Validators.required],
       keywords: ['',Validators.required],
-      notes: ['', Validators.required]
+      notes: ['', Validators.required],
+      rating : [0,Validators.required],
+      date:[this.minDate]
     })
 
     let value: any = localStorage.getItem("SplitData");
@@ -93,14 +96,15 @@ export class MetadataComponent {
 
   addMetaData() {
     if (this.addInfoForm.valid) {
-      var Payload: any = {};
-      Payload.id = 0;
-      Payload.metaDataOfSlide = this.addInfoForm.controls['title'].value;
-      Payload.keyWords = this.addInfoForm.controls['keywords'].value;
-      Payload.notes = this.addInfoForm.controls['note'].value;
+      // var Payload: any = {};
+      // Payload.id = 0;
+      // Payload.metaDataOfSlide = this.addInfoForm.controls['title'].value;
+      // Payload.keyWords = this.addInfoForm.controls['keywords'].value;
+      // Payload.notes = this.addInfoForm.controls['note'].value;
+      let payload = this.addInfoForm.value;
 
-      this.ApiService.addmetadata(Payload).subscribe((data: any) => {
-        console.log(data, 'meta data result');
+      this.ApiService.addmetadata(payload).subscribe((data: any) => {
+       // console.log(data, 'meta data result');
         alert('Submitted Metadata Successfully');
       })
     }
@@ -108,6 +112,7 @@ export class MetadataComponent {
 
   rate(rating: number) {
     this.rating = rating;
+    this.addInfoForm.controls['rating'].setValue(Number(rating));
   }
 
   submitRating() {

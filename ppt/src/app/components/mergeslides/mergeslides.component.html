@@ -50,6 +50,16 @@
                   <th mat-header-cell *matHeaderCellDef >Keywords</th>
                   <td mat-cell *matCellDef="let element">{{element.keyWords ? element.keyWords: '-'}} </td>
               </ng-container>
+
+              <ng-container matColumnDef="downloadCount"> 
+                <th mat-header-cell *matHeaderCellDef>Downloaded Count</th>
+                <td mat-cell *matCellDef="let element"> {{element.downloadCount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="rating"> 
+              <th mat-header-cell *matHeaderCellDef>Rating</th>
+              <td mat-cell *matCellDef="let element"> {{element.rating}} </td>
+          </ng-container>
           
           
               <ng-container matColumnDef="metaDataOfSlide"> 
