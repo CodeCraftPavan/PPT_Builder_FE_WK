@@ -30,9 +30,11 @@ export class MetadataComponent {
   S3ObjUrl: any;
   pramod: any;
   minDate = new Date();
+  metadataDate = new Date();
 
   ngOnInit() {
     this.stars = Array(this.maxRating).fill(false);
+    
   }
 
   constructor(private sanitizer: DomSanitizer,
@@ -46,7 +48,7 @@ export class MetadataComponent {
       keywords: ['',Validators.required],
       notes: ['', Validators.required],
       rating : [0,Validators.required],
-      date:[this.minDate]
+     // date:[this.minDate]
     })
 
     let value: any = localStorage.getItem("SplitData");

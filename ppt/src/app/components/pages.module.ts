@@ -10,11 +10,12 @@ import { ViewPptComponent } from './view-ppt/view-ppt.component';
 import { SplitpptComponent } from './splitppt/splitppt.component';
 import { AddpptComponent } from './addppt/addppt.component';
 import { SearchpptComponent } from './searchppt/searchppt.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
   imports: [
-    MaterialModule,CommonModule
+    MaterialModule,CommonModule,NgxPaginationModule
   ],
   declarations: [
     MetadataComponent,

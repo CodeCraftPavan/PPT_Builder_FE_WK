@@ -10,15 +10,15 @@
         </div>
         <hr/>
          
-        <div class="row p-2" *ngFor="let mode of metadataList">
+        <div class="row p-2" *ngFor="let mode of metadataList | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems } ; let i = index">
             <div class="col-md-6">
                 <iframe [src]="getslideView(mode)" width="520px" height="400px" frameborder="0"></iframe>
             </div>
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title"> <span class="under">Title:</span> {{mode.metaDataOfSlide}}</h5>
-                      <h6 class="card-subtitle mb-2 text-muted"> <span class="under" >Keywords:</span> {{mode.keyWords}}</h6>
+                      <h5 class="card-text"> <span class="under">Title:</span> {{mode.metaDataOfSlide}}</h5>
+                      <h6 class="card-text"> <span class="under" >Keywords:</span> {{mode.keyWords}}</h6>
                       <p class="card-text"><span class="under" >Downloaded Count:</span> {{mode.downloadCount}}</p>
                       <p class="card-text"><span class="under" >Rating:</span> {{mode.rating}}</p>
                       <p class="card-text"><span class="under" >Note:</span> {{mode.notes}}</p>
@@ -30,6 +30,14 @@
                 <mat-checkbox (change)="onCheckboxChange(mode, $event.checked)"></mat-checkbox>
             </div>
         </div>
+        <div class="row">
+            <div class="d-flex justify-content-end pagination-custom">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true"
+                  (pageChange)="handlePageChange($event)"></pagination-controls>
+              </div>
+
+        </div>
+        
         <div class="row p-2" *ngIf="metadataList.length == 0">
             <app-data-not-found></app-data-not-found>
         </div>

@@ -48,36 +48,43 @@
                   <textarea matInput id="notes" class="form-control" formControlName="notes"></textarea>
                   <mat-error *ngIf="addInfoForm.get('notes')?.hasError('required')">Please enter notes</mat-error>
               </mat-form-field>
-              <div class="rating-container row mt-2">              
+              <div class="rating-container col-md-4"> 
+                <label for="rating"> <b>Add Rating</b></label>             
                 <div class="rating col-md-6">
+                  
                   <span *ngFor="let star of stars; index as i" (click)="rate(i + 1)">
                     <mat-icon>{{ i < rating ? 'star' : 'star_border' }}</mat-icon>
                   </span>
-                </div>
-                
+                </div>       
               </div>
-
-              <mat-form-field appearance="outline" class="form-group w-100">
-                <mat-label>Date</mat-label>
-                <input readonly matInput placeholder="Due date" formControlName="date" [matDatepicker]="picker3"
-                  [min]="minDate" (click)="picker3.open()">
-                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                <mat-datepicker #picker3></mat-datepicker>
-                <!-- <mat-error *ngIf="receivePaymentForm.get('dueDate').hasError('required')">
-                  Please select due date.
-                </mat-error> -->
-              </mat-form-field>
               <div class="form-group">
                 <button mat-raised-button type="submit" color="primary">Save</button>
               </div>
-        
+              
           </form>
-                <!--Add Rating  -->
+          <!--Add Rating  -->
 
            
           
           
         </div>
+      </div>
+      <div class="row mt-3">
+      
+         <div class="col-md-4">
+          <label for="date"> <b>Date</b></label>
+          <p>{{metadataDate | date:"MMM dd, yyyy 'at' hh:mm a"}}</p>
+          <!-- <mat-form-field appearance="outline" class="form-group w-100">
+            <mat-label>Date</mat-label>
+            <input readonly matInput placeholder="Due date" [matDatepicker]="picker3"
+              [min]="minDate" (click)="picker3.open()" [(ngModel)]="metadataDate">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3></mat-datepicker>
+          </mat-form-field> -->
+
+         </div>
+      
+        
       </div>
 
   

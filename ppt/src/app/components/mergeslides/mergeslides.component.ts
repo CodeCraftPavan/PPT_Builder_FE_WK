@@ -7,7 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewPptComponent } from '../view-ppt/view-ppt.component';
 import { FeedbackComponent } from '../feedback/feedback.component';
-
+import { PaginatorService } from '../../shared/service/paginator.service';
 
 @Component({
   selector: 'app-mergeslides',
@@ -26,16 +26,13 @@ export class MergeslidesComponent {
   displayedColumns: string[] = ['slno', 'keywords', 'metaDataOfSlide','downloadCount','rating','notes','view', 'add'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   // Pagination properties
-  length = 0;
+  pageSizeOptions: number[] =  [10, 20, 50, 100, 200];
   pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
   pageIndex = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
- 
 
-
-  constructor(private ApiService: UserService,private sanitizer: DomSanitizer,private router: Router,public dialog: MatDialog
-  ) {
+  constructor(private ApiService: UserService,private sanitizer: DomSanitizer,private router: Router,
+    public dialog: MatDialog, public paginatorService: PaginatorService) {
     this.getRFQ();
   }
 
@@ -48,19 +45,12 @@ export class MergeslidesComponent {
   }
 
   getRFQ() {
-    
-    let pagination:any = {};
-    pagination.pageSize = 20;
-    pagination.pageNumber=0;
-
-    this.ApiService.getAllSlides(pagination).subscribe((resp: any) => {
+    this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.pageSize,this.pageIndex)).subscribe((resp: any) => {
        this.metadataList = resp.data.responseList;
-      // this.length = resp.data.length;
       this.dataSource = new MatTableDataSource<any>(this.metadataList);
-     // this.updatePageData();
       this.paginator.length = resp.data.totalCount;
       this.paginator.pageIndex = this.pageIndex;
-      console.log(this.metadataList, 'all metadata');
+     // console.log(this.metadataList, 'all metadata');
     }, (error: any) => {
 
     })
@@ -71,6 +61,7 @@ export class MergeslidesComponent {
     this.pageSize = event.pageSize;
     this.getRFQ();
   }
+
 
   viewSlide(element:any){
     const dialogRef = this.dialog.open(ViewPptComponent, {width: '750px',data: { element }
@@ -102,7 +93,6 @@ export class MergeslidesComponent {
   mergeSlides(metadata: any) {
     console.log(metadata, 'metadata');
     let fileLocation = metadata.s3FilePath;
-    ;
     this.slideFileKeyList.push(fileLocation)
   }
 
@@ -142,12 +132,11 @@ export class MergeslidesComponent {
     this.router.navigate(["\home"]);
   }
 
-  onPageChange(event: PageEvent): void {
-  
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.updatePageData();
-  }
+  // onPageChange(event: PageEvent): void {
+  //   this.pageIndex = event.pageIndex;
+  //   this.pageSize = event.pageSize;
+  //   this.updatePageData();
+  // }
 
   updatePageData(): void {
     this.metadataList = this.metadataList.slice(this.pageIndex * this.pageSize, (this.pageIndex + 1) * this.pageSize);

@@ -5,8 +5,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../shared/service/user.service';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { AddpptComponent } from '../addppt/addppt.component';
+import { PaginatorService } from '../../shared/service/paginator.service';
 
 @Component({
   selector: 'app-splitppt',
@@ -19,12 +18,19 @@ export class SplitpptComponent {
   metadataList :any[] =[];
   safeUrl: SafeResourceUrl;
   slideFileKeyList: any = [];
+  currentPage: number = 0;
+  page: number = 1
+  itemsPerPage: number = 3;
+  totalItems: number = 0;
+  filterText: string = "";
+  pageSizeOptions: number[] =  [3,6,9];
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private sanitizer: DomSanitizer,
     // private toastrService: ToastrService,
+    public paginatorService: PaginatorService,
     private ApiService: UserService,public dialog: MatDialog) {
 
     this.addInfoForm = this.formBuilder.group({
@@ -38,12 +44,9 @@ export class SplitpptComponent {
 
 
   getSplitPptList(){
-    let pagination:any = {};
-    pagination.pageSize = 10;
-    pagination.pageNumber =0;
-
-    this.ApiService.getAllSlides(pagination).subscribe((resp: any) => {
-       this.metadataList = resp.data.responseList
+    this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.itemsPerPage,this.currentPage)).subscribe((resp: any) => {
+       this.metadataList = resp.data.responseList;
+       this.totalItems = resp.data.totalCount;
       // this.length = resp.data.length;
     //   this.dataSource = new MatTableDataSource<any>(this.metadataList);
     //  // this.updatePageData();
@@ -53,6 +56,15 @@ export class SplitpptComponent {
     }, (error: any) => {
 
     })
+  }
+
+  handlePageChange(event: number){
+    // console.log(event)
+    this.currentPage = event;
+    this.itemsPerPage = event;
+     this.getSplitPptList();
+   
+     
   }
 
   search(){

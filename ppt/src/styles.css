@@ -223,3 +223,16 @@ label{
 /* .sticky-top {
   z-index: 0 !important;
 } */
+
+.ngx-pagination .current {
+  padding: 0.1875rem 0.625rem;
+  background: #0C2B4B!important;
+}
+
+.pagination-custom{
+  border-top: 1px solid #fff;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon{
+  background-color: gray;
+}
