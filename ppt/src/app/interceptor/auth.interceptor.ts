@@ -12,7 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private isRefreshing = false;
   private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
     
-  constructor(private masterService: MasterService) {}
+  constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<Object>> {
 
@@ -22,9 +22,10 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(req);
     }
 
-    let Token: any = localStorage.getItem("Token");
-      const Authorization = Token;
-    return next.handle(req.clone({ setHeaders: { Authorization } }));
+    let token: any = localStorage.getItem("Token");
+    //return next.handle(req.clone({ setHeaders: { token } }))
+    return  token !== null ? next.handle(req.clone({ setHeaders: { token } })) : next.handle(req.clone({}));
+    
 
   
 

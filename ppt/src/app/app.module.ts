@@ -12,6 +12,7 @@ import { SortableheaderDirective } from './shared/directive/sortableheader.direc
 import { PagesModule } from './components/pages.module';
 import { SharedModule } from './shared/shared.module';
 import { CommonModule } from '@angular/common';
+import { ToastrModule } from 'ngx-toastr';
 //import { ToastrModule } from 'ngx-toastr';
 
 //import { DataTablesModule } from 'angular-datatables';
@@ -25,13 +26,11 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     BrowserModule,BrowserAnimationsModule,PagesModule,SharedModule,
     AppRoutingModule,LayoutModule,HttpClientModule,
-    
-    // ToastrModule.forRoot({
-    //   closeButton: true,
-    //   timeOut: 3000,// 3 seconds
-    //   progressBar: true,
-    //   positionClass: "toast-top-center",
-    // })
+    ToastrModule.forRoot({
+      closeButton: true,
+      timeOut: 3000,// 3 seconds
+      progressBar: true,
+    })
   ],
   providers: [
     {

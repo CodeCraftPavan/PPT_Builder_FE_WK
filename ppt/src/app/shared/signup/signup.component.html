@@ -44,79 +44,131 @@
   </div>
    -->
 
-   <div class="container">
-    <!-- Email Verification Step -->
-    <mat-card *ngIf="!otpSent">
-      <mat-card-header class="heading">
-        <mat-card-title>Verify Email</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <form [formGroup]="emailForm" (ngSubmit)="sendOTP()" class="text-center mt-3">
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="Email" formControlName="email" type="email">
-          </mat-form-field>
-          <button mat-raised-button color="primary" type="submit">Send OTP</button>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  
-    <!-- OTP Verification Step -->
-    <mat-card *ngIf="otpSent && !otpVerified">
-      <mat-card-header class="heading">
-        <mat-card-title>Enter OTP</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <form [formGroup]="otpForm" (ngSubmit)="verifyOTP()" class="text-center mt-3">
-          <mat-form-field appearance="outline">
-            <input matInput placeholder="Enter OTP" formControlName="otp" type="text">
-          </mat-form-field>
-          <button mat-raised-button color="primary" type="submit">Verify OTP</button>
-        </form>
-      </mat-card-content>
-    </mat-card>
-  
-    <!-- Sign Up Step -->
-    <mat-card *ngIf="otpVerified">
-      <mat-card-header class="heading">
-        <mat-card-title>Sign Up</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="text-center mt-3">
-          <div class="row">
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="First Name" formControlName="firstName" type="text">
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Last Name" formControlName="lastName" type="text">
-              </mat-form-field>
-            </div>
+<div class="wrapper">
+
+  <!-- verify email -->
+  <div *ngIf="showVerifyEmailForm">
+    <h3 class="login-heading mb-4"><strong>Verify Email</strong></h3>
+    <form [formGroup]="verifyEmailForm" (ngSubmit)="onVerifyEmail()">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Email</label>
+        <input type="text" class="form-control" formControlName="email" name="email"
+          [ngClass]="{'is-invalid':(submitted && g['email'].errors) ||(g['email'].errors && g['email'].touched) }">
+        <div *ngIf="(submitted && g['email'].errors) ||(g['email'].errors && g['email'].touched)"
+          class="invalid-feedback">
+          <div *ngIf="g['email'].errors['required']">
+            Email is required
           </div>
-          <div class="row">
-            <mat-form-field appearance="outline">
-              <input matInput placeholder="Email" formControlName="email" type="email">
-            </mat-form-field>
+          <div *ngIf="g['email'].errors['pattern']">Email domain should be ecanarys.com</div>
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button class="btn btn-primary btn-login text-uppercase fw-bold bg-primary-delivery mb-2" type="submit">
+          <div class="spinner-border" role="status" style="font-size: 10px; width: 15px; height: 15px"
+            *ngIf="buttonText == 'Verifying Email Please Wait!'">
+            <span class="sr-only">Loading...</span>
           </div>
-          <div class="row">
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Password" formControlName="password" type="password">
-              </mat-form-field>
-            </div>
-            <div class="col">
-              <mat-form-field appearance="outline">
-                <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password">
-              </mat-form-field>
-            </div>
-          </div>
-          <button mat-raised-button color="primary" type="submit">Sign Up</button>
-        </form>
-      </mat-card-content>
-      <mat-card-actions>
-        <p>Already have an account? <a routerLink="/login">Login</a></p>
-      </mat-card-actions>
-    </mat-card>
+          {{buttonText}}
+        </button>
+
+      </div>
+
+    </form>
   </div>
-  
+
+  <!-- otp verify form -->
+  <div *ngIf="showOTPVerifyForm">
+    <h3 class="login-heading mb-4"><strong>Verify OTP</strong></h3>
+    <form [formGroup]="OTPVerifyForm" (ngSubmit)="onOTPVerifySubmit()">
+      <div class="form-group mb-3">
+        <label class="form-control-label">Email</label>
+        <input type="text" class="form-control disabled" formControlName="email" name="email" readonly>
+      </div>
+
+      <div class="form-group mb-3">
+        <label class="form-control-label">OTP</label>
+        <input type="text" class="form-control" formControlName="otp" name="otp"
+          [ngClass]="{'is-invalid':(submitted && h['otp'].errors) ||(h['otp'].errors && h['otp'].touched) }">
+        <div *ngIf="(submitted && h['otp'].errors) ||(h['otp'].errors && h['otp'].touched)" class="invalid-feedback">
+          <div *ngIf="h['otp'].errors['required']">
+            OTP is required
+          </div>
+
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button class="btn btn-primary btn-login text-uppercase fw-bold bg-primary-delivery mb-2" type="submit">
+          <div class="spinner-border" role="status" style="font-size: 10px; width: 15px; height: 15px"
+            *ngIf="buttonText == 'Verifying OTP Please Wait!'">
+            <span class="sr-only">Loading...</span>
+          </div>
+          {{buttonText}}
+        </button>
+
+      </div>
+
+    </form>
+  </div>
+
+  <!-- signup form -->
+  <div *ngIf="showRegisterForm">
+    <h3 class="login-heading mb-4" *ngIf="showRegisterForm"><strong>Register Your Details</strong></h3>
+    <form [formGroup]="signUpForm" (ngSubmit)="onUserRegister()">
+      <div class="form-group mb-3">
+        <label class="form-control-label">First Name</label>
+        <input type="text" class="form-control" formControlName="firstName" name="firstName"
+          [ngClass]="{'is-invalid':(submitted && g['firstName'].errors) ||(g['firstName'].errors && g['firstName'].touched) }">
+        <div *ngIf="(submitted && g['firstName'].errors) ||(g['firstName'].errors && g['firstName'].touched)"
+          class="invalid-feedback">
+          <div *ngIf="g['firstName'].errors['required']">
+            First Name is required
+          </div>
+          <div *ngIf="g['firstName'].errors['pattern']">Only Characters are allowed</div>
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <label class="form-control-label">Last Name</label>
+        <input type="text" class="form-control" formControlName="lastName" name="lastName"
+          [ngClass]="{'is-invalid':(submitted && g['lastName'].errors) ||(g['lastName'].errors && g['lastName'].touched) }">
+        <div *ngIf="(submitted && g['lastName'].errors) ||(g['lastName'].errors && g['lastName'].touched)"
+          class="invalid-feedback">
+          <div *ngIf="g['lastName'].errors['required']">
+            lastName is required
+          </div>
+          <div *ngIf="g['lastName'].errors['pattern']">Only Characters are allowed</div>
+        </div>
+      </div>
+      <div class="form-group mb-3">
+        <label class="form-control-label">Email</label>
+        <input type="text" class="form-control disabled" formControlName="userEMailId" name="email" readonly>
+      </div>
+      <div class="form-group mb-3">
+        <label class="form-control-label">Password</label>
+        <input type="text" class="form-control" formControlName="password" name="password"
+          [ngClass]="{'is-invalid':(submitted && g['password'].errors) ||(g['password'].errors && g['password'].touched) }">
+        <div *ngIf="(submitted && g['password'].errors) ||(g['password'].errors && g['password'].touched)"
+          class="invalid-feedback">
+          <div *ngIf="g['password'].errors['required']">
+            password is required
+          </div>
+
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button class="btn btn-primary btn-login text-uppercase fw-bold bg-primary-delivery mb-2" type="submit">
+          <div class="spinner-border" role="status" style="font-size: 10px; width: 15px; height: 15px"
+            *ngIf="buttonText == 'Submitting Please Wait!'">
+            <span class="sr-only">Loading...</span>
+          </div>
+          {{buttonText}}
+        </button>
+
+      </div>
+
+    </form>
+    <p>Already have an account? <a routerLink="/login">Login</a></p>
+  </div>
+</div>

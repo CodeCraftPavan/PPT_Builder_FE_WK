@@ -25,16 +25,16 @@ export class ForgetPasswordComponent {
   }
 
   sendResetPasswordEmail() {
-    this.ApiService.sendResetPasswordEmail(this.email).subscribe(
-      response => {
-        console.log('Reset password email sent:', response);
-        this.dialogRef.close();
-        this.openOtpDialog();
-      },
-      error => {
-        console.error('Error sending reset password email:', error);
-      }
-    );
+    // this.ApiService.sendResetPasswordEmail(this.email).subscribe(
+    //   response => {
+    //     console.log('Reset password email sent:', response);
+    //     this.dialogRef.close();
+    //     this.openOtpDialog();
+    //   },
+    //   error => {
+    //     console.error('Error sending reset password email:', error);
+    //   }
+    // );
   }
 
   openOtpDialog(): void {
