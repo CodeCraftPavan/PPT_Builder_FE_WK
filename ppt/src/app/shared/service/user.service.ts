@@ -30,23 +30,23 @@ export class UserService {
 
 
   mergePPt(data: any) {
-    return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.split.splitPPT, data)
+    return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.Split.SplitPPT, data)
   }
 
   addmetadata(data: any) {
-    return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.split.addmetadata, data)
+    return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.Split.Addmetadata, data)
   }
 
   getAllSlides(data: any) {
-    return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.mergeSlides.getAllSlides, data)
+    return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.MergeSlides.GetAllSlides, data)
   }
 
   searchSlides(data: any) {
-    return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.mergeSlides.searchSlides, data)
+    return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.MergeSlides.SearchSlides, data)
   }
 
   mergeSlides(data: any) {
-    return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.mergeSlides.mergeSlide, data)
+    return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.MergeSlides.MergeSlide, data)
   }
 
   submitFeedback(feedback: any): Observable<any> {
@@ -54,10 +54,8 @@ export class UserService {
   }
 
   addRating(data: any): Observable<any> {
-    return this.http.post<any>(`http://10.0.0.163:8081/api/RatingSlides/AddRating`, { data });
+    return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.Rating.AddRating,data);
   }
-
-
 
  
   resetPassword(email: string, newPassword: string): Observable<any> {

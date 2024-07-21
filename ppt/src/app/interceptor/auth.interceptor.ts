@@ -21,11 +21,10 @@ export class AuthInterceptor implements HttpInterceptor {
     if(result){
       return next.handle(req);
     }
-
-    let token: any = localStorage.getItem("Token");
-    console.log(token)
-    return next.handle(req.clone({ setHeaders: { token } }))
-   // return  token !== null ? next.handle(req.clone({ setHeaders: { token } })) : next.handle(req.clone({}));
+    let Token: any = localStorage.getItem("Token");
+    const Authorization = Token;
+   // return next.handle(req.clone({ setHeaders: { Authorization } }));
+    return  Token !== null ? next.handle(req.clone({ setHeaders: { Authorization } })) : next.handle(req.clone({}));
     
 
   

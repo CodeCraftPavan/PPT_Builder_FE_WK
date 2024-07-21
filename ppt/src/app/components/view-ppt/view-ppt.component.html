@@ -2,17 +2,16 @@
     <p>View PPT</p>
     <mat-dialog-content class="mat-typography">
         <iframe [src]="safeUrl" width="100%" height="500px" frameborder="0"></iframe>
-        <div class="rating-container col-md-4"> 
+        <div class="rating-container row mt-3"> 
             <label for="rating"> <b>Add Rating</b></label>             
-            <div class="rating col-md-6">          
+            <div class="rating col-md-6 mb-3">          
               <span *ngFor="let star of stars; index as i" (click)="rate(i + 1)">
                 <mat-icon>{{ i < rating ? 'star' : 'star_border' }}</mat-icon>
               </span>
             </div>  
             <div class="form-group">
-                <button mat-raised-button type="submit" color="primary" (click)="submitRating()">Submit</button>
+                <button mat-raised-button type="submit" color="primary" [disabled]="rating == 0" (click)="submitRating()">Submit</button>
             </div>
-
           </div>
   </mat-dialog-content>
   </div> 

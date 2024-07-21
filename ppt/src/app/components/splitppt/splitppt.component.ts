@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { UserService } from '../../shared/service/user.service';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatorService } from '../../shared/service/paginator.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-splitppt',
@@ -25,13 +26,17 @@ export class SplitpptComponent {
   filterText: string = "";
   pageSizeOptions: number[] =  [3,6,9];
 
+  @Input() maxRating = 5;
+  @Input() rating = 0;
+  stars: boolean[] = [];
+ 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private sanitizer: DomSanitizer,
-    // private toastrService: ToastrService,
+    private toastrService: ToastrService,
     public paginatorService: PaginatorService,
-    private ApiService: UserService,public dialog: MatDialog) {
+    private  userService: UserService,public dialog: MatDialog) {
 
     this.addInfoForm = this.formBuilder.group({
       value: [''],
@@ -44,7 +49,7 @@ export class SplitpptComponent {
 
 
   getSplitPptList(){
-    this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.itemsPerPage,this.currentPage)).subscribe((resp: any) => {
+    this.userService.getAllSlides(this.paginatorService.GetPagination(this.itemsPerPage,this.currentPage)).subscribe((resp: any) => {
        this.metadataList = resp.data.responseList;
        this.totalItems = resp.data.totalCount;
       // this.length = resp.data.length;
@@ -77,7 +82,7 @@ export class SplitpptComponent {
       pagination.pageNumber =0;
       payload.searchinput = val;
       payload.pagination = pagination;
-      this.ApiService.searchSlides(payload).subscribe((resp: any) => {
+      this.userService.searchSlides(payload).subscribe((resp: any) => {
         console.log(resp);
         this.metadataList = resp.data.responseList;
         console.log(this.metadataList,'Slide LIst');
@@ -133,6 +138,22 @@ export class SplitpptComponent {
     // dialogRef.afterClosed().subscribe(result => {
     //   console.log('The dialog was closed');
     // }); 
+  }
+
+  rate(rating: number) {
+    this.rating = rating;
+  }
+
+  submitRating() {
+    let payload :any= {};
+    payload.rating= this.rating
+   // payload.slideId= this.metadataList.metaData[0].id
+    if(this.rating != 0){
+    this.userService.addRating(payload).subscribe((response: any) => {
+      console.log(response, 'Ratings data');
+    })}else{
+      this.toastrService.error('Please select a rating')
+    }
   }
 
 }

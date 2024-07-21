@@ -1,46 +1,63 @@
 <div class="wrapper page">
     <div class="container bg-white br-2 p-3">
         <div class="row header-padding">
-            <div class="col-md-9 col-sm-6"><h4 class="text-black mt-2">List of Spilt Slides</h4></div>
+            <div class="col-md-9 col-sm-6">
+                <h4 class="text-black mt-2">List of Spilt Slides</h4>
+            </div>
             <div class="col-md-3 col-sm-6 button-right">
-                <button [disabled]="slideFileKeyList.length <= 1"  (click)="onMergeClick()" mat-raised-button color="primary">Download PPT</button> &nbsp;
-                    <button mat-raised-button color="primary"  (click)="onAddPptClick()">Split PPT</button>
-                
+                <button [disabled]="slideFileKeyList.length <= 1" (click)="onMergeClick()" mat-raised-button
+                    color="primary">Download PPT</button> &nbsp;
+                <button mat-raised-button color="primary" (click)="onAddPptClick()">Split PPT</button>
+
             </div>
         </div>
-        <hr/>
-         
-        <div class="row p-2" *ngFor="let mode of metadataList | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems } ; let i = index">
+        <hr />
+
+        <div class="row p-2"
+            *ngFor="let mode of metadataList | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems } ; let i = index">
             <div class="col-md-6">
                 <iframe [src]="getslideView(mode)" width="520px" height="400px" frameborder="0"></iframe>
             </div>
             <div class="col-md-4">
-                <div class="card">
+                <div class="card2">
                     <div class="card-body">
-                      <h5 class="card-text"> <span class="under">Title:</span> {{mode.metaDataOfSlide}}</h5>
-                      <h6 class="card-text"> <span class="under" >Keywords:</span> {{mode.keyWords}}</h6>
-                      <p class="card-text"><span class="under" >Downloaded Count:</span> {{mode.downloadCount}}</p>
-                      <p class="card-text"><span class="under" >Rating:</span> {{mode.rating}}</p>
-                      <p class="card-text"><span class="under" >Note:</span> {{mode.notes}}</p>
+                        <p class="card-text"><strong>Title:</strong> {{mode.metaDataOfSlide}}</p>
+                        <p class="card-text"><strong>Keywords:</strong> {{mode.keyWords}}</p>
+                        <p class="card-text"><strong>Downloaded Count:</strong> {{mode.downloadCount}}</p>
+                        <p class="card-text"><strong>Rating:</strong> {{mode.rating}}</p>
+                        <p class="card-text"><strong>Note:</strong> {{mode.notes}}</p>
+                        
+                    </div>
+                </div>
+                <div class="rating-container row mt-3"> 
+                    <label for="rating"> <b>Add Rating</b></label>             
+                    <div class="rating col-md-6 mb-3">          
+                      <span *ngFor="let star of stars; index as i" (click)="rate(i + 1)">
+                        <mat-icon>{{ i < rating ? 'star' : 'star_border' }}</mat-icon>
+                      </span>
+                    </div>  
+                    <div class="form-group">
+                        <button mat-raised-button type="submit" color="primary" [disabled]="rating == 0" (click)="submitRating()">Submit</button>
                     </div>
                   </div>
-        
+
             </div>
-            <div class="col-md-2" >
+            <div class="col-md-2">
                 <mat-checkbox (change)="onCheckboxChange(mode, $event.checked)"></mat-checkbox>
             </div>
         </div>
+      
         <div class="row">
             <div class="d-flex justify-content-end pagination-custom">
                 <pagination-controls previousLabel="Prev" nextLabel="Next" [responsive]="true"
-                  (pageChange)="handlePageChange($event)"></pagination-controls>
-              </div>
+                    (pageChange)="handlePageChange($event)"></pagination-controls>
+            </div>
 
         </div>
-        
+
         <div class="row p-2" *ngIf="metadataList.length == 0">
             <app-data-not-found></app-data-not-found>
         </div>
-      
+
     </div>
-  </div>
+</div>

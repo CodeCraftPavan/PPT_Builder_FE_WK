@@ -2,6 +2,7 @@ import { Component, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserService } from '../../shared/service/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-view-ppt',
@@ -18,17 +19,18 @@ export class ViewPptComponent {
   metadataList: any;
 
   constructor(private sanitizer: DomSanitizer,@Inject(MAT_DIALOG_DATA) public filData: any,
-   private dailogRef: MatDialogRef<ViewPptComponent>,private userService: UserService,){}
+   private dailogRef: MatDialogRef<ViewPptComponent>,private userService: UserService,
+  private toastr : ToastrService){}
 
   ngOnInit() {
     this.getslideView();
     this.stars = Array(this.maxRating).fill(false);
-    let value: any = localStorage.getItem("SplitData");
-    this.metadataList =JSON.parse(value);
+  
   }
 
   getslideView() {
     this.S3ObjUrl = this.filData.element.objectUrl;
+    console.log(this.S3ObjUrl);
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true` + '#toolbar=0');
   }
 
@@ -37,16 +39,15 @@ export class ViewPptComponent {
   }
 
   submitRating() {
-    let payload = {
-      rating: this.rating,
-      slideId: this.metadataList.metaData[0].id
-    };
-    // let payload: any = {};
-    // payload.rating = data.rating,
-    //   payload.slideId = data.slideId
+    let payload :any= {};
+    payload.rating= this.rating,
+    payload.slideId= this.filData.element.id
+    if(this.rating != 0){
     this.userService.addRating(payload).subscribe((response: any) => {
       console.log(response, 'Ratings data');
-    })
+    })}else{
+      this.toastr.error('Please select a rating')
+    }
   }
 
 
