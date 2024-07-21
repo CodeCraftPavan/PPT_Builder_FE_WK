@@ -25,8 +25,6 @@ export class MetadataComponent {
 
   addInfoForm: FormGroup;
   metadataList: any;
-
-
   S3ObjUrl: any;
   pramod: any;
   minDate = new Date();
@@ -39,7 +37,7 @@ export class MetadataComponent {
 
   constructor(private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
-    private ApiService: UserService,
+    private userService: UserService,
     private router: Router
   ) {
 
@@ -105,7 +103,7 @@ export class MetadataComponent {
       // Payload.notes = this.addInfoForm.controls['note'].value;
       let payload = this.addInfoForm.value;
 
-      this.ApiService.addmetadata(payload).subscribe((data: any) => {
+      this.userService.addmetadata(payload).subscribe((data: any) => {
        // console.log(data, 'meta data result');
         alert('Submitted Metadata Successfully');
       })
@@ -118,25 +116,17 @@ export class MetadataComponent {
   }
 
   submitRating() {
-
-    const data = {
+    let payload = {
       rating: this.rating,
       slideId: this.metadataList.metaData[0].id
     };
-    this.addRatings(data);
-  }
-
-  addRatings(data: any) {
-    // const Payload = {
-    //   rating: data.rating,
-    //   slideId: data.slideId
-    // };
-    var Payload: any = {};
-    Payload.rating = data.rating,
-      Payload.slideId = data.slideId
-    debugger;
-    this.ApiService.addRating(Payload).subscribe((response: any) => {
+    // let payload: any = {};
+    // payload.rating = data.rating,
+    //   payload.slideId = data.slideId
+    this.userService.addRating(payload).subscribe((response: any) => {
       console.log(response, 'Ratings data');
     })
   }
+
+  
 }

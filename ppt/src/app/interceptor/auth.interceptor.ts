@@ -23,8 +23,9 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     let token: any = localStorage.getItem("Token");
-    //return next.handle(req.clone({ setHeaders: { token } }))
-    return  token !== null ? next.handle(req.clone({ setHeaders: { token } })) : next.handle(req.clone({}));
+    console.log(token)
+    return next.handle(req.clone({ setHeaders: { token } }))
+   // return  token !== null ? next.handle(req.clone({ setHeaders: { token } })) : next.handle(req.clone({}));
     
 
   
