@@ -25,6 +25,7 @@ export class SplitpptComponent {
   totalItems: number = 0;
   filterText: string = "";
   pageSizeOptions: number[] =  [3,6,9];
+  sortOrder: string = "A"
 
   @Input() maxRating = 5;
   @Input() rating = 0;
@@ -45,11 +46,12 @@ export class SplitpptComponent {
   
   ngOnInit() {
     this.getSplitPptList();
+    this.stars = Array(this.maxRating).fill(false);
   }
 
 
   getSplitPptList(){
-    this.userService.getAllSlides(this.paginatorService.GetPagination(this.itemsPerPage,this.currentPage)).subscribe((resp: any) => {
+    this.userService.getAllSlides(this.paginatorService.GetPagination(this.itemsPerPage,this.currentPage, this.sortOrder)).subscribe((resp: any) => {
        this.metadataList = resp.data.responseList;
        this.totalItems = resp.data.totalCount;
       // this.length = resp.data.length;

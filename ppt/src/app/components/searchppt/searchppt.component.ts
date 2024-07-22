@@ -5,6 +5,8 @@ import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/shared/service/user.service';
 import { FeedbackComponent } from '../feedback/feedback.component';
+import { ToastrService } from 'ngx-toastr';
+import { PaginatorService } from '../../shared/service/paginator.service';
 
 @Component({
   selector: 'app-searchppt',
@@ -17,12 +19,16 @@ export class SearchpptComponent {
   metadataList :any[] =[];
   safeUrl: SafeResourceUrl;
   slideFileKeyList: any = [];
+  sortOrder ='A';
+  pageSize = 10;
+  pageIndex = 0;
+  sortDateAscending: boolean = true;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private sanitizer: DomSanitizer,
-    // private toastrService: ToastrService,
+    private toastrService: ToastrService,public paginatorService: PaginatorService,
     private ApiService: UserService,public dialog: MatDialog) {
 
     this.addInfoForm = this.formBuilder.group({
@@ -56,14 +62,13 @@ export class SearchpptComponent {
   search(){
     if(this.addInfoForm.valid){
       let val = this.addInfoForm.controls['value'].value;
-      console.log(val,'search text');
-      let payload :any = {};
-      let pagination:any = {};
-      pagination.pageSize = 10;
-      pagination.pageNumber =0;
-      payload.searchinput = val;
-      payload.pagination = pagination;
-      this.ApiService.searchSlides(payload).subscribe((resp: any) => {
+      // let payload :any = {};
+      // let pagination:any = {};
+      // pagination.pageSize = 10;
+      // pagination.pageNumber =0;
+      // payload.searchinput = val;
+      // payload.pagination = pagination;
+      this.ApiService.searchSlides(this.paginatorService.GetSearchPagination(this.pageSize, this.pageIndex, this.sortOrder, val)).subscribe((resp: any) => {
         console.log(resp);
         this.metadataList = resp.data.responseList;
         console.log(this.metadataList,'Slide LIst');
@@ -119,5 +124,23 @@ export class SearchpptComponent {
     // dialogRef.afterClosed().subscribe(result => {
     //   console.log('The dialog was closed');
     // }); 
+  }
+
+  onSortDateClick(sortDateAscending:boolean){
+    if(sortDateAscending == true) {
+      this.sortOrder = 'A';
+      this.sortDateAscending = false;
+    }else{
+         this.sortOrder = 'D';
+         this.sortDateAscending = true;
+    }
+
+    this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.pageSize, this.pageIndex, this.sortOrder)).subscribe((resp: any) => {
+      this.metadataList = resp.data.responseList;
+     
+      // console.log(this.metadataList, 'all metadata');
+    }, (error: any) => {
+    })
+
   }
 }

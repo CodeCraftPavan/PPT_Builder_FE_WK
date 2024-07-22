@@ -4,6 +4,7 @@
             <div class="col-md-9 col-sm-6"><h4 class="text-black mt-2">List of Slides</h4></div>
             <div class="col-md-3 col-sm-6 button-right">
                 
+                
             </div>
         </div>
      
@@ -19,7 +20,12 @@
                 </div>
                 <div class="col-md-4 form-group">
                     <button [disabled]="slideFileKeyList.length <= 1"  (click)="onMergeClick()" mat-raised-button color="primary">Download PPT</button> &nbsp;
-                    <!-- <button mat-raised-button color="primary"  (click)="onAddPptClick()">Split PPT</button> -->
+                    <span (click)="onSortDateClick(sortDateAscending)" [attr.disabled]="metadataList.length ==0">Sort By Date 
+                        <mat-icon color="primary" mat-list-icon *ngIf="!sortDateAscending" style="position:relative;top:7px">arrow_upward
+                        </mat-icon>
+                        <mat-icon color="primary" mat-list-icon *ngIf="sortDateAscending" style="position:relative;top:7px">arrow_downward
+                        </mat-icon>
+                      </span>
                 </div>
     
                

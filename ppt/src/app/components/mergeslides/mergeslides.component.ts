@@ -23,16 +23,18 @@ export class MergeslidesComponent {
   safeUrl: SafeResourceUrl;
   S3ObjUrl: any;
   pagedMetadataList: any;
-  displayedColumns: string[] = ['slno', 'keywords', 'metaDataOfSlide','downloadCount','rating','notes','view', 'add'];
+  displayedColumns: string[] = ['slno', 'keywords', 'metaDataOfSlide', 'downloadCount', 'rating', 'notes', 'view', 'add'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   // Pagination properties
-  pageSizeOptions: number[] =  [10, 20, 50, 100, 200];
+  pageSizeOptions: number[] = [10, 20, 50, 100, 200];
   pageSize = 10;
   pageIndex = 0;
+  sortOrder ='A';
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  sortDateAscending: boolean = true;
 
-  constructor(private ApiService: UserService,private sanitizer: DomSanitizer,private router: Router,
-    public dialog: MatDialog, public paginatorService: PaginatorService) {
+  constructor(private ApiService: UserService, private sanitizer: DomSanitizer, private router: Router,
+    public dialog: MatDialog,public paginatorService: PaginatorService) {
     this.getRFQ();
   }
 
@@ -41,18 +43,17 @@ export class MergeslidesComponent {
   }
 
   ngOnInit(): void {
- //   this.getRFQ();
+    //   this.getRFQ();
   }
 
   getRFQ() {
-    this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.pageSize,this.pageIndex)).subscribe((resp: any) => {
-       this.metadataList = resp.data.responseList;
+    this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.pageSize, this.pageIndex, this.sortOrder)).subscribe((resp: any) => {
+      this.metadataList = resp.data.responseList;
       this.dataSource = new MatTableDataSource<any>(this.metadataList);
       this.paginator.length = resp.data.totalCount;
       this.paginator.pageIndex = this.pageIndex;
-     // console.log(this.metadataList, 'all metadata');
+      // console.log(this.metadataList, 'all metadata');
     }, (error: any) => {
-
     })
   }
 
@@ -63,8 +64,9 @@ export class MergeslidesComponent {
   }
 
 
-  viewSlide(element:any){
-    const dialogRef = this.dialog.open(ViewPptComponent, {width: '750px',data: { element }
+  viewSlide(element: any) {
+    const dialogRef = this.dialog.open(ViewPptComponent, {
+      width: '750px', data: { element }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -72,11 +74,11 @@ export class MergeslidesComponent {
     });
   }
 
-  
+
 
   slideval = 0;
-  
-  getslideView(element:any) {
+
+  getslideView(element: any) {
     this.S3ObjUrl = element.objectUrl;
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
 
@@ -110,25 +112,26 @@ export class MergeslidesComponent {
   }
 
   onMergeClick(): void {
-  let data:any = {};
-      data.SlideKeyList = JSON.stringify(this.slideFileKeyList);
-      data.MergedSlidesKey= JSON.stringify(this.MergedSlidesKey);
-      data.MergedpresentationUrl= this.url
-      console.log(data)
-      const dialogRef = this.dialog.open(FeedbackComponent, {width: '500px',data: data
-      });
+    let data: any = {};
+    data.SlideKeyList = JSON.stringify(this.slideFileKeyList);
+    data.MergedSlidesKey = JSON.stringify(this.MergedSlidesKey);
+    data.MergedpresentationUrl = this.url
+    console.log(data)
+    const dialogRef = this.dialog.open(FeedbackComponent, {
+      width: '500px', data: data
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });    
-  //   this.router.navigate(['/dashboard/keypoints'],{ queryParams: { 
-  //     MergedpresentationUrl: this.url,
-  //     SlideKeyList: JSON.stringify(this.slideFileKeyList),
-  //     MergedSlidesKey: JSON.stringify(this.MergedSlidesKey)
-  //    } 
-  //  })
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+    //   this.router.navigate(['/dashboard/keypoints'],{ queryParams: { 
+    //     MergedpresentationUrl: this.url,
+    //     SlideKeyList: JSON.stringify(this.slideFileKeyList),
+    //     MergedSlidesKey: JSON.stringify(this.MergedSlidesKey)
+    //    } 
+    //  })
   }
-  onHomeClick():void{
+  onHomeClick(): void {
     this.router.navigate(["\home"]);
   }
 
@@ -141,6 +144,7 @@ export class MergeslidesComponent {
   updatePageData(): void {
     this.metadataList = this.metadataList.slice(this.pageIndex * this.pageSize, (this.pageIndex + 1) * this.pageSize);
   }
+
   download() {
     let Payload = {
       slideFileKeys: this.slideFileKeyList
@@ -150,7 +154,7 @@ export class MergeslidesComponent {
     this.ApiService.mergeSlides(Payload).subscribe((resp: any) => {
       console.log(resp, 'meta data result');
       this.MergedSlidesKey = resp.data.mergedSlideKeyId
-      console.log(this.MergedSlidesKey,'slideId')
+      console.log(this.MergedSlidesKey, 'slideId')
 
       this.url = resp.data;
       const a = document.createElement('a');
@@ -162,17 +166,37 @@ export class MergeslidesComponent {
 
       //window.open(url);
       setTimeout(() => {
-        this.router.navigate(['/download/keypoints'], { 
-          queryParams: { 
-          presentationUrl: this.url,
-          MergedSlidesKey: JSON.stringify(this.MergedSlidesKey)
-         } 
+        this.router.navigate(['/download/keypoints'], {
+          queryParams: {
+            presentationUrl: this.url,
+            MergedSlidesKey: JSON.stringify(this.MergedSlidesKey)
+          }
         });
       }, 1000);
-      },error => {
-        console.error('Error downloading presentation', error);
-        alert('Error downloading presentation');
-      }
+    }, error => {
+      console.error('Error downloading presentation', error);
+      alert('Error downloading presentation');
+    }
     );
+  }
+
+  onSortDateClick(sortDateAscending:boolean){
+    if(sortDateAscending == true) {
+      this.sortOrder = 'A';
+      this.sortDateAscending = false;
+    }else{
+         this.sortOrder = 'D';
+         this.sortDateAscending = true;
+    }
+
+    this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.pageSize, this.pageIndex, this.sortOrder)).subscribe((resp: any) => {
+      this.metadataList = resp.data.responseList;
+      this.dataSource = new MatTableDataSource<any>(this.metadataList);
+      this.paginator.length = resp.data.totalCount;
+      this.paginator.pageIndex = this.pageIndex;
+      // console.log(this.metadataList, 'all metadata');
+    }, (error: any) => {
+    })
+
   }
 }
