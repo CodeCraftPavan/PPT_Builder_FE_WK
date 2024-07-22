@@ -7,6 +7,7 @@ import { FeedbackComponent } from '../feedback/feedback.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatorService } from '../../shared/service/paginator.service';
 import { ToastrService } from 'ngx-toastr';
+import { ViewPptComponent } from '../view-ppt/view-ppt.component';
 
 @Component({
   selector: 'app-splitppt',
@@ -30,6 +31,7 @@ export class SplitpptComponent {
   @Input() maxRating = 5;
   @Input() rating = 0;
   stars: boolean[] = [];
+  
  
   constructor(
     private formBuilder: FormBuilder,
@@ -156,6 +158,17 @@ export class SplitpptComponent {
     })}else{
       this.toastrService.error('Please select a rating')
     }
+  }
+
+  viewSlide(element: any) {
+    const dialogRef = this.dialog.open(ViewPptComponent, {
+      width: '750px', data: { element }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.getSplitPptList();
+    });
   }
 
 }

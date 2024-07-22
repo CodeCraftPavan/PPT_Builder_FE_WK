@@ -45,6 +45,7 @@ export class ViewPptComponent {
     if(this.rating != 0){
     this.userService.addRating(payload).subscribe((response: any) => {
       console.log(response, 'Ratings data');
+      this.dailogRef.close()
     })}else{
       this.toastr.error('Please select a rating')
     }

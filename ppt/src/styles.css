@@ -236,3 +236,9 @@ label{
 .carousel-control-next-icon, .carousel-control-prev-icon{
   background-color: gray;
 }
+
+.custom-hyperlink{
+  text-decoration: underline;
+  font-size: 16px;
+
+}
