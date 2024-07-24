@@ -50,10 +50,9 @@
               </mat-form-field>
               <div class="rating-container col-md-4"> 
                 <label for="rating"> <b>Add Rating</b></label>             
-                <div class="rating col-md-6">
-                  
+                <div class="rating col-md-6" >
                   <span *ngFor="let star of stars; index as i" (click)="rate(i + 1)">
-                    <mat-icon>{{ i < rating ? 'star' : 'star_border' }}</mat-icon>
+                    <mat-icon display="d-md-flex">{{ i < rating ? 'star' : 'star_border' }}</mat-icon>
                   </span>
                 </div>       
               </div>

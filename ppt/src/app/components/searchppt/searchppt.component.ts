@@ -50,7 +50,7 @@ export class SearchpptComponent {
        this.metadataList = resp.data.responseList
       // this.length = resp.data.length;
     //   this.dataSource = new MatTableDataSource<any>(this.metadataList);
-    //  // this.updatePageData();
+    //   this.updatePageData();
     //   this.paginator.length = resp.data.totalCount;
     //   this.paginator.pageIndex = this.pageIndex;
       console.log(this.metadataList, 'all metadata');
@@ -62,14 +62,21 @@ export class SearchpptComponent {
   search(){
     if(this.addInfoForm.valid){
       let val = this.addInfoForm.controls['value'].value;
+
+      const searchPayload = {
+        searchinput: val,
+        pagination: this.paginatorService.GetSearchPagination(this.pageSize, this.pageIndex, this.sortOrder)
+      }
       // let payload :any = {};
       // let pagination:any = {};
       // pagination.pageSize = 10;
       // pagination.pageNumber =0;
       // payload.searchinput = val;
       // payload.pagination = pagination;
-      this.ApiService.searchSlides(this.paginatorService.GetSearchPagination(this.pageSize, this.pageIndex, this.sortOrder, val)).subscribe((resp: any) => {
-        console.log(resp);
+      debugger;
+      this.ApiService.searchSlides(searchPayload).subscribe((resp: any) => {
+      //this.ApiService.searchSlides(this.paginatorService.GetSearchPagination(this.pageSize, this.pageIndex, this.sortOrder, val)).subscribe((resp: any) => {
+        console.log(resp, 'testData');
         this.metadataList = resp.data.responseList;
         console.log(this.metadataList,'Slide LIst');
       } )

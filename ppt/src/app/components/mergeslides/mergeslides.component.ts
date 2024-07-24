@@ -23,7 +23,7 @@ export class MergeslidesComponent {
   safeUrl: SafeResourceUrl;
   S3ObjUrl: any;
   pagedMetadataList: any;
-  displayedColumns: string[] = ['slno', 'keywords', 'metaDataOfSlide', 'downloadCount', 'rating', 'notes', 'view', 'add'];
+  displayedColumns: string[] = ['slno', 'metaDataOfSlide', 'keywords',  'downloadCount', 'rating', 'notes', 'view', 'add'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   // Pagination properties
   pageSizeOptions: number[] = [10, 20, 50, 100, 200];

@@ -15,13 +15,14 @@ export class PaginatorService {
     filterCondition.sortOrder = sortOrder;
     return filterCondition;
   }
-
-  public GetSearchPagination(pageSize: number, pageNumber: number, sortOrder: string, searchinput:string) {
+  public GetSearchPagination(pageSize: number, pageNumber: number, sortOrder: string) {
+  //public GetSearchPagination(pageSize: number, pageNumber: number, sortOrder: string, searchinput:string) {
     var filterCondition = new SearchPaginator();
+    //filterCondition.searchinput = searchinput;
     filterCondition.pageNumber = pageNumber;
     filterCondition.pageSize = pageSize;
     filterCondition.sortOrder = sortOrder;
-    filterCondition.searchinput = searchinput;
+    
     return filterCondition;
   }
 

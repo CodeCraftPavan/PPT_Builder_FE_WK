@@ -23,13 +23,15 @@
                     <div class="card-body">
                         <p class="card-text"><strong>Title:</strong> {{mode.metaDataOfSlide}}</p>
                         <p class="card-text"><strong>Keywords:</strong> {{mode.keyWords}}</p>
-                        <p class="card-text"><strong>Downloaded Count:</strong> {{mode.downloadCount}}</p>
+                        <p class="card-text"><strong>Notes:</strong> {{mode.notes}}</p>
+                        <p class="card-text"><strong>Created At:</strong> {{mode.createdAt}}</p>
+                        <p class="card-text"><strong>Downloads:</strong> {{mode.downloadCount}}</p>
                         <p class="card-text"><strong>Rating:</strong>
                             <span *ngFor="let star of stars; index as i" style="position: relative;top: 7px;">
                                 <mat-icon>{{ i < mode.rating ? 'star' : 'star_border' }}</mat-icon>
                               </span>
                         </p>
-                        <p class="card-text"><strong>Note:</strong> {{mode.notes}}</p>
+                        
                         
                     </div>
                 </div>

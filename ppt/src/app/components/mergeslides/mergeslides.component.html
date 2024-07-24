@@ -52,6 +52,11 @@
                   <th mat-header-cell *matHeaderCellDef>SL No.</th>
                   <td mat-cell *matCellDef="let element; let i=index"> {{ i+1}} </td>
               </ng-container>
+
+              <ng-container matColumnDef="metaDataOfSlide"> 
+                <th mat-header-cell *matHeaderCellDef>Title</th>
+                <td mat-cell *matCellDef="let element"> {{element.metaDataOfSlide}} </td>
+            </ng-container>
           
               <ng-container matColumnDef="keywords">
                   <th mat-header-cell *matHeaderCellDef >Keywords</th>
@@ -59,7 +64,7 @@
               </ng-container>
 
               <ng-container matColumnDef="downloadCount"> 
-                <th mat-header-cell *matHeaderCellDef>Downloaded Count</th>
+                <th mat-header-cell *matHeaderCellDef>Downloads</th>
                 <td mat-cell *matCellDef="let element"> {{element.downloadCount}} </td>
             </ng-container>
 
@@ -69,10 +74,7 @@
           </ng-container>
           
           
-              <ng-container matColumnDef="metaDataOfSlide"> 
-                  <th mat-header-cell *matHeaderCellDef>Title</th>
-                  <td mat-cell *matCellDef="let element"> {{element.metaDataOfSlide}} </td>
-              </ng-container>
+
               <ng-container matColumnDef="notes">
                   <th mat-header-cell *matHeaderCellDef>Notes</th>
                   <td mat-cell *matCellDef="let element" > {{element.notes}} </td>

@@ -62,3 +62,11 @@ mat-card {
   display: flex;
   align-items: flex-start;
 }
+
+.rating {
+  display: flex;
+}
+
+.star {
+  cursor: pointer;
+}
