@@ -1,0 +1,32 @@
+.text-left {
+    text-align: left;
+  }
+  
+  .card-title,
+  .card-subtitle,
+  .card-text {
+    margin-bottom: 10px; /* Adjust the spacing as needed */
+  }
+  
+  .under {
+    font-weight: bold;
+    min-width: 100px;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .info-row {
+    display: flex;
+    grid-template-columns: 150px 1fr;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust the spacing as needed */
+  }
+
+  .data {
+    flex: 1;
+    text-align: left;
+  }
+  

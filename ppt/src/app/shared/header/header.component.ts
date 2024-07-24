@@ -11,12 +11,16 @@ export class HeaderComponent implements OnInit {
 
   menuList: any;
   loggedUser:any = {};
-  userName = localStorage.getItem('userName')
+  firstName: any = localStorage.getItem('firstName');
+  lastname: any = localStorage.getItem('lastName');
+  userName = this.firstName +" "+this.lastname;
+  
 
   constructor(private masterService: MasterService) {}
 
   ngOnInit(): void {
     this.getMenuListByUserRole()
+    console.log(this.userName);
   }
 
 

@@ -49,13 +49,21 @@ export class MetadataComponent {
      // date:[this.minDate]
     })
 
-    let value: any = localStorage.getItem("SplitData");
-    this.slideList = JSON.parse(value)
-    this.metadataList = this.slideList;
-    //this.metadataList = this.slideList.metaData
-    if (this.metadataList) {
-      this.S3ObjUrl = this.metadataList.slideList[0]
-      this.pramod = this.metadataList.metaData[0];
+    // let value: any = localStorage.getItem("SplitData");
+    // this.slideList = JSON.parse(value)
+    // this.metadataList = this.slideList;
+    // //this.metadataList = this.slideList.metaData
+    // if (this.metadataList) {
+    //   this.S3ObjUrl = this.metadataList.slideList[0]
+    //   this.pramod = this.metadataList.metaData[0];
+
+      let value: any = localStorage.getItem("SplitData");
+      this.slideList = JSON.parse(value)
+      this.metadataList = this.slideList;
+      //this.metadataList = this.slideList.metaData
+      if (this.metadataList) {
+        this.S3ObjUrl = this.metadataList.listWithUrl[0].s3FilePath
+        this.pramod = this.metadataList.metaData[0];
     }
 
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
@@ -75,9 +83,11 @@ export class MetadataComponent {
   update() {
     this.val++;
     this.addInfoForm.reset();
-    this.S3ObjUrl = this.slideList.slideList[this.val]
+    this.S3ObjUrl = this.metadataList.listWithUrl[this.val].s3FilePath;
+    //this.slideList.slideList[this.val]
 
-    this.pramod = this.metadataList.metaData[this.val];
+    this.pramod = this.metadataList.listWithUrl[this.val];
+
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
   }
 
@@ -101,7 +111,14 @@ export class MetadataComponent {
       // Payload.metaDataOfSlide = this.addInfoForm.controls['title'].value;
       // Payload.keyWords = this.addInfoForm.controls['keywords'].value;
       // Payload.notes = this.addInfoForm.controls['note'].value;
+      let data: any = localStorage.getItem("SplitData");
+      debugger;
+      let metaDataofSlide = JSON.parse(data);
+
+      let metaDataId: any = metaDataofSlide.listWithUrl[0].id;
+      console.log(metaDataId, 'MetaDataId');
       let payload = this.addInfoForm.value;
+      payload.id = this.pramod.id;
 
       this.userService.addmetadata(payload).subscribe((data: any) => {
        // console.log(data, 'meta data result');

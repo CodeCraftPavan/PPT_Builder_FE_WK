@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
@@ -7,6 +7,8 @@ import { UserService } from 'src/app/shared/service/user.service';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { ToastrService } from 'ngx-toastr';
 import { PaginatorService } from '../../shared/service/paginator.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-searchppt',
@@ -19,10 +21,26 @@ export class SearchpptComponent {
   metadataList :any[] =[];
   safeUrl: SafeResourceUrl;
   slideFileKeyList: any = [];
-  sortOrder ='A';
+
+  // Pagination properties
+  pageSizeOptions: number[] = [10, 20, 50, 100, 200];
   pageSize = 10;
-  pageIndex = 0;
+  pageIndex = 1;
+  sortOrder ='DEF';
+  //sortOrder ='A';
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  totalItems: number = 0;
+  currentPage: number = 0;
+  itemsPerPage: number = 3;  
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  
+  //sortOrder ='DEF';
+  //sortOrder ='A';
+  //pageSize = 10;
+  //pageIndex = 0;
   sortDateAscending: boolean = true;
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,6 +58,15 @@ export class SearchpptComponent {
    // this.getSplitPptList();
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  pageChanged(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.search();
+  }
 
   getSplitPptList(){
     let pagination:any = {};
@@ -78,6 +105,9 @@ export class SearchpptComponent {
       //this.ApiService.searchSlides(this.paginatorService.GetSearchPagination(this.pageSize, this.pageIndex, this.sortOrder, val)).subscribe((resp: any) => {
         console.log(resp, 'testData');
         this.metadataList = resp.data.responseList;
+        this.dataSource = new MatTableDataSource<any>(this.metadataList);
+        this.paginator.length = resp.data.totalCount;
+        this.paginator.pageIndex = this.pageIndex;
         console.log(this.metadataList,'Slide LIst');
       } )
     }

@@ -42,7 +42,10 @@ export class LoginComponent {
       this.loginText = 'Logging Please Wait!'
       this.ApiService.login(this.loginForm.value).subscribe({next:(data: any) => {
         if(data.data){
-        localStorage.setItem('Token', data.data);
+          debugger;
+        localStorage.setItem('Token', data.data.token);
+        localStorage.setItem('firstName', data.data.firstName);
+        localStorage.setItem('lastName', data.data.lastName);
         this.router.navigate(['/dashboard/splitppt']);
         this.loginText = "Log In";
         }

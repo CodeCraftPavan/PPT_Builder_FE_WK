@@ -3,8 +3,6 @@
         <div class="row header-padding">
             <div class="col-md-9 col-sm-6"><h4 class="text-black mt-2">List of Slides</h4></div>
             <div class="col-md-3 col-sm-6 button-right">
-                
-                
             </div>
         </div>
      
@@ -27,27 +25,50 @@
                         </mat-icon>
                       </span>
                 </div>
-    
-               
                 </div>             
-            </form>  
-         
+            </form>
         </div>
         <hr/>
          
-        <div class="row p-2" *ngFor="let mode of metadataList">
+        <!-- <div class="row p-2" *ngFor="let mode of metadataList"> -->
+        <div class="row p-2" *ngFor="let mode of metadataList | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems } ; let i = index">
             <div class="col-md-6">
                 <iframe [src]="getslideView(mode)" width="520px" height="400px" frameborder="0"></iframe>
             </div>
             <div class="col-md-4">
-                <div class="card">
+                <!-- <div class="card">
                     <div class="card-body">
                       <h5 class="card-title"> <span class="under">Title:</span> {{mode.metaDataOfSlide}}</h5>
                       <h6 class="card-subtitle mb-2 text-muted"> <span class="under" >Keywords:</span> {{mode.keyWords}}</h6>
                       <p class="card-text"><span class="under" >Note:</span> {{mode.notes}}</p>
+                      <h6 class="card-text"><span class="under">Created At:</span> {{mode.createdAt}}</h6>
                     </div>
-                  </div>
-        
+                  </div> -->
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="info-row">
+                          <h5 class="card-title">
+                            <span class="under">Title:</span> <span class="data">{{mode.metaDataOfSlide}}</span>
+                          </h5>
+                        </div>
+                        <div class="info-row">
+                          <h6 class="card-subtitle mb-2 text-muted">
+                            <span class="under">Keywords:</span> <span class="data">{{mode.keyWords}}</span>
+                          </h6>
+                        </div>
+                        <div class="info-row">
+                          <p class="card-text">
+                            <span class="under">Note:</span> <span class="data">{{mode.notes}}</span>
+                          </p>
+                        </div>
+                        <div class="info-row">
+                          <h6 class="card-text">
+                            <span class="under">Created At:</span> <span class="data">{{mode.createdAt}}</span>
+                          </h6>
+                        </div>
+                      </div>                      
+                </div>
             </div>
             <div class="col-md-2" >
                 <mat-checkbox (change)="onCheckboxChange(mode, $event.checked)"></mat-checkbox>
@@ -56,6 +77,10 @@
         <div class="row p-2" *ngIf="metadataList.length == 0">
             <app-data-not-found></app-data-not-found>
         </div>
+        
+      
+      <mat-paginator #paginatorPageSize [pageSizeOptions]="pageSizeOptions"
+        showFirstLastButtons  (page)="pageChanged($event)"></mat-paginator>
       
     </div>
   </div>
