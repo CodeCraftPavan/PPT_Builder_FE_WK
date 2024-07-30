@@ -71,9 +71,7 @@
           </div>
           {{buttonText}}
         </button>
-
       </div>
-
     </form>
   </div>
 
@@ -106,51 +104,49 @@
           </div>
           {{buttonText}}
         </button>
-
       </div>
-
     </form>
   </div>
 
   <!-- signup form -->
   <div *ngIf="showRegisterForm">
-    <h3 class="login-heading mb-4" *ngIf="showRegisterForm"><strong>Register Your Details</strong></h3>
+    <h3 class="login-heading mb-4" ><strong>Register Your Details</strong></h3>
     <form [formGroup]="signUpForm" (ngSubmit)="onUserRegister()">
       <div class="form-group mb-3">
         <label class="form-control-label">First Name</label>
         <input type="text" class="form-control" formControlName="firstName" name="firstName"
-          [ngClass]="{'is-invalid':(submitted && g['firstName'].errors) ||(g['firstName'].errors && g['firstName'].touched) }">
-        <div *ngIf="(submitted && g['firstName'].errors) ||(g['firstName'].errors && g['firstName'].touched)"
+          [ngClass]="{'is-invalid':(submitted && f['firstName'].errors) ||(f['firstName'].errors && f['firstName'].touched) }">
+        <div *ngIf="(submitted && f['firstName'].errors) ||(f['firstName'].errors && f['firstName'].touched)"
           class="invalid-feedback">
-          <div *ngIf="g['firstName'].errors['required']">
+          <div *ngIf="f['firstName'].errors['required']">
             First Name is required
           </div>
-          <div *ngIf="g['firstName'].errors['pattern']">Only Characters are allowed</div>
+          <div *ngIf="f['firstName'].errors['pattern']">Only Characters are allowed</div>
         </div>
       </div>
       <div class="form-group mb-3">
         <label class="form-control-label">Last Name</label>
         <input type="text" class="form-control" formControlName="lastName" name="lastName"
-          [ngClass]="{'is-invalid':(submitted && g['lastName'].errors) ||(g['lastName'].errors && g['lastName'].touched) }">
-        <div *ngIf="(submitted && g['lastName'].errors) ||(g['lastName'].errors && g['lastName'].touched)"
+          [ngClass]="{'is-invalid':(submitted && f['lastName'].errors) ||(f['lastName'].errors && f['lastName'].touched) }">
+        <div *ngIf="(submitted && f['lastName'].errors) ||(f['lastName'].errors && f['lastName'].touched)"
           class="invalid-feedback">
-          <div *ngIf="g['lastName'].errors['required']">
+          <div *ngIf="f['lastName'].errors['required']">
             lastName is required
           </div>
-          <div *ngIf="g['lastName'].errors['pattern']">Only Characters are allowed</div>
+          <div *ngIf="f['lastName'].errors['pattern']">Only Characters are allowed</div>
         </div>
       </div>
       <div class="form-group mb-3">
         <label class="form-control-label">Email</label>
         <input type="text" class="form-control disabled" formControlName="userEMailId" name="email" readonly>
-      </div>
+      </div>  
       <div class="form-group mb-3">
         <label class="form-control-label">Password</label>
         <input type="text" class="form-control" formControlName="password" name="password"
-          [ngClass]="{'is-invalid':(submitted && g['password'].errors) ||(g['password'].errors && g['password'].touched) }">
-        <div *ngIf="(submitted && g['password'].errors) ||(g['password'].errors && g['password'].touched)"
+          [ngClass]="{'is-invalid':(submitted && f['password'].errors) ||(f['password'].errors && f['password'].touched) }">
+        <div *ngIf="(submitted && f['password'].errors) ||(f['password'].errors && f['password'].touched)"
           class="invalid-feedback">
-          <div *ngIf="g['password'].errors['required']">
+          <div *ngIf="f['password'].errors['required']">
             password is required
           </div>
 
@@ -158,7 +154,7 @@
       </div>
 
       <div class="d-grid">
-        <button class="btn btn-primary btn-login text-uppercase fw-bold bg-primary-delivery mb-2" type="submit">
+        <button type="submit" class="btn btn-primary btn-login text-uppercase fw-bold bg-primary-delivery mb-2" >
           <div class="spinner-border" role="status" style="font-size: 10px; width: 15px; height: 15px"
             *ngIf="buttonText == 'Submitting Please Wait!'">
             <span class="sr-only">Loading...</span>
@@ -169,6 +165,8 @@
       </div>
 
     </form>
-    <p>Already have an account? <a routerLink="/login">Login</a></p>
+    <p>Already have an account? 
+      <a class="small" href="login">Login</a>
+    </p>
   </div>
 </div>

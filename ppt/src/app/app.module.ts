@@ -21,8 +21,13 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   imports: [
     CommonModule,
-    BrowserModule,BrowserAnimationsModule,PagesModule,SharedModule,
-    AppRoutingModule,LayoutModule,HttpClientModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    PagesModule,
+    SharedModule,
+    AppRoutingModule,
+    LayoutModule,
+    HttpClientModule,
     ToastrModule.forRoot({
       closeButton: true,
       timeOut: 3000,// 3 seconds

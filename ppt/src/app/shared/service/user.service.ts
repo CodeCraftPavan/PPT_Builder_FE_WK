@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { APP_DI_CONFIG } from '../../app.config';
+import { passwordReset } from 'src/app/utils/passwordReset';
 
 
 @Injectable({
@@ -27,9 +28,11 @@ export class UserService {
   createUser(data: any) {
     return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.Authentication.CreateUser, data);
   }
-
+  
 
   mergePPt(data: any) {
+    //return this.http.post<any>('https://localhost:44361/syncFusion-Split', data)
+    
     return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.Split.SplitPPT, data)
   }
 
@@ -42,6 +45,7 @@ export class UserService {
   }
 
   searchSlides(data: any) {
+    //return this.http.post<any>("https://localhost:44361/search-slide", data)
     return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.MergeSlides.SearchSlides, data)
   }
 
@@ -58,8 +62,8 @@ export class UserService {
   }
 
  
-  resetPassword(email: string, newPassword: string): Observable<any> {
-    return this.http.post<any>(`http://10.0.0.163:8081/api/AuthManagement/ResetPassword'`, { email, newPassword });
+  resetPassword(data: passwordReset) {
+    return this.http.post<any>(`http://10.0.0.163:8081/api/AuthManagement/ResetPassword`,  data);
   }
 
   

@@ -10,6 +10,7 @@ import { PaginatorService } from '../../shared/service/paginator.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
+
 @Component({
   selector: 'app-searchppt',
   templateUrl: './searchppt.component.html',
@@ -22,9 +23,11 @@ export class SearchpptComponent {
   safeUrl: SafeResourceUrl;
   slideFileKeyList: any = [];
 
+  showRefreshButton: boolean = false
+
   // Pagination properties
-  pageSizeOptions: number[] = [10, 20, 50, 100, 200];
-  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 20, 50, 100, 200];
+  pageSize = 5;
   pageIndex = 1;
   sortOrder ='DEF';
   //sortOrder ='A';
@@ -32,7 +35,7 @@ export class SearchpptComponent {
 
   totalItems: number = 0;
   currentPage: number = 0;
-  itemsPerPage: number = 3;  
+  itemsPerPage: number = 5;  
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   
   //sortOrder ='DEF';
@@ -75,7 +78,7 @@ export class SearchpptComponent {
 
     this.ApiService.getAllSlides(pagination).subscribe((resp: any) => {
        this.metadataList = resp.data.responseList
-      // this.length = resp.data.length;
+    //   this.length = resp.data.length;
     //   this.dataSource = new MatTableDataSource<any>(this.metadataList);
     //   this.updatePageData();
     //   this.paginator.length = resp.data.totalCount;
@@ -106,11 +109,17 @@ export class SearchpptComponent {
         console.log(resp, 'testData');
         this.metadataList = resp.data.responseList;
         this.dataSource = new MatTableDataSource<any>(this.metadataList);
-        this.paginator.length = resp.data.totalCount;
+        this.paginator.length = resp.data.totalCount; 
         this.paginator.pageIndex = this.pageIndex;
+        this.paginator.pageSize = searchPayload.pagination.pageSize;
+        this.itemsPerPage = searchPayload.pagination.pageSize;
         console.log(this.metadataList,'Slide LIst');
       } )
     }
+  }
+
+  refreshResults() {
+    this.search();
   }
 
   getslideView(data: any) { 

@@ -23,20 +23,20 @@ export class LoginComponent {
   submitted :boolean = false;
 
 
-  constructor(private formBuilder: FormBuilder,private router: Router,private ApiService: UserService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private ApiService: UserService) {
     this.loginForm = this.formBuilder.group({
       userEmail: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
-    
   }
 
   ngOnInit(){
     
   }
-  
 
-  
   onLogin() {
     if (this.loginForm.valid) {
       this.loginText = 'Logging Please Wait!'
@@ -46,7 +46,7 @@ export class LoginComponent {
         localStorage.setItem('Token', data.data.token);
         localStorage.setItem('firstName', data.data.firstName);
         localStorage.setItem('lastName', data.data.lastName);
-        this.router.navigate(['/dashboard/splitppt']);
+        this.router.navigate(['/dashboard/mergeppt']);
         this.loginText = "Log In";
         }
       },error: (error:any) => {

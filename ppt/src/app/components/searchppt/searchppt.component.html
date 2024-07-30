@@ -16,16 +16,24 @@
                 <div class="col-md-2 form-group">
                     <button (click)="search()"  mat-raised-button color="primary" type="submit">Search</button>
                 </div>
+                
                 <div class="col-md-4 form-group">
-                    <button [disabled]="slideFileKeyList.length <= 1"  (click)="onMergeClick()" mat-raised-button color="primary">Download PPT</button> &nbsp;
-                    <span (click)="onSortDateClick(sortDateAscending)" [attr.disabled]="metadataList.length ==0">Sort By Date 
+                    <button [disabled]="slideFileKeyList.length < 1"  (click)="onMergeClick()" mat-raised-button color="primary">Download PPT</button> &nbsp;
+                    <!-- <span (click)="onSortDateClick(sortDateAscending)" [attr.disabled]="metadataList.length ==0">Sort By Date 
                         <mat-icon color="primary" mat-list-icon *ngIf="!sortDateAscending" style="position:relative;top:7px">arrow_upward
                         </mat-icon>
                         <mat-icon color="primary" mat-list-icon *ngIf="sortDateAscending" style="position:relative;top:7px">arrow_downward
                         </mat-icon>
-                      </span>
+                      </span> -->
+                      <button (click)="refreshResults()" mat-raised-button color="primary">
+                        Refresh
+                     </button>
                 </div>
-                </div>             
+
+                <div class="col-md-4 form-group">
+        
+                </div>
+                </div>
             </form>
         </div>
         <hr/>
@@ -77,11 +85,8 @@
         <div class="row p-2" *ngIf="metadataList.length == 0">
             <app-data-not-found></app-data-not-found>
         </div>
-        
-      
-      <mat-paginator #paginatorPageSize [pageSizeOptions]="pageSizeOptions"
-        showFirstLastButtons  (page)="pageChanged($event)"></mat-paginator>
-      
+        <mat-paginator #paginatorPageSize [pageSizeOptions]="pageSizeOptions"
+          showFirstLastButtons  (page)="pageChanged($event)"></mat-paginator>      
     </div>
   </div>
 

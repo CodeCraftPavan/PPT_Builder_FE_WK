@@ -50,7 +50,7 @@
               </mat-form-field>
               <div class="rating-container col-md-4"> 
                 <label for="rating"> <b>Add Rating</b></label>             
-                <div class="rating col-md-6" >
+                <div class="rating" >
                   <span *ngFor="let star of stars; index as i" (click)="rate(i + 1)">
                     <mat-icon display="d-md-flex">{{ i < rating ? 'star' : 'star_border' }}</mat-icon>
                   </span>
@@ -61,11 +61,7 @@
               </div>
               
           </form>
-          <!--Add Rating  -->
-
-           
-          
-          
+          <!--Add Rating  -->                               
         </div>
       </div>
       <div class="row mt-3">
@@ -81,14 +77,8 @@
             <mat-datepicker #picker3></mat-datepicker>
           </mat-form-field> -->
 
-         </div>
-      
-        
+         </div>              
       </div>
-
-  
-   
-    
   </div>
 </div>
 

@@ -17,21 +17,21 @@ export class ResetPasswordComponent {
     private ApiService: UserService,
   ) {}
 
-  changePassword() {
-    if (this.newPassword !== this.confirmPassword) {
-      console.error('Passwords do not match');
-      return;
-    }
-    this.ApiService.resetPassword(this.data.email, this.newPassword).subscribe(
-      (response:any) => {
-        console.log('Password reset successful:', response);
-        this.dialogRef.close();
-      },
-      (error:any) => {
-        console.error('Password reset failed:', error);
-      }
-    );
-  }
+  // changePassword() {
+  //   if (this.newPassword !== this.confirmPassword) {
+  //     console.error('Passwords do not match');
+  //     return;
+  //   }
+  //   this.ApiService.resetPassword(this.data.email, this.newPassword).subscribe(
+  //     (response:any) => {
+  //       console.log('Password reset successful:', response);
+  //       this.dialogRef.close();
+  //     },
+  //     (error:any) => {
+  //       console.error('Password reset failed:', error);
+  //     }
+  //   );
+  // }
 
 
 }

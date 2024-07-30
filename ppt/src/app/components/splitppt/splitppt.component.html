@@ -5,7 +5,7 @@
                 <h4 class="text-black mt-2">List of Spilt Slides</h4>
             </div>
             <div class="col-md-3 col-sm-6 button-right">
-                <button [disabled]="slideFileKeyList.length <= 1" (click)="onMergeClick()" mat-raised-button
+                <button [disabled]="slideFileKeyList.length < 1" (click)="onMergeClick()" mat-raised-button
                     color="primary">Download PPT</button> &nbsp;
                 <button mat-raised-button color="primary" (click)="onAddPptClick()">Split PPT</button>
 

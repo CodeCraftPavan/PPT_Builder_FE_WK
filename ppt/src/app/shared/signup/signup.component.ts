@@ -21,11 +21,16 @@ export class SignupComponent {
   showRegisterForm: boolean = false;
   buttonText = 'Submit';
   emailPattern = '^.+@ecanarys.com$';
-  get g(){ return this.verifyEmailForm.controls};
+  get g(){ return this.verifyEmailForm.controls}; 
   get h(){ return this.OTPVerifyForm.controls};
+  get f() { return this.signUpForm.controls; }
   submitted :boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private ApiService: UserService, private toastrService: ToastrService,private router:Router
+  constructor(
+    private formBuilder: FormBuilder, 
+    private ApiService: UserService, 
+    private toastrService: ToastrService,
+    private router:Router
   ) { 
 
     this.verifyEmailForm = this.formBuilder.group({
@@ -39,7 +44,7 @@ export class SignupComponent {
     this.signUpForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      userEMailId: ['', [Validators.required, Validators.email]],
+      userEMailId: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
      // confirmPassword: ['', Validators.required]
     });
@@ -70,9 +75,12 @@ export class SignupComponent {
       this.buttonText = 'Submitting Please Wait!';
       this.ApiService.verifyOTP(this.OTPVerifyForm.value).subscribe({next:(data: any) => {
         this.buttonText = "Submit";
+        this.signUpForm.controls['userEMailId'].setValue(this.OTPVerifyForm.controls['email'].value)
+
         this.toastrService.success('Email has been verified successfully!');
         this.showOTPVerifyForm = false;
        // this.showLoginForm = true;
+       this.showRegisterForm = true;
       },error: (error:any) => {
         //this.errorHandler.HandleError(error);
         
@@ -80,21 +88,25 @@ export class SignupComponent {
     }
   }
 
-  onUserRegister(): void {
+  onUserRegister(){
+    console.log(this.signUpForm.valid,'form valid');
+    
+    this.submitted =true;
     if (this.signUpForm.valid) {
       this.buttonText = 'Submitting Please Wait!';
       this.ApiService.createUser(this.signUpForm.value).subscribe({next:(data: any) => {
+        debugger;
         this.buttonText = "Submit";
         this.toastrService.success('Account created successfully!');
+        this.showRegisterForm = true;
         this.router.navigate(['/login']);
       },error: (error:any) => {
+        debugger;
+        this.buttonText = 'Submit';
         //this.errorHandler.HandleError(error);
-        
+        this.toastrService.error("Account already exists, kindly login.")
       }});
     }
  
   }
-
-  
-
 }

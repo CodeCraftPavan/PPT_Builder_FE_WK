@@ -26,13 +26,12 @@ export class MetadataComponent {
   addInfoForm: FormGroup;
   metadataList: any;
   S3ObjUrl: any;
-  pramod: any;
+  S3ObjectMetadata: any;
   minDate = new Date();
   metadataDate = new Date();
 
   ngOnInit() {
     this.stars = Array(this.maxRating).fill(false);
-    
   }
 
   constructor(private sanitizer: DomSanitizer,
@@ -40,7 +39,6 @@ export class MetadataComponent {
     private userService: UserService,
     private router: Router
   ) {
-
     this.addInfoForm = this.formBuilder.group({
       metaDataOfSlide: ['',Validators.required],
       keywords: ['',Validators.required],
@@ -55,7 +53,7 @@ export class MetadataComponent {
     // //this.metadataList = this.slideList.metaData
     // if (this.metadataList) {
     //   this.S3ObjUrl = this.metadataList.slideList[0]
-    //   this.pramod = this.metadataList.metaData[0];
+    //   this.S3ObjectMetadata = this.metadataList.metaData[0];
 
       let value: any = localStorage.getItem("SplitData");
       this.slideList = JSON.parse(value)
@@ -63,8 +61,9 @@ export class MetadataComponent {
       //this.metadataList = this.slideList.metaData
       if (this.metadataList) {
         this.S3ObjUrl = this.metadataList.listWithUrl[0].s3FilePath
-        this.pramod = this.metadataList.metaData[0];
+        this.S3ObjectMetadata = this.metadataList.metaData[0];
     }
+    console.log(this.metadataList,'metaDataList');
 
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
 
@@ -81,23 +80,25 @@ export class MetadataComponent {
   val = 0;
 
   update() {
+    debugger;
     this.val++;
-    this.addInfoForm.reset();
-    this.S3ObjUrl = this.metadataList.listWithUrl[this.val].s3FilePath;
-    //this.slideList.slideList[this.val]
-
-    this.pramod = this.metadataList.listWithUrl[this.val];
-
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
+    if(this.val >= this.metadataList.listWithUrl.length){
+      alert("You have viewed all the splitted slides.");
+    }
+    else{
+      this.addInfoForm.reset();
+      this.S3ObjUrl = this.metadataList.listWithUrl[this.val].s3FilePath;
+      //this.slideList.slideList[this.val]
+      this.S3ObjectMetadata = this.metadataList.listWithUrl[this.val];
+      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
+    }
   }
 
   prev() {
+    debugger;
     this.val--;
-
-    this.S3ObjUrl = this.slideList.slideList[this.val]
-
+    this.S3ObjUrl = this.metadataList.listWithUrl[this.val].s3FilePath;
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
-
   }
 
   onHomeClick(): void {
@@ -111,14 +112,13 @@ export class MetadataComponent {
       // Payload.metaDataOfSlide = this.addInfoForm.controls['title'].value;
       // Payload.keyWords = this.addInfoForm.controls['keywords'].value;
       // Payload.notes = this.addInfoForm.controls['note'].value;
-      let data: any = localStorage.getItem("SplitData");
+      //let data: any = localStorage.getItem("SplitData");
       debugger;
-      let metaDataofSlide = JSON.parse(data);
-
-      let metaDataId: any = metaDataofSlide.listWithUrl[0].id;
-      console.log(metaDataId, 'MetaDataId');
+      //let metaDataofSlide = JSON.parse(data);
+      //let metaDataId: any = metaDataofSlide.listWithUrl[0].id;
+      //console.log(metaDataId, 'MetaDataId');
       let payload = this.addInfoForm.value;
-      payload.id = this.pramod.id;
+      payload.id = this.S3ObjectMetadata.id;
 
       this.userService.addmetadata(payload).subscribe((data: any) => {
        // console.log(data, 'meta data result');
@@ -133,6 +133,7 @@ export class MetadataComponent {
   }
 
   submitRating() {
+    debugger;
     let payload = {
       rating: this.rating,
       slideId: this.metadataList.metaData[0].id

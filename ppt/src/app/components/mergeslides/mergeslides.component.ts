@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ViewPptComponent } from '../view-ppt/view-ppt.component';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { PaginatorService } from '../../shared/service/paginator.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-mergeslides',
@@ -16,6 +17,7 @@ import { PaginatorService } from '../../shared/service/paginator.service';
 })
 export class MergeslidesComponent {
 
+  addInfoForm: FormGroup;
   slideList: any;
   metadataList: any;
   MergedSlidesKey: any;
@@ -34,13 +36,41 @@ export class MergeslidesComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   sortDateAscending: boolean = true;
 
-  constructor(private ApiService: UserService, private sanitizer: DomSanitizer, private router: Router,
-    public dialog: MatDialog,public paginatorService: PaginatorService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private ApiService: UserService, 
+    private sanitizer: DomSanitizer, 
+    private router: Router,
+    public dialog: MatDialog,
+    public paginatorService: PaginatorService) {
+      this.addInfoForm = this.formBuilder.group({
+        value: ['']
+      });
     this.getRFQ();
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+  }
+  search(){
+    if(this.addInfoForm.valid){
+      let val = this.addInfoForm.value.value;
+      debugger;
+      const searchPayload = {
+        searchInput: val,
+        pagination: this.paginatorService.GetPagination(this.pageSize,this.pageIndex,this.sortOrder)
+      };
+      console.log(searchPayload);
+
+      this.ApiService.searchSlides(searchPayload).subscribe((resp: any) =>{
+        this.metadataList = resp.data.responseList;
+        this.dataSource = new MatTableDataSource<any>(this.metadataList);
+        this.paginator.length = resp.data.totalCount;
+        this.paginator.pageIndex = this.pageIndex;
+        this.paginator.pageSize = searchPayload.pagination.pageSize; 
+        console.log(this.metadataList,'Slide LIst in table');
+      })
+    }
   }
 
   ngOnInit(): void {
@@ -64,7 +94,6 @@ export class MergeslidesComponent {
     this.getRFQ();
   }
 
-
   viewSlide(element: any) {
     const dialogRef = this.dialog.open(ViewPptComponent, {
       width: '750px', data: { element }
@@ -75,17 +104,12 @@ export class MergeslidesComponent {
     });
   }
 
-
-
   slideval = 0;
 
   getslideView(element: any) {
     this.S3ObjUrl = element.objectUrl;
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
-
-
   }
-
 
   sanitizeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
@@ -182,22 +206,36 @@ export class MergeslidesComponent {
   }
 
   onSortDateClick(sortDateAscending:boolean){
-    if(sortDateAscending == true) {
-      this.sortOrder = 'A';
-      this.sortDateAscending = false;
-    }else{
-         this.sortOrder = 'D';
-         this.sortDateAscending = true;
+    debugger;
+    let val = this.addInfoForm.value.value;
+    if(val){
+      if(sortDateAscending == true) {
+        this.sortOrder = 'A';
+        this.sortDateAscending = false;
+      }else{
+           this.sortOrder = 'D';
+           this.sortDateAscending = true;
+      }
+      this.search();
     }
-
-    this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.pageSize, this.pageIndex, this.sortOrder)).subscribe((resp: any) => {
-      this.metadataList = resp.data.responseList;
-      this.dataSource = new MatTableDataSource<any>(this.metadataList);
-      this.paginator.length = resp.data.totalCount;
-      this.paginator.pageIndex = this.pageIndex;
-      // console.log(this.metadataList, 'all metadata');
-    }, (error: any) => {
-    })
-
+    else{
+      if(sortDateAscending == true) {
+        this.sortOrder = 'A';
+        this.sortDateAscending = false;
+      }else{
+           this.sortOrder = 'D';
+           this.sortDateAscending = true;
+      }
+  
+      this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.pageSize, this.pageIndex, this.sortOrder)).subscribe((resp: any) => {
+        this.metadataList = resp.data.responseList;
+        this.dataSource = new MatTableDataSource<any>(this.metadataList);
+        this.paginator.length = resp.data.totalCount;
+        this.paginator.pageIndex = this.pageIndex;
+        // console.log(this.metadataList, 'all metadata');
+      }, (error: any) => {
+      })
+    }
+    
   }
 }
