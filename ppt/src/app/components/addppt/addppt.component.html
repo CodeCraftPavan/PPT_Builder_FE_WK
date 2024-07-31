@@ -1,7 +1,8 @@
 <div class="container p-2">
       <form>
         <div class="form-group mb-3 col-md-6">
-          <label for="formFile" class="form-label">Upload File</label>
+          <p class="text-black mt-1" ><b>Total Number of Slides Splitted: {{slideCount}}</b></p>
+          <label for="formFile" class="form-label"><b>Upload File</b></label>
           <input class="form-control upload-file" type="file" id="formFile" (change)="uploadFile($event)" >  
         </div>  
         <div class="form-group">

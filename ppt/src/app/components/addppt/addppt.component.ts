@@ -12,6 +12,7 @@ export class AddpptComponent {
   isLoading = false;
   splittedData: string;
   SubmitText = 'Submit';
+  slideCount: number = 0;
 
   constructor( private ApiService: UserService,
     private router: Router,
@@ -27,7 +28,10 @@ export class AddpptComponent {
     this.ApiService.mergePPt(formData).subscribe((data: any) => {
       let value = JSON.stringify(data)
       this.SubmitText = 'Submit';
-      this.splittedData = value
+      this.splittedData = value;
+      this.slideCount = data.slideCount;
+      debugger;
+      console.log(data.slideCount, 'slideCount');
       localStorage.setItem('SplitData',value)
       
       //this.router.navigate(['/dashboard/metadata']);
