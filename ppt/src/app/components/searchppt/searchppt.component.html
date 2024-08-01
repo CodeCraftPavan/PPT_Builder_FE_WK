@@ -10,7 +10,7 @@
             <form  [formGroup]="addInfoForm">  
                 <div class="row">
                 <div class="col-md-5 form-group">
-                    <input type="email" formControlName="value" class="form-control" placeholder="search ppt">
+                    <input type="email" formControlName="value" class="form-control" placeholder="What are you looking for?">
                 </div>
     
                 <div class="col-md-2 form-group">
@@ -57,25 +57,34 @@
                     <div class="card-body">
                         <div class="info-row">
                           <h5 class="card-title">
-                            <span class="under">Title:</span> <span class="data">{{mode.metaDataOfSlide}}</span>
+                            <span class="under">Title: </span> <span class="data">{{mode.metaDataOfSlide}}</span>
                           </h5>
                         </div>
                         <div class="info-row">
                           <h6 class="card-subtitle mb-2 text-muted">
-                            <span class="under">Keywords:</span> <span class="data">{{mode.keyWords}}</span>
+                            <span class="under">Keywords: </span> <span class="data">{{mode.keyWords}}</span>
                           </h6>
                         </div>
                         <div class="info-row">
                           <p class="card-text">
-                            <span class="under">Note:</span> <span class="data">{{mode.notes}}</span>
+                            <span class="under">Note: </span> <span class="data">{{mode.notes}}</span>
                           </p>
                         </div>
                         <div class="info-row">
                           <h6 class="card-text">
-                            <span class="under">Created At:</span> <span class="data">{{mode.createdAt}}</span>
+                            <span class="under">Created At: </span> <span class="data">{{mode.createdAt}}</span>
                           </h6>
                         </div>
-                      </div>                      
+                        <div class="info-row">
+                          <h6 class="card-text">
+                            <span class="under">Rating: </span>
+                            <ng-container *ngFor="let star of stars">
+                              <span class="star" [ngClass]="{'filled': star <= mode.rating}">★</span>
+                            </ng-container>
+                          </h6>
+                        </div>
+                      </div> 
+                                          
                 </div>
             </div>
             <div class="col-md-2" >

@@ -19,10 +19,16 @@ export class FeedbackComponent implements OnInit {
   presentationPurpose = PresentationPurpose;
   purposeValues: string[];
   presentationUrl: string;
+  showOthersRemarks: boolean = false;
   
 
-  constructor(private formBuilder: FormBuilder, private apiService: UserService,private router: Router, private route: ActivatedRoute,
-    @Inject(MAT_DIALOG_DATA) public fileData: any, private dailogRef: MatDialogRef<FeedbackComponent>
+  constructor(
+    private formBuilder: FormBuilder, 
+    private apiService: UserService,
+    private router: Router, 
+    private route: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public fileData: any, 
+    private dailogRef: MatDialogRef<FeedbackComponent>
   ) {
     this.purposeValues = getEnumValues(this.presentationPurpose);
     console.log(this.fileData)
@@ -31,7 +37,18 @@ export class FeedbackComponent implements OnInit {
   ngOnInit(): void {
     this.feedbackForm = this.formBuilder.group({
       SlideTitle: ['', Validators.required],
-      UsagePurposeType: ['', Validators.required]
+      UsagePurposeType: ['', Validators.required],
+      OthersRemarks: ['']
+    });
+
+    this.feedbackForm.get('UsagePurposeType')?.valueChanges.subscribe(value => {
+      this.showOthersRemarks = value === PresentationPurpose.others;
+      if (this.showOthersRemarks) {
+        this.feedbackForm.get('OthersRemarks')?.setValidators(Validators.required);
+      } else {
+        this.feedbackForm.get('OthersRemarks')?.clearValidators();
+      }
+      this.feedbackForm.get('OthersRemarks')?.updateValueAndValidity();
     });
 
     //   this.route.queryParams.subscribe(params => {
@@ -129,7 +146,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   onSubmit(): void {
-    ;
+    
   
     let Payload = {
       slideFileKeys: JSON.parse(this.fileData.SlideKeyList)
@@ -150,7 +167,8 @@ export class FeedbackComponent implements OnInit {
         const feedbackPayload = {
           mergedSlidesKeyId: this.MergedSlidesKey,
           SlideTitle: this.feedbackForm.controls['SlideTitle'].value,
-          UsagePurposeType: this.feedbackForm.controls['UsagePurposeType'].value
+          UsagePurposeType: this.feedbackForm.controls['UsagePurposeType'].value,
+          OthersRemarks: this.feedbackForm.controls['OthersRemarks'].value
         };
   
         this.apiService.submitFeedback(feedbackPayload).subscribe(response => {

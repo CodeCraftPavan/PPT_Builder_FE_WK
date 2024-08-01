@@ -23,7 +23,9 @@ export class SearchpptComponent {
   safeUrl: SafeResourceUrl;
   slideFileKeyList: any = [];
 
-  showRefreshButton: boolean = false
+  rating: number = 0;
+  stars: number[] = [1, 2, 3, 4, 5];
+
 
   // Pagination properties
   pageSizeOptions: number[] = [5, 10, 20, 50, 100, 200];
@@ -60,6 +62,7 @@ export class SearchpptComponent {
   ngOnInit() {
    // this.getSplitPptList();
   }
+
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;

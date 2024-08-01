@@ -1,5 +1,5 @@
 <div class="container p-2">
-  <p>Add Key Points</p>
+  <p><b>Please provide these details</b></p>
   <mat-dialog-content class="mat-typography">
     <form [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -14,6 +14,10 @@
             {{ value }}
           </option>
         </select>
+      </div>
+      <div class="form-group" *ngIf="showOthersRemarks">
+        <label for="OthersRemarks">Please Enter the Purpose Details</label>
+        <input type="text" id="OthersRemarks" formControlName="OthersRemarks" class="form-control">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

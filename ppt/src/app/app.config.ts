@@ -5,7 +5,7 @@ export const APP_DI_CONFIG: any = {
 
     parentDomain: 'http://10.0.0.163:8081',
 
-    // https://localhost:44361/api/AuthManagement/Sign-In
+    
 
     endPoints: {
         Authentication: {

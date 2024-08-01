@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input,ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/service/user.service';
+
+
 
 
 @Component({
@@ -37,7 +39,8 @@ export class MetadataComponent {
   constructor(private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private cd: ChangeDetectorRef
   ) {
     this.addInfoForm = this.formBuilder.group({
       metaDataOfSlide: ['',Validators.required],
@@ -81,24 +84,39 @@ export class MetadataComponent {
 
   update() {
     debugger;
-    this.val++;
-    if(this.val >= this.metadataList.listWithUrl.length){
-      alert("You have viewed all the splitted slides.");
+    if(this.val < 10)
+    {
+     this.val++;
     }
-    else{
+    else
+    {
+      alert("You have viewed all the splitted slides.");
+      return;
+    }
+    
       this.addInfoForm.reset();
       this.S3ObjUrl = this.metadataList.listWithUrl[this.val].s3FilePath;
       //this.slideList.slideList[this.val]
       this.S3ObjectMetadata = this.metadataList.listWithUrl[this.val];
-      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
-    }
+      let safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
+      //setTimeout(() =>{
+        this.safeUrl = safeURL;
+      //}, 1000);
+      //this.safeUrl = safeURL;
+            this.cd.detectChanges();
+    
   }
 
   prev() {
     debugger;
-    this.val--;
+    if(this.val > 0)
+    {
+      this.val--;
+    }
     this.S3ObjUrl = this.metadataList.listWithUrl[this.val].s3FilePath;
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
+    let safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
+    this.safeUrl = safeURL;
+    this.cd.detectChanges();
   }
 
   onHomeClick(): void {

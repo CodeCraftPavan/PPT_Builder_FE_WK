@@ -29,4 +29,18 @@
     flex: 1;
     text-align: left;
   }
+  .star-rating {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .star {
+    display: inline-flex;
+    font-size: 24px;
+    color: #ccc;
+  }
+  
+  .star.filled {
+    color: rgb(23, 12, 177);
+  }
   
