@@ -14,6 +14,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   login(data: any) {
+    //return this.http.post<any>("https://localhost:44361/api/AuthManagement/Sign-In", data)
     return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.Authentication.Login, data);
   }
 
@@ -41,6 +42,8 @@ export class UserService {
   }
 
   getAllSlides(data: any) {
+    //return this.http.post<any>("https://localhost:44361/get-all-slides-object-url", data)
+    
     return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.MergeSlides.GetAllSlides, data)
   }
 

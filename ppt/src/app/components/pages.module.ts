@@ -11,11 +11,17 @@ import { SplitpptComponent } from './splitppt/splitppt.component';
 import { AddpptComponent } from './addppt/addppt.component';
 import { SearchpptComponent } from './searchppt/searchppt.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
   imports: [
-    MaterialModule,CommonModule,NgxPaginationModule
+    MatTableModule,
+    MatSortModule,
+    MaterialModule,
+    CommonModule,
+    NgxPaginationModule
   ],
   declarations: [
     MetadataComponent,

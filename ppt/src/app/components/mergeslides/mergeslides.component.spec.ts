@@ -10,7 +10,7 @@ describe('MergeslidesComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ MergeslidesComponent ]
     })
-    .compileComponents();
+    .compileComponents(); 
 
     fixture = TestBed.createComponent(MergeslidesComponent);
     component = fixture.componentInstance;

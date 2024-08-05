@@ -22,35 +22,38 @@
     </div>
     
     <div class="table-responsive" style="margin: 10px;">
-      <table mat-table [dataSource]="dataSource">
+      <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)"
+      class="mat-elevation-z8">
         <ng-container matColumnDef="slno">
           <th mat-header-cell *matHeaderCellDef>SL No.</th>
           <td mat-cell *matCellDef="let element; let i=index"> {{ i+1 }} </td>
         </ng-container>
 
         <ng-container matColumnDef="metaDataOfSlide"> 
-          <th mat-header-cell *matHeaderCellDef>Title</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by metaDataOfSlide">Title</th>
           <td mat-cell *matCellDef="let element"> {{ element.metaDataOfSlide }} </td>
         </ng-container>
         
         <ng-container matColumnDef="keywords">
-          <th mat-header-cell *matHeaderCellDef>Keywords</th>
+          <th mat-header-cell *matHeaderCellDef >KeyWords</th>
           <td mat-cell *matCellDef="let element">{{ element.keyWords ? element.keyWords : '-' }} </td>
         </ng-container>
 
+        <ng-container matColumnDef="notes" >
+          <th mat-header-cell *matHeaderCellDef >Notes</th>
+          <td mat-cell *matCellDef="let element"> {{ element.notes }} </td>
+        </ng-container>
+
         <ng-container matColumnDef="downloadCount"> 
-          <th mat-header-cell *matHeaderCellDef>Downloads</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Downloads</th>
           <td mat-cell *matCellDef="let element"> {{ element.downloadCount }} </td>
         </ng-container>
 
         <ng-container matColumnDef="rating"> 
-          <th mat-header-cell *matHeaderCellDef>Rating</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by rating">Rating</th>
           <td mat-cell *matCellDef="let element"> {{ element.rating }} </td>
         </ng-container>
-        <ng-container matColumnDef="notes">
-          <th mat-header-cell *matHeaderCellDef>Notes</th>
-          <td mat-cell *matCellDef="let element"> {{ element.notes }} </td>
-        </ng-container>
+
 
         <ng-container matColumnDef="view">
           <th mat-header-cell *matHeaderCellDef>Action</th>

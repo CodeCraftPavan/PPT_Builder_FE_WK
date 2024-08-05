@@ -1,0 +1,7 @@
+.logo-container {
+    display: flex;
+    align-items: center; /* Centers logo vertically */
+    justify-content: center; /* Centers logo horizontally if needed */
+    margin: 0; /* Ensure no extra margin */
+    padding: 0; /* Ensure no extra padding */
+}

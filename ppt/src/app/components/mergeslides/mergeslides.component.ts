@@ -1,4 +1,4 @@
-import { Component, NgModule, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, NgModule, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -9,13 +9,17 @@ import { ViewPptComponent } from '../view-ppt/view-ppt.component';
 import { FeedbackComponent } from '../feedback/feedback.component';
 import { PaginatorService } from '../../shared/service/paginator.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatSort, Sort } from '@angular/material/sort';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-mergeslides',
   templateUrl: './mergeslides.component.html',
   styleUrls: ['./mergeslides.component.scss']
 })
-export class MergeslidesComponent {
+export class MergeslidesComponent implements AfterViewInit{
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   addInfoForm: FormGroup;
   slideList: any;
@@ -25,18 +29,19 @@ export class MergeslidesComponent {
   safeUrl: SafeResourceUrl;
   S3ObjUrl: any;
   pagedMetadataList: any;
-  displayedColumns: string[] = ['slno', 'metaDataOfSlide', 'keywords',  'downloadCount', 'rating', 'notes', 'view', 'add'];
+  displayedColumns: string[] = ['slno', 'metaDataOfSlide', 'keywords', 'notes',  'downloadCount', 'rating',  'view', 'add'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   // Pagination properties
   pageSizeOptions: number[] = [10, 20, 50, 100, 200];
   pageSize = 10;
-  pageIndex = 0;
+  pageIndex = 1;
   sortOrder ='DEF';
   //sortOrder ='A';
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+ 
   sortDateAscending: boolean = true;
 
   constructor(
+    private _liveAnnouncer: LiveAnnouncer,
     private formBuilder: FormBuilder,
     private ApiService: UserService, 
     private sanitizer: DomSanitizer, 
@@ -50,7 +55,8 @@ export class MergeslidesComponent {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+    
+    this.dataSource.sort = this.sort;
   }
   search(){
     if(this.addInfoForm.valid){
@@ -68,21 +74,32 @@ export class MergeslidesComponent {
         this.paginator.length = resp.data.totalCount;
         this.paginator.pageIndex = this.pageIndex;
         this.paginator.pageSize = searchPayload.pagination.pageSize; 
+        this.ngAfterViewInit();
         console.log(this.metadataList,'Slide LIst in table');
       })
     }
   }
 
   ngOnInit(): void {
-    //   this.getRFQ();
+     this.getRFQ();
   }
 
   getRFQ() {
+    debugger;
     this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.pageSize, this.pageIndex, this.sortOrder)).subscribe((resp: any) => {
+      
+      resp.data.responseList.forEach((e:any) => {
+        e['title'] = e.metaDataOfSlide.charAt(0).toUpperCase() + e.metaDataOfSlide.substring(1).toLowerCase()
+ 
+        
+      });
+      //resp.data.responseList.sort((a:any, b:any) => a.metaDataOfSlide.localeCompare(b.metaDataOfSlide));
+      console.log(JSON.stringify(resp.data.responseList) );
       this.metadataList = resp.data.responseList;
       this.dataSource = new MatTableDataSource<any>(this.metadataList);
       this.paginator.length = resp.data.totalCount;
       this.paginator.pageIndex = this.pageIndex;
+      this.ngAfterViewInit();
       // console.log(this.metadataList, 'all metadata');
     }, (error: any) => {
     })
@@ -237,5 +254,25 @@ export class MergeslidesComponent {
       })
     }
     
+  }
+
+  announceSortChange(sortState: Sort) {
+    // This example uses English messages. If your application supports
+    // multiple language, you would internationalize these strings.
+    // Furthermore, you can customize the message to add additional
+    // details about the values being sorted.
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
+
+  customSort(sort: MatSort) {
+    this.dataSource.sortingDataAccessor = (data, header) => {
+      const value = data[header];
+      return typeof value === 'string' ? value.toLowerCase() : value;
+    };
+    this.dataSource.sort = sort;
   }
 }
