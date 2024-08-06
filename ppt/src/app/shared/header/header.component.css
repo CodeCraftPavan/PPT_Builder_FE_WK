@@ -1,7 +1,24 @@
-.logo-container {
+.logo-container1 {
     display: flex;
     align-items: center; /* Centers logo vertically */
     justify-content: center; /* Centers logo horizontally if needed */
-    margin: 0; /* Ensure no extra margin */
-    padding: 0; /* Ensure no extra padding */
+    margin: 0; 
+    padding: 5px;
+    border-radius: 15px;
 }
+
+.logo-container {
+    /* Ensure the logo container has the same background color as the navbar */
+    /*background-color: #007bff;  Adjust to match your navbar's background color */
+    padding: 2px; /* Uniform padding for equal margins */
+    border-radius: 5px; /* Match the radius to your header's corner curves */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-rounded {
+    border-radius: 10px; /* Adjust the radius to match your design */
+    max-width: 60px; /* Adjust the max-width to fit inside the container with padding */
+    max-height: 60px; /* Adjust the max-height to fit inside the container with padding */
+  }
