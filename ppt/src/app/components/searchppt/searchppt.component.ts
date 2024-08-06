@@ -106,7 +106,7 @@ export class SearchpptComponent {
       // pagination.pageNumber =0;
       // payload.searchinput = val;
       // payload.pagination = pagination;
-      debugger;
+      ;
       this.ApiService.searchSlides(searchPayload).subscribe((resp: any) => {
       //this.ApiService.searchSlides(this.paginatorService.GetSearchPagination(this.pageSize, this.pageIndex, this.sortOrder, val)).subscribe((resp: any) => {
         console.log(resp, 'testData');

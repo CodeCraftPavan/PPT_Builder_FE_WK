@@ -83,7 +83,7 @@ export class MetadataComponent {
   val = 0;
 
   update() {
-    debugger;
+    ;
     if(this.val < 10)
     {
      this.val++;
@@ -108,7 +108,7 @@ export class MetadataComponent {
   }
 
   prev() {
-    debugger;
+    ;
     if(this.val > 0)
     {
       this.val--;
@@ -131,7 +131,7 @@ export class MetadataComponent {
       // Payload.keyWords = this.addInfoForm.controls['keywords'].value;
       // Payload.notes = this.addInfoForm.controls['note'].value;
       //let data: any = localStorage.getItem("SplitData");
-      debugger;
+      ;
       //let metaDataofSlide = JSON.parse(data);
       //let metaDataId: any = metaDataofSlide.listWithUrl[0].id;
       //console.log(metaDataId, 'MetaDataId');
@@ -151,7 +151,7 @@ export class MetadataComponent {
   }
 
   submitRating() {
-    debugger;
+    ;
     let payload = {
       rating: this.rating,
       slideId: this.metadataList.metaData[0].id

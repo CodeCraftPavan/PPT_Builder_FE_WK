@@ -30,7 +30,7 @@ export class AddpptComponent {
       this.SubmitText = 'Submit';
       this.splittedData = value;
       this.slideCount = data.slideCount;
-      debugger;
+      ;
       console.log(data.slideCount, 'slideCount');
       localStorage.setItem('SplitData',value)
       

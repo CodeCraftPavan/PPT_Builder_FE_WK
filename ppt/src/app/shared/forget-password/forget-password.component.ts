@@ -84,7 +84,7 @@ export class ForgetPasswordComponent {
   }
 
   onResetPassword() {
-    debugger;
+    ;
     console.log(this.resetPasswordForm.valid,'form valid');
     this.submitted = true;
     if (this.resetPasswordForm.valid) {
@@ -104,7 +104,7 @@ export class ForgetPasswordComponent {
           this.showResetPasswordForm = true;
         },
         error: (error) => {
-          debugger;
+          ;
           this.toastrService.error('Password reset failed' );
           this.buttonText = 'Submit';
         }

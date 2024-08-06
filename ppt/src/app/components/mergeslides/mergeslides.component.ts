@@ -57,11 +57,12 @@ export class MergeslidesComponent implements AfterViewInit{
   ngAfterViewInit(): void {
     
     this.dataSource.sort = this.sort;
+    this.customSort(this.sort);
   }
   search(){
     if(this.addInfoForm.valid){
       let val = this.addInfoForm.value.value;
-      debugger;
+      ;
       const searchPayload = {
         searchInput: val,
         pagination: this.paginatorService.GetPagination(this.pageSize,this.pageIndex,this.sortOrder)
@@ -85,15 +86,22 @@ export class MergeslidesComponent implements AfterViewInit{
   }
 
   getRFQ() {
-    debugger;
+    ;
     this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.pageSize, this.pageIndex, this.sortOrder)).subscribe((resp: any) => {
-      
-      resp.data.responseList.forEach((e:any) => {
-        e['title'] = e.metaDataOfSlide.charAt(0).toUpperCase() + e.metaDataOfSlide.substring(1).toLowerCase()
- 
-        
+      resp.data.responseList.forEach((e: any) => {
+        e.metaDataOfSlide = this.toTitleCase(e.metaDataOfSlide);
+        e.keyWords = this.toTitleCase(e.keyWords);
+        e.notes = this.capitalizeFirstWord(e.notes);
       });
-      //resp.data.responseList.sort((a:any, b:any) => a.metaDataOfSlide.localeCompare(b.metaDataOfSlide));
+      
+      resp.data.responseList.sort((a: any, b: any) => 
+      a.metaDataOfSlide.toLowerCase().localeCompare(b.metaDataOfSlide.toLowerCase())
+      );
+
+      // resp.data.responseList.forEach((e:any) => {
+      //   e['title'] = e.metaDataOfSlide.charAt(0).toUpperCase() + e.metaDataOfSlide.substring(1).toLowerCase()        
+      // });
+      resp.data.responseList.sort((a:any, b:any) => a.metaDataOfSlide.localeCompare(b.metaDataOfSlide));
       console.log(JSON.stringify(resp.data.responseList) );
       this.metadataList = resp.data.responseList;
       this.dataSource = new MatTableDataSource<any>(this.metadataList);
@@ -223,7 +231,7 @@ export class MergeslidesComponent implements AfterViewInit{
   }
 
   onSortDateClick(sortDateAscending:boolean){
-    debugger;
+    ;
     let val = this.addInfoForm.value.value;
     if(val){
       if(sortDateAscending == true) {
@@ -275,4 +283,17 @@ export class MergeslidesComponent implements AfterViewInit{
     };
     this.dataSource.sort = sort;
   }
+
+  toTitleCase(str: string): string {
+    return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+  }
+
+  capitalizeFirstWord(str: string): string {
+    if (!str) return str;
+    const words = str.split(' ');
+    if (words.length === 0) return str;
+    words[0] = words[0].charAt(0).toUpperCase() + words[0].substr(1).toLowerCase();
+    return words.join(' ');
+  }
+  
 }
