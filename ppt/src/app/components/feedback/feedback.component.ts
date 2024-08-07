@@ -5,6 +5,7 @@ import { PresentationPurpose } from '../../models/presentation-purpose.enum';
 import { getEnumValues } from '../../utils/enum-utils';
 import { UserService } from '../../shared/service/user.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-feedback',
@@ -20,9 +21,12 @@ export class FeedbackComponent implements OnInit {
   purposeValues: string[];
   presentationUrl: string;
   showOthersRemarks: boolean = false;
+  get f() { return this.feedbackForm.controls; }
+  submitted :boolean = false;
   
 
   constructor(
+    private toastrService: ToastrService,
     private formBuilder: FormBuilder, 
     private apiService: UserService,
     private router: Router, 
@@ -31,8 +35,25 @@ export class FeedbackComponent implements OnInit {
     private dailogRef: MatDialogRef<FeedbackComponent>
   ) {
     this.purposeValues = getEnumValues(this.presentationPurpose);
-    console.log(this.fileData)
+    console.log(this.fileData);
+
+    this.feedbackForm = this.formBuilder.group({
+      SlideTitle: ['', Validators.required],
+      UsagePurposeType: ['', Validators.required],
+      OthersRemarks: ['']
+    });
+
+    this.feedbackForm.get('UsagePurposeType')?.valueChanges.subscribe(value => {
+      this.showOthersRemarks = value === 'Others';
+      if (this.showOthersRemarks) {
+        this.feedbackForm.get('OthersRemarks')?.setValidators(Validators.required);
+      } else {
+        this.feedbackForm.get('OthersRemarks')?.clearValidators();
+      }
+      this.feedbackForm.get('OthersRemarks')?.updateValueAndValidity();
+    });
   }
+  
 
   ngOnInit(): void {
     this.feedbackForm = this.formBuilder.group({
@@ -146,43 +167,45 @@ export class FeedbackComponent implements OnInit {
   }
 
   onSubmit(): void {
-    
-  
-    let Payload = {
-      slideFileKeys: JSON.parse(this.fileData.SlideKeyList)
-    }
-      
-    this.apiService.mergeSlides(Payload).subscribe((resp: any) => {
-      this.MergedSlidesKey = resp.data.mergedSlideKeyId;
-      this.MergedpresentationUrl = resp.data.objectUrl;
-      const a = document.createElement('a');
-      a.href = this.MergedpresentationUrl;
-      a.download = 'merged_presentation.pptx'; // Optionally set a filename
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-  
-      // After mergeSlides API call is successful, call submitFeedback API
-      if (this.feedbackForm.valid) {
-        const feedbackPayload = {
-          mergedSlidesKeyId: this.MergedSlidesKey,
-          SlideTitle: this.feedbackForm.controls['SlideTitle'].value,
-          UsagePurposeType: this.feedbackForm.controls['UsagePurposeType'].value,
-          OthersRemarks: this.feedbackForm.controls['OthersRemarks'].value
-        };
-  
-        this.apiService.submitFeedback(feedbackPayload).subscribe(response => {
-         // console.log('Feedback submitted successfully', response);
-          alert('Feedback submitted successfully');
-          this.dailogRef.close();
-        }, error => {
-          alert('Error submitting feedback');
-        });
+    this.submitted =true;
+    if(this.feedbackForm.valid){
+      let Payload = {
+        slideFileKeys: JSON.parse(this.fileData.SlideKeyList)
       }
-    }, error => {
-      console.error('Error downloading presentation', error);
-      alert('Error downloading presentation');
-    });
+        
+      this.apiService.mergeSlides(Payload).subscribe((resp: any) => {
+        this.MergedSlidesKey = resp.data.mergedSlideKeyId;
+        this.MergedpresentationUrl = resp.data.objectUrl;
+        const a = document.createElement('a');
+        a.href = this.MergedpresentationUrl;
+        a.download = 'merged_presentation.pptx'; // Optionally set a filename
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    
+        // After mergeSlides API call is successful, call submitFeedback API
+        if (this.feedbackForm.valid) {
+          const feedbackPayload = {
+            mergedSlidesKeyId: this.MergedSlidesKey,
+            SlideTitle: this.feedbackForm.controls['SlideTitle'].value,
+            UsagePurposeType: this.feedbackForm.controls['UsagePurposeType'].value,
+            OthersRemarks: this.feedbackForm.controls['OthersRemarks'].value
+          };
+    
+          this.apiService.submitFeedback(feedbackPayload).subscribe(response => {
+           this.toastrService.success('Key Details submitted successfully');
+            this.dailogRef.close();
+          }, error => {
+            this.toastrService.error('Error submitting Key Details');
+          });
+        }
+      }, error => {
+        console.error('Error downloading presentation', error);
+        this.toastrService.error('Error downloading presentation', error);
+        //alert('Error downloading presentation');
+      });
+    }
+
   }
   
 }

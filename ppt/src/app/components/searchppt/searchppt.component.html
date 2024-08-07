@@ -72,7 +72,7 @@
                         </div>
                         <div class="info-row">
                           <h6 class="card-text">
-                            <span class="under">Created At: </span> <span class="data">{{mode.createdAt}}</span>
+                            <span class="under">Created At: </span> <span class="data">{{ mode.createdAt | date: 'dd MMM yyyy, hh:mm a'}}</span>
                           </h6>
                         </div>
                         <div class="info-row">
@@ -83,8 +83,7 @@
                             </ng-container>
                           </h6>
                         </div>
-                      </div> 
-                                          
+                      </div>              
                 </div>
             </div>
             <div class="col-md-2" >

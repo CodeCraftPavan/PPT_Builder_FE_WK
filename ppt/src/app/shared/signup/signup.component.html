@@ -124,10 +124,14 @@
           [ngClass]="{'is-invalid':(submitted && f['firstName'].errors) ||(f['firstName'].errors && f['firstName'].touched) }">
         <div *ngIf="(submitted && f['firstName'].errors) ||(f['firstName'].errors && f['firstName'].touched)"
           class="invalid-feedback">
-          <div *ngIf="f['firstName'].errors['required']">
+          <div *ngIf="f['firstName'].errors['required']">First Name is required</div>
+          <div *ngIf="f['firstName'].errors['pattern']">Only characters are allowed</div>
+          <div *ngIf="f['firstName'].errors['minlength']">First Name must be at least 3 characters long</div>
+          <div *ngIf="f['firstName'].errors['maxlength']">First Name cannot be more than 20 characters long</div>
+          <!-- <div *ngIf="f['firstName'].errors['required']">
             First Name is required
           </div>
-          <div *ngIf="f['firstName'].errors['pattern']">Only Characters are allowed</div>
+          <div *ngIf="f['firstName'].errors['pattern']">Only Characters are allowed</div> -->
         </div>
       </div>
       <div class="form-group mb-3">
@@ -135,27 +139,33 @@
         <input type="text" class="form-control" formControlName="lastName" name="lastName"
           [ngClass]="{'is-invalid':(submitted && f['lastName'].errors) ||(f['lastName'].errors && f['lastName'].touched) }">
         <div *ngIf="(submitted && f['lastName'].errors) ||(f['lastName'].errors && f['lastName'].touched)"
-          class="invalid-feedback">
-          <div *ngIf="f['lastName'].errors['required']">
-            lastName is required
+            class="invalid-feedback">
+              <div *ngIf="f['lastName'].errors['required']">Last Name is required</div>
+              <div *ngIf="f['lastName'].errors['pattern']">Only characters are allowed</div>
+              <div *ngIf="f['lastName'].errors['minlength']">Last Name must be at least 3 characters long</div>
+              <div *ngIf="f['lastName'].errors['maxlength']">Last Name cannot be more than 20 characters long</div>
           </div>
-          <div *ngIf="f['lastName'].errors['pattern']">Only Characters are allowed</div>
+          <!-- <div *ngIf="f['lastName'].errors['required']">
+            Last Name is required
+          </div>
+          <div *ngIf="f['lastName'].errors['pattern']">Only Characters are allowed</div> -->
         </div>
-      </div>
+        
       <div class="form-group mb-3">
         <label class="form-control-label">Email</label>
         <input type="text" class="form-control disabled" formControlName="userEMailId" name="email" readonly>
       </div>  
       <div class="form-group mb-3">
         <label class="form-control-label">Password</label>
-        <input type="text" class="form-control" formControlName="password" name="password"
+        <input type="password" class="form-control" formControlName="password" name="password"
           [ngClass]="{'is-invalid':(submitted && f['password'].errors) ||(f['password'].errors && f['password'].touched) }">
         <div *ngIf="(submitted && f['password'].errors) ||(f['password'].errors && f['password'].touched)"
           class="invalid-feedback">
-          <div *ngIf="f['password'].errors['required']">
+            <div *ngIf="f['password'].errors['required']">Password is required</div>
+            <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters long</div>
+          <!-- <div *ngIf="f['password'].errors['required']">
             password is required
-          </div>
-
+          </div> -->
         </div>
       </div>
 
@@ -167,9 +177,7 @@
           </div>
           {{buttonText}}
         </button>
-
       </div>
-
     </form>
     <p>Already have an account? 
       <a class="small" href="login">Login</a>

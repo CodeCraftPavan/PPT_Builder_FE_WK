@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ForgetPasswordComponent } from '../forget-password/forget-password.component';
 import { UserService } from '../service/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { MasterService } from '../service/master.service';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,8 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    private masterService: MasterService,
+    private toastrService: ToastrService,
     private router: Router,
     private ApiService: UserService) {
     this.loginForm = this.formBuilder.group({
@@ -42,16 +45,17 @@ export class LoginComponent {
       this.loginText = 'Logging Please Wait!'
       this.ApiService.login(this.loginForm.value).subscribe({next:(data: any) => {
         if(data.data){
-          ;
         localStorage.setItem('Token', data.data.token);
         localStorage.setItem('firstName', data.data.firstName);
         localStorage.setItem('lastName', data.data.lastName);
+        this.masterService.saveToken(data.data.token);
         this.router.navigate(['/dashboard/mergeppt']);
+
         this.loginText = "Log In";
         }
       },error: (error:any) => {
-        //this.errorHandler.HandleError(error);
-        
+        this.toastrService.error('Login Failed. Please try again.')
+        this.loginText = 'Log In'
       }});
      
     }

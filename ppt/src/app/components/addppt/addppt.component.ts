@@ -13,6 +13,7 @@ export class AddpptComponent {
   splittedData: string;
   SubmitText = 'Submit';
   slideCount: number = 0;
+  fileUploaded = false;
 
   constructor( private ApiService: UserService,
     private router: Router,
@@ -45,8 +46,8 @@ export class AddpptComponent {
   AttachFiles:any;
   uploadFile(e: any) {
     this.AttachFiles = e.target.files[0];
+    this.fileUploaded = true; 
     console.log(this.AttachFiles,'file');
  
   }
-
 }

@@ -13,6 +13,7 @@ import { SearchpptComponent } from './searchppt/searchppt.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -21,7 +22,12 @@ import { MatSortModule } from '@angular/material/sort';
     MatSortModule,
     MaterialModule,
     CommonModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    ToastrModule.forRoot({
+      closeButton: true,
+      timeOut: 3000,// 3 seconds
+      progressBar: true,
+    })
   ],
   declarations: [
     MetadataComponent,

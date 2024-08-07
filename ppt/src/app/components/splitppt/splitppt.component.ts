@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, NgModule } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PaginatorService } from '../../shared/service/paginator.service';
 import { ToastrService } from 'ngx-toastr';
 import { ViewPptComponent } from '../view-ppt/view-ppt.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-splitppt',
@@ -27,6 +28,10 @@ export class SplitpptComponent {
   filterText: string = "";
   pageSizeOptions: number[] =  [3,6,9];
   sortOrder: string = "A"
+
+  @NgModule({
+    providers: [DatePipe]
+  })
 
   @Input() maxRating = 5;
   @Input() rating = 0;

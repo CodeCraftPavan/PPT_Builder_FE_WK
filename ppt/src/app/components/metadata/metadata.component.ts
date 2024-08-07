@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/service/user.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 
@@ -31,6 +33,7 @@ export class MetadataComponent {
   S3ObjectMetadata: any;
   minDate = new Date();
   metadataDate = new Date();
+  fileUploaded = false;
 
   ngOnInit() {
     this.stars = Array(this.maxRating).fill(false);
@@ -38,6 +41,7 @@ export class MetadataComponent {
 
   constructor(private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
+    private toastrService: ToastrService,
     private userService: UserService,
     private router: Router,
     private cd: ChangeDetectorRef
@@ -83,14 +87,16 @@ export class MetadataComponent {
   val = 0;
 
   update() {
-    ;
-    if(this.val < 10)
+    debugger;
+    if(this.val < (this.metadataList.listWithUrl.length - 1))
     {
      this.val++;
     }
     else
     {
-      alert("You have viewed all the splitted slides.");
+      this.toastrService.show('You have viewed all the splitted slides.');
+
+      //alert("You have viewed all the splitted slides.");
       return;
     }
     
@@ -99,16 +105,14 @@ export class MetadataComponent {
       //this.slideList.slideList[this.val]
       this.S3ObjectMetadata = this.metadataList.listWithUrl[this.val];
       let safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
-      //setTimeout(() =>{
-        this.safeUrl = safeURL;
-      //}, 1000);
-      //this.safeUrl = safeURL;
-            this.cd.detectChanges();
-    
+      this.rating = 0;  // Reset the rating
+      this.addInfoForm.controls['rating'].setValue(this.rating);
+      this.safeUrl = safeURL;
+      this.cd.detectChanges();
   }
 
   prev() {
-    ;
+    
     if(this.val > 0)
     {
       this.val--;
@@ -124,6 +128,7 @@ export class MetadataComponent {
   }
 
   addMetaData() {
+    debugger;
     if (this.addInfoForm.valid) {
       // var Payload: any = {};
       // Payload.id = 0;
@@ -131,17 +136,20 @@ export class MetadataComponent {
       // Payload.keyWords = this.addInfoForm.controls['keywords'].value;
       // Payload.notes = this.addInfoForm.controls['note'].value;
       //let data: any = localStorage.getItem("SplitData");
-      ;
+      
       //let metaDataofSlide = JSON.parse(data);
       //let metaDataId: any = metaDataofSlide.listWithUrl[0].id;
       //console.log(metaDataId, 'MetaDataId');
       let payload = this.addInfoForm.value;
       payload.id = this.S3ObjectMetadata.id;
 
+      
       this.userService.addmetadata(payload).subscribe((data: any) => {
-       // console.log(data, 'meta data result');
-        alert('Submitted Metadata Successfully');
+       this.toastrService.success('Submitted Metadata Successfully');
+        //alert('Submitted Metadata Successfully');
+        this.update();
       })
+      
     }
   }
 

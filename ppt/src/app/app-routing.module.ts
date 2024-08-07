@@ -9,14 +9,15 @@ const routes: Routes = [
   {path: '', redirectTo: 'login',pathMatch: 'full'},
   {path: 'login', component:LoginComponent}, 
   {path: 'forgetPassword', component:ForgetPasswordComponent},
-  {path:'',component:LoginComponent},
+  //{path:'',component:LoginComponent},
   {
     path: 'dashboard',
     component: LayoutComponent,
-    //canActivate:[AuthGuard],
+    canActivate:[AuthGuard],
     children: [
         {
-      path: '',loadChildren: () => import('./layout/layout.module').then(x => x.LayoutModule)
+      path: '',loadChildren: () => import('./layout/layout.module').then(x => x.LayoutModule),
+      canActivate: [AuthGuard]
   }]},
   {path: '**',redirectTo: 'login'}
 ];

@@ -23,7 +23,7 @@ export class MasterService {
 
   isLoggedOut(){
     localStorage.clear();
-    return this.router.navigate(['/'])
+    return this.router.navigate(['/login'])
   }
 
   public saveToken(token: string): void { 

@@ -8,12 +8,17 @@ import { MasterService } from '../shared/service/master.service';
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private masterService:MasterService,private route:Router) { }
+  constructor(
+    private masterService:MasterService,
+    private route:Router) { }
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if(this.masterService.isLoggedIn()){
+        console.log("auth guard added.")
         return true;
+        
       }
       else{
         console.log('No token found')

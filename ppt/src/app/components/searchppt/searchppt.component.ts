@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, NgModule, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PaginatorService } from '../../shared/service/paginator.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -26,6 +27,9 @@ export class SearchpptComponent {
   rating: number = 0;
   stars: number[] = [1, 2, 3, 4, 5];
 
+  @NgModule({
+    providers: [DatePipe]
+  })
 
   // Pagination properties
   pageSizeOptions: number[] = [5, 10, 20, 50, 100, 200];
@@ -51,8 +55,10 @@ export class SearchpptComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private sanitizer: DomSanitizer,
-    private toastrService: ToastrService,public paginatorService: PaginatorService,
-    private ApiService: UserService,public dialog: MatDialog) {
+    private toastrService: ToastrService,
+    public paginatorService: PaginatorService,
+    private ApiService: UserService,
+    public dialog: MatDialog) {
 
     this.addInfoForm = this.formBuilder.group({
       value: [''],

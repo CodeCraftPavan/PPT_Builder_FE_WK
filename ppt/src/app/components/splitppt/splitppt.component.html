@@ -24,7 +24,7 @@
                         <p class="card-text"><strong>Title:</strong> {{mode.metaDataOfSlide}}</p>
                         <p class="card-text"><strong>Keywords:</strong> {{mode.keyWords}}</p>
                         <p class="card-text"><strong>Notes:</strong> {{mode.notes}}</p>
-                        <p class="card-text"><strong>Created At:</strong> {{mode.createdAt}}</p>
+                        <p class="card-text"><strong>Created At:</strong> {{ mode.createdAt | date: 'dd MMM yyyy, hh:mm a'}}</p>
                         <p class="card-text"><strong>Downloads:</strong> {{mode.downloadCount}}</p>
                         <p class="card-text"><strong>Rating:</strong>
                             <span *ngFor="let star of stars; index as i" style="position: relative;top: 7px;">

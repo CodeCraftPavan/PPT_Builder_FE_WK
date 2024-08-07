@@ -41,9 +41,17 @@ export class SignupComponent {
       otp: ['', Validators.required]
     });
 
+    // this.signUpForm = this.formBuilder.group({
+    //   firstName: ['', Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(30)],
+    //   lastName: ['', Validators.required,Validators.pattern('^[a-zA-Z]+$'), Validators.maxLength(30)],
+    //   userEMailId: [''],
+    //   password: ['', [Validators.required, Validators.minLength(6)]],
+    //  // confirmPassword: ['', Validators.required]
+    // });
+
     this.signUpForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: ['', Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.minLength(3), Validators.maxLength(30)],
+      lastName: ['', Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.minLength(3), Validators.maxLength(30)],
       userEMailId: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
      // confirmPassword: ['', Validators.required]
@@ -64,7 +72,6 @@ export class SignupComponent {
         this.showVerifyEmailForm = false;
         this.OTPVerifyForm.controls['email'].setValue(this.verifyEmailForm.controls['email'].value)
       }
-      
     );
     }
       
@@ -83,14 +90,13 @@ export class SignupComponent {
        this.showRegisterForm = true;
       },error: (error:any) => {
         //this.errorHandler.HandleError(error);
-        
+        this.toastrService.error('Error occured while submitting the Email');
       }});
     }
   }
 
   onUserRegister(){
     console.log(this.signUpForm.valid,'form valid');
-    
     this.submitted =true;
     if (this.signUpForm.valid) {
       this.buttonText = 'Submitting Please Wait!';

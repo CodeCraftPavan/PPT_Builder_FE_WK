@@ -2,11 +2,13 @@
       <form>
         <div class="form-group mb-3 col-md-6">
           <p class="text-black mt-1" ><b>Total Number of Slides Splitted: {{slideCount}}</b></p>
-          <label for="formFile" class="form-label"><b>Upload File</b></label>
+          <label for="formFile" class="form-label"><b>Upload File</b>
+          <p style="font-size: 12px;">*Please upload the Powerpoint presentations(.pptx format).</p>
+          </label>
           <input class="form-control upload-file" type="file" id="formFile" (change)="uploadFile($event)" >  
         </div>  
         <div class="form-group">
-          <button mat-raised-button color="primary" (click)="SubmitFile()">
+          <button mat-raised-button color="primary" (click)="SubmitFile()" [disabled]="!fileUploaded">
             <div class="spinner-border" role="status" style="font-size: 10px; width: 15px; height: 15px" *ngIf="SubmitText == 'Splitting the ppt. Please Wait!'">
               <span class="sr-only">Loading...</span>
             </div>

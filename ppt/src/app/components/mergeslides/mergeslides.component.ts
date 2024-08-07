@@ -11,6 +11,7 @@ import { PaginatorService } from '../../shared/service/paginator.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-mergeslides',
@@ -41,6 +42,7 @@ export class MergeslidesComponent implements AfterViewInit{
   sortDateAscending: boolean = true;
 
   constructor(
+    private toastrService: ToastrService,
     private _liveAnnouncer: LiveAnnouncer,
     private formBuilder: FormBuilder,
     private ApiService: UserService, 
@@ -225,7 +227,8 @@ export class MergeslidesComponent implements AfterViewInit{
       }, 1000);
     }, error => {
       console.error('Error downloading presentation', error);
-      alert('Error downloading presentation');
+      this.toastrService.error('Error downloading presentation', error);
+      //alert('Error downloading presentation');
     }
     );
   }
