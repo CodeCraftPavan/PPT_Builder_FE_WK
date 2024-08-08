@@ -1,0 +1,29 @@
+.documentation-container {
+    padding: 20px;
+    line-height: 1.6;
+  }
+  
+  h1 {
+    color: #3f51b5;
+  }
+  
+  h2 {
+    margin-top: 20px;
+  }
+
+  .logo-container {
+    /* Ensure the logo container has the same background color as the navbar */
+    /*background-color: #007bff;  Adjust to match your navbar's background color */
+    padding: 2px; /* Uniform padding for equal margins */
+    border-radius: 5px; /* Match the radius to your header's corner curves */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-rounded {
+    border-radius: 10px; /* Adjust the radius to match your design */
+    max-width: 100px; /* Adjust the max-width to fit inside the container with padding */
+    max-height: 100px; /* Adjust the max-height to fit inside the container with padding */
+  }
+  

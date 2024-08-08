@@ -25,6 +25,22 @@ mat-card {
   width: 100%;
 }
 
+.date-container {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.date-container label {
+  margin-right: 5px; /* Add some space between label and date */
+}
+
+.date-container p {
+  margin: 0; /* Remove default margin of p element */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
 .slide-number {
   position: absolute;

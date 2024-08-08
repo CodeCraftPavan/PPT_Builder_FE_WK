@@ -1,0 +1,137 @@
+
+<div class="documentation-container">
+    <div class="logo-container">
+        <img src="assets/PPT-BUILDER-LOGO-v2.png" alt="PPT Builder Logo" class="img-fluid logo-rounded">
+    </div>
+
+    <h1>Welcome to the PPT Builder Documentation</h1>
+    
+    <h2>Overview</h2>
+    <p>PPT Builder application allows users to access the slides with Keydetails from the application and create their new presentation. Users can also upload their own presentations to split presentations into multiple slides, add Keydetails for each slide, and manage the slides through an interactive interface.</p>
+  
+    <h2>Features</h2>
+    <ul>
+      <li>Split presentations into multiple files</li>
+      <li>View and navigate through the split slides using a carousel</li>
+      <li>Add Keydetails (title, keywords, notes, rating) for each slide</li>
+      <li>Save Keydetails to the backend and handle errors</li>
+      <li>Display Toastr notifications for user feedback</li>
+    </ul>
+  
+    <h2>Usage</h2>
+    
+    <h3>Navigating the Application: </h3>
+    
+    <h4>Uploading a Presentation</h4>
+    <ul>
+      <li>Click the Split PPT to add a new file and its associated keydetails.</li>
+      <li>Ensure to provide keydetails for each new file added.</li>
+      <li>Note that slides without the keydetails will not be stored in the application.</li>
+      <li>Now each separate slide will be saved in the application.</li>
+    </ul>
+    
+    <h4>Adding Metadata</h4>
+    <ul>
+      <li>Fill in the form on the right side of the screen with the following fields:</li>
+      <ul>
+        <li><strong>Title</strong>: Enter a title for the slide.</li>
+        <li><strong>Keywords</strong>: Enter keywords related to the slide.</li>
+        <li><strong>Notes</strong>: Enter any notes you want to associate with the slide.</li>
+        <li><strong>Rating</strong>: Select a rating (1-5 stars) for the slide based on the efforts you made to create slides.</li>
+        <li><strong>Date</strong>: View the date associated with the slide.</li>
+      </ul>
+      <li>Click "Save" to store the metadata.</li>
+      <li><strong>Navigating Slides</strong></li>
+      <ul>
+        <li>Use the "Previous" and "Next" buttons to move between slides.</li>
+        <li>If the metadata is incomplete, a warning message will appear.</li>
+      </ul>
+    </ul>
+    
+    <h4>Search Slides</h4>
+    <ul>
+      <li>Search with the keywords in the search bar and hit search.</li>
+      <li>All the slides having the keyword you entered will appear.</li>
+      <li>Select the slides which you need to have in your new presentation.</li>
+      <li>Click the Download PPT button.</li>
+      <li>Enter the title and the purpose of the presentation and submit.</li>
+      <li>Now you have the newly prepared presentation.</li>
+    </ul>
+    
+    <h4>Sign-Up Flow</h4>
+    <ul>
+      <li><strong>Enter Email for Verification</strong></li>
+      <ul>
+        <li>The user navigates to the sign-up page.</li>
+        <li>The user is prompted to enter their email address.</li>
+        <li>Only email addresses from Ecanarys domains are allowed.</li>
+      </ul>
+      <li><strong>Submit Email</strong></li>
+      <ul>
+        <li>The user submits their email address.</li>
+        <li>An OTP is generated and sent to the provided email address.</li>
+        <li>The user is directed to the email verification page.</li>
+      </ul>
+      <li><strong>Verify Email with OTP</strong></li>
+      <ul>
+        <li>The user receives an email with an OTP.</li>
+        <li>The user enters the OTP on the verification page.</li>
+        <li>The application verifies the OTP.</li>
+        <li>If the OTP is valid, the user is redirected to the sign-up page.</li>
+        <li>If the OTP is invalid, an error message is displayed.</li>
+      </ul>
+      <li><strong>Complete Sign-Up</strong></li>
+      <ul>
+        <li>The user fills in the following details on the sign-up page:</li>
+        <ul>
+          <li>First Name</li>
+          <li>Last Name</li>
+          <li>Password (with validation for strength and confirmation)</li>
+        </ul>
+        <li>The user submits the sign-up form.</li>
+        <li>The application creates a new account with the provided details.</li>
+        <li>Upon successful account creation, the user is redirected to the login page.</li>
+      </ul>
+      <li><strong>Login</strong></li>
+      <ul>
+        <li>The user enters their email address and password on the login page.</li>
+        <li>The application verifies the credentials.</li>
+        <li>If valid, the user is logged in and redirected to the application dashboard.</li>
+        <li>If invalid, an error message is displayed.</li>
+      </ul>
+    </ul>
+  
+    <h4>Forgot Password Flow</h4>
+    <ul>
+      <li><strong>Request Password Reset</strong></li>
+      <ul>
+        <li>Verify the email as described in the sign-up process.</li>
+      </ul>
+      <li><strong>Reset Password</strong></li>
+      <ul>
+        <li>Enter the new Password (with validation for strength and confirmation).</li>
+        <li>Submit the Password Reset Form.</li>
+        <li>Login with your new Password.</li>
+      </ul>
+    </ul>
+    
+    <h3>Error Handling</h3>
+    <ul>
+      <li>If metadata is not provided before navigating away from a slide, a warning will be shown.</li>
+      <li>Ensure that all required fields are filled else the slide will not be saved in the application.</li>
+    </ul>
+    
+    <h3>Toastr Notifications</h3>
+    <ul>
+      <li><strong>Success</strong>: Notifications will appear when keydetails are saved successfully.</li>
+      <li><strong>Error</strong>: Notifications will appear for validation errors or any issues encountered.</li>
+      <li><strong>Warning</strong>: Notifications will appear if keydetails are missing or incomplete.</li>
+    </ul>
+    
+    <h3>Troubleshooting</h3>
+    <ul>
+      <li><strong>Keydetails Not Saving</strong>: Ensure all required fields are filled before saving. Check for validation errors.</li>
+      <li><strong>Slides Not Updating</strong>: Refresh the page whenever the searched slide is not getting displayed.</li>
+    </ul>
+  </div>
+  

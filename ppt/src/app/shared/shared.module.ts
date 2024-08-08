@@ -7,6 +7,8 @@ import { OtpVerificationComponent } from './otp-verification/otp-verification.co
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SignupComponent } from './signup/signup.component';
 import { CommonModule } from '@angular/common';
+import { WelcomeDialogComponent } from './welcome-dialog/welcome-dialog.component';
+import { DocumentationComponent } from './documentation/documentation.component';
 //import { DataNotFoundComponent } from './data-not-found/data-not-found.component';
 
 @NgModule({
@@ -19,6 +21,8 @@ import { CommonModule } from '@angular/common';
     OtpVerificationComponent,
     ResetPasswordComponent,
     SignupComponent,
+    WelcomeDialogComponent,
+    DocumentationComponent,
    
   ]
 })

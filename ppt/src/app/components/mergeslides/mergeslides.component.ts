@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ToastrService } from 'ngx-toastr';
+import { WelcomeDialogComponent } from 'src/app/shared/welcome-dialog/welcome-dialog.component';
 
 @Component({
   selector: 'app-mergeslides',
@@ -54,6 +55,7 @@ export class MergeslidesComponent implements AfterViewInit{
         value: ['']
       });
     this.getRFQ();
+    //this.openWelcomeDialog();
   }
 
   ngAfterViewInit(): void {
@@ -85,10 +87,20 @@ export class MergeslidesComponent implements AfterViewInit{
 
   ngOnInit(): void {
      this.getRFQ();
+     this.openWelcomeDialog();
+
+  }
+
+  openWelcomeDialog(): void {
+    debugger;
+    this.dialog.open(WelcomeDialogComponent, {
+      width: '400px',
+      disableClose: true // Prevents closing the dialog by clicking outside
+    });
   }
 
   getRFQ() {
-    ;
+    //this.openWelcomeDialog();
     this.ApiService.getAllSlides(this.paginatorService.GetPagination(this.pageSize, this.pageIndex, this.sortOrder)).subscribe((resp: any) => {
       resp.data.responseList.forEach((e: any) => {
         e.metaDataOfSlide = this.toTitleCase(e.metaDataOfSlide);

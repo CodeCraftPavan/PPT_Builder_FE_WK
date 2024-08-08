@@ -88,19 +88,18 @@ export class MetadataComponent {
 
   update() {
     debugger;
-    if(this.val < (this.metadataList.listWithUrl.length - 1))
-    {
+    if(this.val < (this.metadataList.listWithUrl.length - 1)){
      this.val++;
     }
-    else
-    {
+    else{
       this.toastrService.show('You have viewed all the splitted slides.');
-
-      //alert("You have viewed all the splitted slides.");
       return;
     }
-    
-      this.addInfoForm.reset();
+    this.updateNextSlide();
+  }
+
+  updateNextSlide(){
+    this.addInfoForm.reset();
       this.S3ObjUrl = this.metadataList.listWithUrl[this.val].s3FilePath;
       //this.slideList.slideList[this.val]
       this.S3ObjectMetadata = this.metadataList.listWithUrl[this.val];
@@ -111,8 +110,25 @@ export class MetadataComponent {
       this.cd.detectChanges();
   }
 
+  updateNestSlideWithoutmetaData(){
+    if(this.val < (this.metadataList.listWithUrl.length - 1)){
+     this.val++;
+    }
+    else{
+      if(this.addInfoForm.invalid){
+        this.toastrService.warning("Please add the details of the slide for the future use. Or else the slide will not be stored in the application.", " ", {timeOut: 10000});
+      }
+      else{
+        this.toastrService.show('You have viewed all the splitted slides.');
+      }
+      return;
+    }
+    if(this.addInfoForm.invalid){
+      this.toastrService.warning("Please add the details of the slide for the future use. Or else the slide will not be stored in the application.", " ", {timeOut: 10000});    
+    }
+    this.updateNextSlide();
+  }
   prev() {
-    
     if(this.val > 0)
     {
       this.val--;
@@ -121,6 +137,7 @@ export class MetadataComponent {
     let safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
     this.safeUrl = safeURL;
     this.cd.detectChanges();
+    this.resetForm();
   }
 
   onHomeClick(): void {
@@ -130,27 +147,14 @@ export class MetadataComponent {
   addMetaData() {
     debugger;
     if (this.addInfoForm.valid) {
-      // var Payload: any = {};
-      // Payload.id = 0;
-      // Payload.metaDataOfSlide = this.addInfoForm.controls['title'].value;
-      // Payload.keyWords = this.addInfoForm.controls['keywords'].value;
-      // Payload.notes = this.addInfoForm.controls['note'].value;
-      //let data: any = localStorage.getItem("SplitData");
-      
-      //let metaDataofSlide = JSON.parse(data);
-      //let metaDataId: any = metaDataofSlide.listWithUrl[0].id;
-      //console.log(metaDataId, 'MetaDataId');
       let payload = this.addInfoForm.value;
       payload.id = this.S3ObjectMetadata.id;
-
-      
       this.userService.addmetadata(payload).subscribe((data: any) => {
-       this.toastrService.success('Submitted Metadata Successfully');
-        //alert('Submitted Metadata Successfully');
-        this.update();
+      this.toastrService.success('Submitted Metadata Successfully');
+      this.update();
       })
-      
     }
+    this.resetForm();
   }
 
   rate(rating: number) {
@@ -159,18 +163,17 @@ export class MetadataComponent {
   }
 
   submitRating() {
-    ;
     let payload = {
       rating: this.rating,
       slideId: this.metadataList.metaData[0].id
     };
-    // let payload: any = {};
-    // payload.rating = data.rating,
-    //   payload.slideId = data.slideId
     this.userService.addRating(payload).subscribe((response: any) => {
       console.log(response, 'Ratings data');
     })
   }
 
-  
+  resetForm() {
+    this.addInfoForm.reset();
+    this.rating = 0;
+  }
 }
