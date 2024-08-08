@@ -50,12 +50,12 @@ export class SignupComponent {
     // });
 
     this.signUpForm = this.formBuilder.group({
-      firstName: ['', Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.minLength(3), Validators.maxLength(30)],
-      lastName: ['', Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.minLength(3), Validators.maxLength(30)],
+      firstName: ['', [Validators.required,Validators.pattern('^[a-zA-Z]+$'),Validators.minLength(3), Validators.maxLength(30)]],
+      lastName: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$'), Validators.minLength(3), Validators.maxLength(30)]],
       userEMailId: [''],
       password: ['', [Validators.required, Validators.minLength(6)]],
      // confirmPassword: ['', Validators.required]
-    });
+    })
   }
 
   
