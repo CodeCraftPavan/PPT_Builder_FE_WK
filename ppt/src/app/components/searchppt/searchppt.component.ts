@@ -106,13 +106,6 @@ export class SearchpptComponent {
         searchinput: val,
         pagination: this.paginatorService.GetSearchPagination(this.pageSize, this.pageIndex, this.sortOrder)
       }
-      // let payload :any = {};
-      // let pagination:any = {};
-      // pagination.pageSize = 10;
-      // pagination.pageNumber =0;
-      // payload.searchinput = val;
-      // payload.pagination = pagination;
-      ;
       this.ApiService.searchSlides(searchPayload).subscribe((resp: any) => {
       //this.ApiService.searchSlides(this.paginatorService.GetSearchPagination(this.pageSize, this.pageIndex, this.sortOrder, val)).subscribe((resp: any) => {
         console.log(resp, 'testData');
@@ -144,7 +137,6 @@ export class SearchpptComponent {
   mergeSlides(metadata: any) {
     console.log(metadata, 'metadata');
     let fileLocation = metadata.s3FilePath;
-    ;
     this.slideFileKeyList.push(fileLocation)
   }
 

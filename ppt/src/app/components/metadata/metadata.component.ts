@@ -46,22 +46,13 @@ export class MetadataComponent {
     private router: Router,
     private cd: ChangeDetectorRef
   ) {
-    this.addInfoForm = this.formBuilder.group({
-      metaDataOfSlide: ['',Validators.required],
-      keywords: ['',Validators.required],
-      notes: ['', Validators.required],
-      rating : [0,Validators.required],
-     // date:[this.minDate]
+      this.addInfoForm = this.formBuilder.group({
+       metaDataOfSlide: ['',Validators.required],
+       keywords: ['',Validators.required],
+       notes: ['', Validators.required],
+       rating : [0,Validators.required],
+      // date:[this.minDate]
     })
-
-    // let value: any = localStorage.getItem("SplitData");
-    // this.slideList = JSON.parse(value)
-    // this.metadataList = this.slideList;
-    // //this.metadataList = this.slideList.metaData
-    // if (this.metadataList) {
-    //   this.S3ObjUrl = this.metadataList.slideList[0]
-    //   this.S3ObjectMetadata = this.metadataList.metaData[0];
-
       let value: any = localStorage.getItem("SplitData");
       this.slideList = JSON.parse(value)
       this.metadataList = this.slideList;

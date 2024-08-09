@@ -13,6 +13,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ToastrService } from 'ngx-toastr';
 import { WelcomeDialogComponent } from 'src/app/shared/welcome-dialog/welcome-dialog.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-mergeslides',
@@ -31,7 +32,7 @@ export class MergeslidesComponent implements AfterViewInit{
   safeUrl: SafeResourceUrl;
   S3ObjUrl: any;
   pagedMetadataList: any;
-  displayedColumns: string[] = ['slno', 'metaDataOfSlide', 'keywords', 'notes',  'downloadCount', 'rating',  'view', 'add'];
+  displayedColumns: string[] = ['slno', 'metaDataOfSlide', 'keywords', 'notes', 'createdAt',  'downloadCount', 'rating',  'view', 'add'];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   // Pagination properties
   pageSizeOptions: number[] = [10, 20, 50, 100, 200];
@@ -39,6 +40,10 @@ export class MergeslidesComponent implements AfterViewInit{
   pageIndex = 1;
   sortOrder ='DEF';
   //sortOrder ='A';
+
+  @NgModule({
+    providers: [DatePipe]
+  })
  
   sortDateAscending: boolean = true;
 
@@ -55,7 +60,7 @@ export class MergeslidesComponent implements AfterViewInit{
         value: ['']
       });
     this.getRFQ();
-    //this.openWelcomeDialog();
+    
   }
 
   ngAfterViewInit(): void {
@@ -86,10 +91,18 @@ export class MergeslidesComponent implements AfterViewInit{
   }
 
   ngOnInit(): void {
-     this.getRFQ();
-     this.openWelcomeDialog();
-
+    this.getRFQ();
+    this.checkFirstVisit();
   }
+
+  checkFirstVisit(): void {
+    const firstVisit = localStorage.getItem('firstVisit');
+    if (!firstVisit) {
+      this.openWelcomeDialog();
+      localStorage.setItem('firstVisit', 'true');
+    }
+  }
+
 
   openWelcomeDialog(): void {
     debugger;
