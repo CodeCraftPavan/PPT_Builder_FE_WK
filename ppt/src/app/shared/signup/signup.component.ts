@@ -74,7 +74,6 @@ export class SignupComponent {
       }
     );
     }
-      
   }
 
   onOTPVerifySubmit(){
@@ -101,18 +100,14 @@ export class SignupComponent {
     if (this.signUpForm.valid) {
       this.buttonText = 'Submitting Please Wait!';
       this.ApiService.createUser(this.signUpForm.value).subscribe({next:(data: any) => {
-        ;
         this.buttonText = "Submit";
         this.toastrService.success('Account created successfully!');
         this.showRegisterForm = true;
         this.router.navigate(['/login']);
       },error: (error:any) => {
-        ;
         this.buttonText = 'Submit';
-        //this.errorHandler.HandleError(error);
         this.toastrService.error("Account already exists, kindly login.")
       }});
     }
- 
   }
 }

@@ -38,6 +38,7 @@ export class UserService {
   }
 
   addmetadata(data: any) {
+    //return this.http.post<any>('https://localhost:44361/insert-MetaData', data)
     return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.Split.Addmetadata, data)
   }
 
@@ -57,16 +58,23 @@ export class UserService {
   }
 
   submitFeedback(feedback: any): Observable<any> {
+    //return this.http.post(`https://localhost:44361/get-feed-back`, feedback);
     return this.http.post(`${this.baseUrl}`, feedback);
   }
 
   addRating(data: any): Observable<any> {
+    //return this.http.post<any>('https://localhost:44361/api/RatingSlides/AddRating',data);
+    
     return this.http.post<any>(APP_DI_CONFIG.parentDomain + APP_DI_CONFIG.endPoints.Rating.AddRating,data);
   }
 
  
   resetPassword(data: passwordReset) {
     return this.http.post<any>(`http://10.0.0.163:8081/api/AuthManagement/ResetPassword`,  data);
+  }
+
+  getMetaData(data: number) {
+    return this.http.post<any>(`http://10.0.0.163:8081/get-metaData`,  data);
   }
 
   

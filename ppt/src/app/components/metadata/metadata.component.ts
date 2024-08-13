@@ -5,10 +5,6 @@ import { Router } from '@angular/router';
 import { UserService } from '../../shared/service/user.service';
 import { ToastrService } from 'ngx-toastr';
 
-
-
-
-
 @Component({
   selector: 'app-metadata',
   templateUrl: './metadata.component.html',
@@ -34,6 +30,8 @@ export class MetadataComponent {
   minDate = new Date();
   metadataDate = new Date();
   fileUploaded = false;
+  prevButtonCount: number = 0;
+  ratingsDisplay: number = 0;
 
   ngOnInit() {
     this.stars = Array(this.maxRating).fill(false);
@@ -42,6 +40,7 @@ export class MetadataComponent {
   constructor(private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
     private toastrService: ToastrService,
+    private ApiService: UserService,
     private userService: UserService,
     private router: Router,
     private cd: ChangeDetectorRef
@@ -51,20 +50,16 @@ export class MetadataComponent {
        keywords: ['',Validators.required],
        notes: ['', Validators.required],
        rating : [0,Validators.required],
-      // date:[this.minDate]
     })
       let value: any = localStorage.getItem("SplitData");
       this.slideList = JSON.parse(value)
       this.metadataList = this.slideList;
-      //this.metadataList = this.slideList.metaData
       if (this.metadataList) {
         this.S3ObjUrl = this.metadataList.listWithUrl[0].s3FilePath
         this.S3ObjectMetadata = this.metadataList.metaData[0];
     }
     console.log(this.metadataList,'metaDataList');
-
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
-
   }
 
   sanitizeUrl(url: string): SafeResourceUrl {
@@ -90,6 +85,13 @@ export class MetadataComponent {
   }
 
   updateNextSlide(){
+    if(this.metadataList != null){
+      this.ApiService.getMetaData(this.metadataList.listWithUrl[this.val].id).subscribe((resp: any) => {
+      resp.data.metadata
+      //continue with further logic
+      });
+
+    }
     this.addInfoForm.reset();
       this.S3ObjUrl = this.metadataList.listWithUrl[this.val].s3FilePath;
       //this.slideList.slideList[this.val]
@@ -123,7 +125,19 @@ export class MetadataComponent {
     if(this.val > 0)
     {
       this.val--;
+      this.prevButtonCount ++;
     }
+    debugger;
+    let data : any; 
+    data = this.ApiService.getMetaData(this.metadataList.listWithUrl[this.val].id ).subscribe((resp: any) => {
+      console.log(resp, 'slide data');
+      console.log(resp.data.metadata.metaDataOfSlide, 'slide metadata');
+      this.addInfoForm.controls['metaDataOfSlide'].setValue(resp.data.metadata.metaDataOfSlide);
+      this.addInfoForm.controls['keywords'].setValue(resp.data.metadata.keyWords);
+      this.addInfoForm.controls['notes'].setValue(resp.data.metadata.notes);
+      this.rating = resp.data.ratings;
+      this.addInfoForm.controls['rating'].setValue(this.rating);
+    });
     this.S3ObjUrl = this.metadataList.listWithUrl[this.val].s3FilePath;
     let safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://docs.google.com/gview?url=${this.S3ObjUrl}&embedded=true`);
     this.safeUrl = safeURL;
@@ -137,12 +151,20 @@ export class MetadataComponent {
 
   addMetaData() {
     debugger;
-    if (this.addInfoForm.valid) {
+    if (this.addInfoForm.valid && this.prevButtonCount > 0) {
       let payload = this.addInfoForm.value;
-      payload.id = this.S3ObjectMetadata.id;
+      payload.id = this.metadataList.listWithUrl[this.val].id ;
       this.userService.addmetadata(payload).subscribe((data: any) => {
-      this.toastrService.success('Submitted Metadata Successfully');
+      this.toastrService.success('Edited the submitted key details successfully');
       this.update();
+      })
+    }
+    else if (this.addInfoForm.valid){
+      let payload = this.addInfoForm.value;
+      payload.id = this.S3ObjectMetadata.id ;
+      this.userService.addmetadata(payload).subscribe((data: any) => {
+       this.toastrService.success('Submitted details Successfully');
+       this.update();
       })
     }
     this.resetForm();
