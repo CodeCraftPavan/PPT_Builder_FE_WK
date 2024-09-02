@@ -26,4 +26,15 @@
     max-width: 100px; /* Adjust the max-width to fit inside the container with padding */
     max-height: 100px; /* Adjust the max-height to fit inside the container with padding */
   }
+
+  .header-container {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    justify-content: space-between; /* Optional: space between items, if you want them to be on the edges */
+  }
+  
+  .example-button-row {
+    margin-left: 16px; /* Optional: add space between heading and button */
+  }
+  
   
